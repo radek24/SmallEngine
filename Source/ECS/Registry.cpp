@@ -18,6 +18,6 @@ Entity Registry::CreateEntity()
 }
 
 bool Registry::DestroyEntity(const Entity &E) {
-    unimplemented();
+    Unimplemented();
     return false;
 }

@@ -11,8 +11,7 @@ public:
     Registry();
     [[nodiscard]] Entity CreateEntity();
     bool DestroyEntity(const Entity& E);
-template <typename T>
-    void AddComponent<T>();
+
 
 public:
     Entity::IdType CurrentID;

@@ -7,6 +7,13 @@
 
 #include <Log/Log.h>
 
-#define unimplemented() do {LOG_ERROR("This function is unimplemented, please implement"); __debugbreak();} while(0);
-#define assert(x) do { if(!(x)) { LOG_ERROR("Assert failed: " #x); __debugbreak(); } } while(0)
-#define no_entry() do {LOG_ERROR("No entry here"); __debugbreak();} while(0);
+#ifdef PLATFORM_WINDOWS
+#define DEBUG_BREAK() __debugbreak();
+#endif
+#ifdef PLATFORM_MAC
+#define DEBUG_BREAK() __builtin_debugtrap();
+#endif
+
+#define Unimplemented() do {LOG_ERROR("This function is unimplemented, please implement"); DEBUG_BREAK();} while(0);
+#define Assert(x) do { if(!(x)) { LOG_ERROR("Assert failed: " #x); DEBUG_BREAK(); } } while(0)
+#define NoEntry() do {LOG_ERROR("No entry here"); DEBUG_BREAK();} while(0);

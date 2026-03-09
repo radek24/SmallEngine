@@ -16,7 +16,11 @@ add_executable(SmallEngine
         Source/ECS/Components/TransformComponent.h
         Source/Math/MathForward.h
         Source/ECS/Components/VelocityComponent.h
-        Source/Core/DebugBreaks.h
+        Source/Core/Specifications.h
+        Source/Core/App.cpp
+        Source/Core/App.h
+        Source/Core/Window.cpp
+        Source/Core/Window.h
 )
 
 target_include_directories(SmallEngine PRIVATE
@@ -45,3 +49,9 @@ add_custom_command(TARGET SmallEngine POST_BUILD
         "$<TARGET_FILE_DIR:SmallEngine>/Resources"
         VERBATIM
 )
+
+if(WIN32)
+    target_compile_definitions(SmallEngine PRIVATE PLATFORM_WINDOWS)
+elseif(APPLE)
+    target_compile_definitions(SmallEngine PRIVATE PLATFORM_MAC)
+endif()
