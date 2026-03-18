@@ -5,10 +5,11 @@
 
 #pragma once
 #include <unordered_set>
-#include "Core/Window.h"
+#include "Engine/Rendering/Window.h"
 #include "Math/MathForward.h"
+#include "Engine/Core.h"
 
-struct InputState
+struct SE_API InputState
 {
     /** Keys pressed by user this frame*/
     std::unordered_set<unsigned int> PressedKeys;
@@ -30,7 +31,7 @@ struct InputState
     Vector2f MouseDelta;
 };
 
-class EventHandler
+class SE_API EventHandler
 {
 public:
     /** Captures all inputs and populates InputState*/

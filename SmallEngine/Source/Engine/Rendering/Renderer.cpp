@@ -4,7 +4,7 @@
 
 #include "Renderer.h"
 
-#include <Core/Log/Log.h>
+#include <Engine/Log/Log.h>
 #include <SDL3/SDL.h>
 
 std::unique_ptr<Renderer> Renderer::Create(const Window &window)
@@ -37,13 +37,31 @@ void Renderer::EndFrame() const
 
 void Renderer::Clear() const
 {
-    SDL_SetRenderDrawColor(InternalRenderer, 30, 30, 30, 255);
+
+    SDL_SetRenderDrawColor(InternalRenderer,COLOR_TO_SDL(ClearColor));
     SDL_RenderClear(InternalRenderer);
 }
 
 void Renderer::DrawRectangle(const Vector2f& Pos, const Vector2f &Size, const Color &ShapeColor) const
 {
-    SDL_SetRenderDrawColor(InternalRenderer, ShapeColor.NativeR(), ShapeColor.NativeG(), ShapeColor.NativeB(), ShapeColor.NativeA());
+    SDL_SetRenderDrawColor(InternalRenderer, COLOR_TO_SDL(ShapeColor));
     SDL_FRect rect = { Pos.X, Pos.Y, Size.X, Size.Y };
     SDL_RenderFillRect(InternalRenderer, &rect);
+}
+
+void Renderer::DrawPoint(const Vector2f &Pos, float Radius, const Color &PointColor) const
+{
+    SDL_SetRenderDrawColor(InternalRenderer, COLOR_TO_SDL(PointColor));
+    SDL_RenderPoint(InternalRenderer,Pos.X,Pos.Y);
+}
+
+void Renderer::DrawDebugText(const Vector2f &Pos, const char *s, const Color &TextColor) const
+{
+    SDL_SetRenderDrawColor(InternalRenderer, COLOR_TO_SDL(TextColor));
+    SDL_RenderDebugText(InternalRenderer,Pos.X,Pos.Y,s);
+}
+
+void Renderer::SetClearColor(const Color &ClearColor)
+{
+    this->ClearColor = ClearColor;
 }

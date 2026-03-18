@@ -4,7 +4,7 @@
 
 #include "App.h"
 
-#include <Core/Log/Log.h>
+#include <Engine/Log/Log.h>
 
 #include "DebugBreaks.h"
 #include "EventHandler.h"
@@ -22,29 +22,33 @@ App::App(const Specifications &AppSpec)
     Running = true;
 }
 
+App::~App()
+{
+
+}
+
 void App::Run()
 {
-    SDL_Event e;
+    Assert(LevelToTransitionTo != nullptr);
+
+    float LastTime = GetTime();
     while(Running)
     {
+        const float CurrentTime = GetTime();
+        float DeltaTime = CurrentTime - LastTime;
+        LastTime = CurrentTime;
+        TryToTransitionToLevel();
         EventHandler::PollInputs();
         if(EventHandler::ShouldStop())
-            Stop();
-
-        if (AppWindow->ShouldClose())
         {
             Stop();
             break;
         }
+        CurrentLevel->OnUpdate(DeltaTime);
         AppRenderer->BeginFrame();
-
-        Vector2f Pos(EventHandler::GetInputState().MousePos.X,EventHandler::GetInputState().MousePos.Y);
-        Vector2f Size(50,50);
-        Color Col(1,1,1);
-
-        AppRenderer->DrawRectangle(Pos,Size,Col);
-
+        CurrentLevel->OnRender(*AppRenderer);
         AppRenderer->EndFrame();
+        FrameCounter++;
     }
 }
 
@@ -63,8 +67,26 @@ App& App::Get()
 
 float App::GetTime()
 {
-    Unimplemented();
-    return 0;
+    return static_cast<float>(SDL_GetTicks()) / 1000.0f;
+}
+
+void App::TryToTransitionToLevel()
+{
+    if(LevelToTransitionTo)
+    {
+        if(CurrentLevel)
+        {
+            CurrentLevel->OnExit();
+            CurrentLevel.reset();
+        }
+        CurrentLevel = std::move(LevelToTransitionTo);
+        CurrentLevel->OnEnter();
+    }
+}
+
+Level * App::GetCurrentLevel() const
+{
+    return CurrentLevel.get();
 }
 
 void App::PrintInfo()

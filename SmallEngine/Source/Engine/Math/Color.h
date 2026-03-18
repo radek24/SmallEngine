@@ -7,8 +7,11 @@
 
 #include <cstdint>
 #include "MathUtils.h"
+#include "Engine/Core.h"
 
-class Color
+#define COLOR_TO_SDL(Color) (Color).R8(),(Color).G8(),(Color).B8(),(Color).A8()
+
+class SE_API Color
 {
 public:
     /** Constructor that takes 0-1 floats instead of ints, will be converted to ints internally*/
@@ -20,15 +23,15 @@ public:
     Color();
 
 
-    [[nodiscard]] float R() const{return MathUtils::Integer8ToFloat(Rint);}
-    [[nodiscard]] float G() const{return MathUtils::Integer8ToFloat(Gint);}
-    [[nodiscard]] float B() const{return MathUtils::Integer8ToFloat(Bint);}
-    [[nodiscard]] float A() const{return MathUtils::Integer8ToFloat(Aint);}
+    [[nodiscard]] float RF() const{return MathUtils::Integer8ToFloat(Rint);}
+    [[nodiscard]] float GF() const{return MathUtils::Integer8ToFloat(Gint);}
+    [[nodiscard]] float BF() const{return MathUtils::Integer8ToFloat(Bint);}
+    [[nodiscard]] float AF() const{return MathUtils::Integer8ToFloat(Aint);}
 
-    [[nodiscard]] uint8_t NativeR() const{return Rint;}
-    [[nodiscard]] uint8_t NativeG() const{return Gint;}
-    [[nodiscard]] uint8_t NativeB() const{return Bint;}
-    [[nodiscard]] uint8_t NativeA() const{return Aint;}
+    [[nodiscard]] uint8_t R8() const{return Rint;}
+    [[nodiscard]] uint8_t G8() const{return Gint;}
+    [[nodiscard]] uint8_t B8() const{return Bint;}
+    [[nodiscard]] uint8_t A8() const{return Aint;}
 
 private:
     uint8_t Rint;

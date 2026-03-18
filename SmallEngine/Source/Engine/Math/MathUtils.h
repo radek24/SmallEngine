@@ -5,9 +5,9 @@
 
 #pragma once
 #include <cstdint>
+#include "Engine/Core.h"
 
-
-class MathUtils
+class SE_API MathUtils
 {
 public:
   [[nodiscard]] static float Integer8ToFloat(uint8_t Integer);

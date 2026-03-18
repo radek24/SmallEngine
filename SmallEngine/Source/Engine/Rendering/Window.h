@@ -5,8 +5,7 @@
 #pragma once
 #include <memory>
 #include <SDL3/SDL.h>
-#include "Specifications.h"
-
+#include "Engine/Specifications.h"
 
 class Window {
 public:
@@ -18,8 +17,6 @@ public:
     [[nodiscard]] uint32_t GetWidth()  const;
     [[nodiscard]] uint32_t GetHeight() const;
     [[nodiscard]] SDL_Window* GetNativeHandle() const;
-
-    [[nodiscard]] bool ShouldClose() const {return false;};
 private:
     SDL_Window* NativeHandle;
 

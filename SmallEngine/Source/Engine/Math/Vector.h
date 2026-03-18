@@ -13,8 +13,6 @@
 template <typename T>
 struct Vector2 {
 
-    static_assert(std::is_floating_point_v<T>, "T must be floating point");
-
     T X;
     T Y;
 
@@ -61,7 +59,7 @@ struct Vector2 {
     [[nodiscard]] T Length() const;
     /** Normalize vector IN-PLACE */
     void Normalize() const;
-    /** Gets Normalized vector */
+    /** Gets Normalized vector, doesn't change source */
     [[nodiscard]] Vector2<T> GetNormalized();
 
 

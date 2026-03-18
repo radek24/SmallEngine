@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <Core/Log/Log.h>
+#include <Engine/Log/Log.h>
 
 #ifdef PLATFORM_WINDOWS
 #define DEBUG_BREAK() __debugbreak();

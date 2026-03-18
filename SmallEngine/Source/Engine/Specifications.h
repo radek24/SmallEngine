@@ -5,10 +5,11 @@
 #pragma once
 #include <string>
 
+#include "Math/MathForward.h"
+
 struct WindowSpecification {
     std::string Name;
-    int Width = 500;
-    int Height = 300;
+    Vector2i Size;
     bool IsResizable = true;
 };
 

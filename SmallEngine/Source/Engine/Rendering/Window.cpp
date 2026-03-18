@@ -3,7 +3,7 @@
 //
 
 #include "Window.h"
-#include "DebugBreaks.h"
+#include "Engine/DebugBreaks.h"
 
 std::unique_ptr<Window> Window::Create(const WindowSpecification &spec)
 {
@@ -23,7 +23,7 @@ Window::Window(const WindowSpecification &spec)
 
     //Flags = Flags | SDL_WINDOW_HIGH_PIXEL_DENSITY;
 
-    NativeHandle = SDL_CreateWindow(spec.Name.c_str(), spec.Width, spec.Height, Flags);
+    NativeHandle = SDL_CreateWindow(spec.Name.c_str(), spec.Size.X, spec.Size.Y, Flags);
     if(!NativeHandle)
     {
         LOG_ERROR("Window failed to create {0}",SDL_GetError());

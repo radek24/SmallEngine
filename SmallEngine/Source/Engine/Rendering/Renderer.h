@@ -7,10 +7,11 @@
 #include <memory>
 
 #include "Window.h"
-#include "Math/Color.h"
-#include "Math/MathForward.h"
+#include "Engine/Math/Color.h"
+#include "Engine/Math/MathForward.h"
+#include "Engine/Core.h"
 
-class Renderer {
+class SE_API Renderer {
 public:
     static std::unique_ptr<Renderer> Create(const Window& window);
     explicit Renderer(const Window& window);
@@ -23,9 +24,13 @@ public:
     /** Clears screen with color*/
     void Clear() const;
 
-    /*Rendering function*/
-    void DrawRectangle(const Vector2f& Pos, const Vector2f &Size, const Color &ShapeColor) const;
+    void SetClearColor(const Color& ClearColor);
+
+    void DrawRectangle(const Vector2f& Pos, const Vector2f& Size, const Color &ShapeColor) const;
+    void DrawPoint(const Vector2f& Pos,float Radius, const Color &PointColor) const;
+    void DrawDebugText(const Vector2f &Pos, const char *s, const Color &TextColor = Color(1,1,1)) const;
 
 private:
     SDL_Renderer* InternalRenderer;
+    Color ClearColor = Color(0.1);
 };

@@ -4,7 +4,7 @@
 
 #include "Registry.h"
 
-#include "Core/DebugBreaks.h"
+#include "Engine/DebugBreaks.h"
 
 Registry::Registry()
 {

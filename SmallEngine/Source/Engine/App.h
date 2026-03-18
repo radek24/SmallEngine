@@ -5,14 +5,19 @@
 #pragma once
 #include <memory>
 
-#include "Renderer.h"
-#include "Window.h"
-#include "Core/Specifications.h"
+#include "Level.h"
+#include "Rendering/Renderer.h"
+#include "Rendering/Window.h"
+#include "Engine/Specifications.h"
+#include "Engine/Core.h"
 
 /** Singleton class responsible for managing whole engine*/
-class App {
+class SE_API App {
 public:
     explicit App(const Specifications &AppSpec);
+
+
+    virtual ~App();
     /** Start this engine with configuration passed in constructor*/
     void Run();
     /** Stops application, usually by users choice*/
@@ -24,7 +29,20 @@ public:
     /** Number of frames rendered since start  */
     [[nodiscard]] unsigned long long GetFrameCount() const{return FrameCounter;}
 
+
+    template<typename TLevel>
+    /** Schedules level transition that will happen at the end of the frame so we can clean up everything safely. */
+    void QueueLevelTransition()
+    {
+        LevelToTransitionTo = std::make_unique<TLevel>();
+    }
+
+    [[nodiscard]] Level* GetCurrentLevel() const;
+
+
 private:
+    /** Transition to level when possible (on the start of the frame)*/
+    void TryToTransitionToLevel();
     /** Current app specifications */
     Specifications AppSpecification;
     bool Running = false;
@@ -34,5 +52,9 @@ private:
 
     std::unique_ptr<Window> AppWindow;
     std::unique_ptr<Renderer> AppRenderer;
-
+    std::unique_ptr<Level> LevelToTransitionTo;
+    std::unique_ptr<Level> CurrentLevel;
 };
+
+/** Use this function to pass application as a client*/
+App* CreateApplication();

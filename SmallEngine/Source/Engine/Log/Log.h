@@ -1,7 +1,8 @@
 #pragma once
 #include <spdlog/spdlog.h>
+#include "Engine/Core.h"
 
-class Log {
+class SE_API Log {
 private:
     static std::shared_ptr<spdlog::logger> s_Logger;
 
