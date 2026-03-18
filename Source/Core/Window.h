@@ -3,18 +3,24 @@
 //
 
 #pragma once
+#include <memory>
+#include <SDL3/SDL.h>
 #include "Specifications.h"
 
 
 class Window {
-    public:
-    Window(const WindowSpecification& Specs);
-    void Destroy();
-    /** Update and clear window, poll events*/
-    void Update();
+public:
+    [[nodiscard]] static std::unique_ptr<Window> Create(const WindowSpecification& spec);
+    explicit Window(const WindowSpecification& spec);
+    ~Window();
+    void PollEvents(){};
 
-    [[nodiscard]] bool ShouldClose() const;
-    static int GetY();
-    static int GetX();
+    [[nodiscard]] uint32_t GetWidth()  const;
+    [[nodiscard]] uint32_t GetHeight() const;
+    [[nodiscard]] SDL_Window* GetNativeHandle() const;
+
+    [[nodiscard]] bool ShouldClose() const {return false;};
+private:
+    SDL_Window* NativeHandle;
 
 };

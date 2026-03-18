@@ -8,19 +8,26 @@ add_subdirectory(Vendor/SDL3 EXCLUDE_FROM_ALL)
 
 add_executable(SmallEngine
         Source/EntryPoint.cpp
-        Source/Log/Log.cpp
+        Source/Core/Log/Log.cpp
         Source/ECS/Registry.h
         Source/ECS/Entity.h
         Source/ECS/Registry.cpp
-        Source/Math/Vector.h
+        Source/Core/Math/Vector.h
         Source/ECS/Components/TransformComponent.h
-        Source/Math/MathForward.h
+        Source/Core/Math/MathForward.h
         Source/ECS/Components/VelocityComponent.h
         Source/Core/Specifications.h
         Source/Core/App.cpp
         Source/Core/App.h
         Source/Core/Window.cpp
         Source/Core/Window.h
+        Source/Core/Renderer.cpp
+        Source/Core/Renderer.h
+        Source/Core/Math/Color.h
+        Source/Core/Math/MathUtils.cpp
+        Source/Core/Math/MathUtils.h
+        Source/Core/EventHandler.cpp
+        Source/Core/EventHandler.h
 )
 
 target_include_directories(SmallEngine PRIVATE

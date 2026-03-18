@@ -3,3 +3,60 @@
 //
 
 #include "Window.h"
+#include "DebugBreaks.h"
+
+std::unique_ptr<Window> Window::Create(const WindowSpecification &spec)
+{
+    return std::make_unique<Window>(spec);
+}
+
+Window::Window(const WindowSpecification &spec)
+{
+    if (!SDL_Init(SDL_INIT_VIDEO))
+    {
+        LOG_ERROR("SDL_Init failed: {0}", SDL_GetError());
+        return;
+    }
+    SDL_WindowFlags Flags = 0;
+    if(spec.IsResizable)
+        Flags = Flags | SDL_WINDOW_RESIZABLE;
+
+    //Flags = Flags | SDL_WINDOW_HIGH_PIXEL_DENSITY;
+
+    NativeHandle = SDL_CreateWindow(spec.Name.c_str(), spec.Width, spec.Height, Flags);
+    if(!NativeHandle)
+    {
+        LOG_ERROR("Window failed to create {0}",SDL_GetError());
+        SDL_Quit();
+    }
+}
+
+Window::~Window()
+{
+    LOG_INFO("Destroying window...");
+    SDL_DestroyWindow(NativeHandle);
+    LOG_INFO("Window destroyed");
+    LOG_INFO("Quiting SDL");
+    SDL_Quit();
+    LOG_INFO("SDL Quited sucesfully");
+}
+
+uint32_t Window::GetWidth() const
+{
+    int w,h;
+    //SDL_GetWindowSizeInPixels(NativeHandle, &w, &h); //Might be useful for retina
+    SDL_GetWindowSize(NativeHandle, &w, &h);
+    return w;
+}
+
+uint32_t Window::GetHeight() const
+{
+    int w,h;
+    SDL_GetWindowSize(NativeHandle, &w, &h);
+    return h;
+}
+
+SDL_Window * Window::GetNativeHandle() const
+{
+    return NativeHandle;
+}

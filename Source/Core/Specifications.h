@@ -3,6 +3,7 @@
 //
 
 #pragma once
+#include <string>
 
 struct WindowSpecification {
     std::string Name;

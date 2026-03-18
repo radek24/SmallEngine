@@ -7,7 +7,7 @@ private:
 
 public:
     static void Initialize();
-    static inline std::shared_ptr<spdlog::logger>& GetLogger(){return s_Logger;}
+    [[nodiscard]] static inline std::shared_ptr<spdlog::logger>& GetLogger(){return s_Logger;}
 };
 
 #define LOG_INFO(...) Log::GetLogger()->info(__VA_ARGS__)

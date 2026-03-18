@@ -3,13 +3,16 @@
 //
 
 #pragma once
+#include <memory>
+
+#include "Renderer.h"
+#include "Window.h"
 #include "Core/Specifications.h"
 
 /** Singleton class responsible for managing whole engine*/
 class App {
 public:
-    App(const Specifications &AppSpec);
-    ~App();
+    explicit App(const Specifications &AppSpec);
     /** Start this engine with configuration passed in constructor*/
     void Run();
     /** Stops application, usually by users choice*/
@@ -28,4 +31,8 @@ private:
     unsigned long long FrameCounter;
     /** Prints current configuration into console*/
     void PrintInfo();
+
+    std::unique_ptr<Window> AppWindow;
+    std::unique_ptr<Renderer> AppRenderer;
+
 };

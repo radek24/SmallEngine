@@ -3,6 +3,8 @@
 //
 
 #include "Log.h"
+
+#include <iostream>
 #include <spdlog/sinks/stdout_color_sinks.h>
 
 std::shared_ptr<spdlog::logger> Log::s_Logger;

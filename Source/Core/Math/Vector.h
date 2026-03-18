@@ -72,8 +72,6 @@ struct Vector2 {
     [[nodiscard]] bool operator!=(const Vector2<T>& V) const;
 
 
-
-
     /** Print operator*/
     friend std::ostream& operator<<(std::ostream& os, const Vector2<T>& V)
     {
@@ -189,9 +187,10 @@ bool Vector2<T>::operator!=(const Vector2<T> &V) const
 template <typename Type>
 inline const Vector2<Type> Vector2<Type>::ZeroVector = {Type(0), Type(0)};
 
+/** Formatter for {0} style printing */
 template <typename T>
-struct fmt::formatter<Vector2<T>> {
-
+struct fmt::formatter<Vector2<T>>
+{
     constexpr auto parse(fmt::format_parse_context& ctx)
     {
         return ctx.begin();
