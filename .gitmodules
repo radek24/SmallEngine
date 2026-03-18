@@ -1,3 +1,6 @@
 [submodule "Engine/Vendor/SDL3"]
 	path = Engine/Vendor/SDL3
 	url = https://github.com/libsdl-org/SDL.git
+[submodule "SmallEngine/Vendor/SDL3"]
+	path = SmallEngine/Vendor/SDL3
+	url = https://github.com/libsdl-org/SDL
