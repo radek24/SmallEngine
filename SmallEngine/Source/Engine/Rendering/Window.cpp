@@ -20,6 +20,10 @@ Window::Window(const WindowSpecification &spec)
     SDL_WindowFlags Flags = 0;
     if(spec.IsResizable)
         Flags = Flags | SDL_WINDOW_RESIZABLE;
+    if(spec.IsBorderless)
+        Flags = Flags | SDL_WINDOW_BORDERLESS;
+    if(spec.IsFullscreen)
+        Flags = Flags | SDL_WINDOW_FULLSCREEN;
 
     //Flags = Flags | SDL_WINDOW_HIGH_PIXEL_DENSITY;
 

@@ -11,7 +11,7 @@
 
 static App* Application = nullptr;
 
-App::App(const Specifications &AppSpec)
+void App::Init(const Specifications &AppSpec)
 {
     Application = this;
     Log::Initialize();
@@ -68,6 +68,12 @@ App& App::Get()
 float App::GetTime()
 {
     return static_cast<float>(SDL_GetTicks()) / 1000.0f;
+}
+
+void App::SetArgs(int argc, char *argv[])
+{
+    AppSpecification.ArgumentCount = argc;
+    AppSpecification.Arguments = argv;
 }
 
 void App::TryToTransitionToLevel()

@@ -1,5 +1,19 @@
 add_subdirectory(Vendor/SDL3 EXCLUDE_FROM_ALL)
 
+set(SDLIMAGE_VENDORED      ON  CACHE BOOL "" FORCE)
+set(SDLIMAGE_INSTALL       OFF CACHE BOOL "" FORCE)
+
+set(SDLIMAGE_PNG           ON  CACHE BOOL "" FORCE)
+set(SDLIMAGE_JPG           ON  CACHE BOOL "" FORCE)
+set(SDLIMAGE_BMP           ON  CACHE BOOL "" FORCE)
+set(SDLIMAGE_WEBP          OFF CACHE BOOL "" FORCE)
+set(SDLIMAGE_AVIF          OFF CACHE BOOL "" FORCE)
+add_subdirectory(Vendor/SDL_image EXCLUDE_FROM_ALL)
+
+set(SDLTTF_VENDORED        ON  CACHE BOOL "" FORCE)
+set(SDLTTF_INSTALL         OFF CACHE BOOL "" FORCE)
+add_subdirectory(Vendor/SDL_ttf EXCLUDE_FROM_ALL)
+
 add_library(SmallEngine SHARED
         Source/Engine/Log/Log.cpp
         Source/ECS/Registry.cpp

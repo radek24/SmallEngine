@@ -4,3 +4,9 @@
 [submodule "SmallEngine/Vendor/SDL3"]
 	path = SmallEngine/Vendor/SDL3
 	url = https://github.com/libsdl-org/SDL
+[submodule "SmallEngine/Vendor/SDL_image"]
+	path = SmallEngine/Vendor/SDL_image
+	url = https://github.com/libsdl-org/SDL_image.git
+[submodule "SmallEngine/Vendor/SDL_ttf"]
+	path = SmallEngine/Vendor/SDL_ttf
+	url = https://github.com/libsdl-org/SDL_ttf.git

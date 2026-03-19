@@ -11,8 +11,9 @@ struct WindowSpecification {
     std::string Name;
     Vector2i Size;
     bool IsResizable = true;
+    bool IsBorderless = false;
+    bool IsFullscreen = false;
 };
-
 
 struct Specifications
 {

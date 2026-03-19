@@ -14,11 +14,11 @@
 /** Singleton class responsible for managing whole engine*/
 class SE_API App {
 public:
-    explicit App(const Specifications &AppSpec);
-
+    explicit App() = default;
+    void Init(const Specifications &AppSpec);
 
     virtual ~App();
-    /** Start this engine with configuration passed in constructor*/
+    /** Start this engine with configuration passed in Init*/
     void Run();
     /** Stops application, usually by users choice*/
     void Stop();
@@ -28,6 +28,8 @@ public:
     [[nodiscard]] static float GetTime();
     /** Number of frames rendered since start  */
     [[nodiscard]] unsigned long long GetFrameCount() const{return FrameCounter;}
+    /** Adds args to app specification to be parsed later for anything*/
+    void SetArgs(int argc, char *argv[]);
 
 
     template<typename TLevel>
@@ -41,6 +43,7 @@ public:
 
 
 private:
+
     /** Transition to level when possible (on the start of the frame)*/
     void TryToTransitionToLevel();
     /** Current app specifications */

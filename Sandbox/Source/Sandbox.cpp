@@ -5,16 +5,12 @@
 class Sandbox final : public App
 {
 public:
-    explicit Sandbox(const Specifications &AppSpec): App(AppSpec)
+    explicit Sandbox(const Specifications& AppSpec): App()
     {
+        Init(AppSpec);
         QueueLevelTransition<TestLevel>();
     }
-
-    ~Sandbox() override
-    {
-
-    }
-
+    ~Sandbox() override{}
 };
 
 App* CreateApplication()
@@ -22,6 +18,7 @@ App* CreateApplication()
     Specifications AppSpec;
     AppSpec.AppName = "Sandbox";
     AppSpec.WindowSpecs.Size = Vector2i(500,500);
-    AppSpec.WindowSpecs.Name = "SandboxWindow";
+    AppSpec.WindowSpecs.Name = "Sandbox Window";
+
     return new Sandbox(AppSpec);
 }

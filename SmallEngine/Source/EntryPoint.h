@@ -14,6 +14,7 @@ extern App* CreateApplication();
 int main(int argc, char *argv[])
 {
     auto App = CreateApplication();
+    App->SetArgs(argc,argv);
     App->Run();
     delete App;
     return 0;
