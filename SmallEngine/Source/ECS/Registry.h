@@ -6,16 +6,14 @@
 #include "Entity.h"
 
 /** Represents one level with all entities, components and systems needed */
-class Registry {
+class Registry
+{
 public:
     Registry();
     [[nodiscard]] Entity CreateEntity();
     bool DestroyEntity(const Entity& E);
-
-
 public:
     Entity::IdType CurrentID;
-
 };
 
 

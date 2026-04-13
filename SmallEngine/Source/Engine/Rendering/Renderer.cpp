@@ -9,7 +9,6 @@
 
 std::unique_ptr<Renderer> Renderer::Create(const Window &window)
 {
-
     return std::make_unique<Renderer>(window);
 }
 
@@ -53,6 +52,12 @@ void Renderer::DrawPoint(const Vector2f &Pos, float Radius, const Color &PointCo
 {
     SDL_SetRenderDrawColor(InternalRenderer, COLOR_TO_SDL(PointColor));
     SDL_RenderPoint(InternalRenderer,Pos.X,Pos.Y);
+}
+
+void Renderer::DrawTexture(const Vector2f &Pos, const Vector2f &Size, SDL_Texture *Texture) const
+{
+    const SDL_FRect rect = { Pos.X, Pos.Y, Size.X, Size.Y };
+    SDL_RenderTexture(InternalRenderer, Texture, nullptr, &rect);
 }
 
 void Renderer::DrawDebugText(const Vector2f &Pos, const char *s, const Color &TextColor) const

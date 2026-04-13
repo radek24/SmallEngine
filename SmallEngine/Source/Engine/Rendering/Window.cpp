@@ -40,6 +40,7 @@ Window::~Window()
     LOG_INFO("Destroying window...");
     SDL_DestroyWindow(NativeHandle);
     LOG_INFO("Window destroyed");
+
     LOG_INFO("Quiting SDL");
     SDL_Quit();
     LOG_INFO("SDL Quited sucesfully");

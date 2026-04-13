@@ -21,13 +21,14 @@ public:
     void BeginFrame() const;
     /** Will present rendered image to screen*/
     void EndFrame() const;
-    /** Clears screen with color*/
+    /** Clears screen with color specified*/
     void Clear() const;
 
     void SetClearColor(const Color& ClearColor);
 
-    void DrawRectangle(const Vector2f& Pos, const Vector2f& Size, const Color &ShapeColor) const;
-    void DrawPoint(const Vector2f& Pos,float Radius, const Color &PointColor) const;
+    void DrawRectangle(const Vector2f& Pos, const Vector2f& Size, const Color &ShapeColor= Color(1,1,1)) const;
+    void DrawPoint(const Vector2f& Pos,float Radius, const Color &PointColor= Color(1,1,1)) const;
+    void DrawTexture(const Vector2f& Pos, const Vector2f& Size, SDL_Texture* Texture) const;
     void DrawDebugText(const Vector2f &Pos, const char *s, const Color &TextColor = Color(1,1,1)) const;
 
 private:

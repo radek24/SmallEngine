@@ -4,8 +4,8 @@ set(SDLIMAGE_VENDORED      ON  CACHE BOOL "" FORCE)
 set(SDLIMAGE_INSTALL       OFF CACHE BOOL "" FORCE)
 
 set(SDLIMAGE_PNG           ON  CACHE BOOL "" FORCE)
-set(SDLIMAGE_JPG           ON  CACHE BOOL "" FORCE)
-set(SDLIMAGE_BMP           ON  CACHE BOOL "" FORCE)
+set(SDLIMAGE_JPG           OFF  CACHE BOOL "" FORCE)
+set(SDLIMAGE_BMP           OFF CACHE BOOL "" FORCE)
 set(SDLIMAGE_WEBP          OFF CACHE BOOL "" FORCE)
 set(SDLIMAGE_AVIF          OFF CACHE BOOL "" FORCE)
 add_subdirectory(Vendor/SDL_image EXCLUDE_FROM_ALL)
@@ -25,6 +25,8 @@ add_library(SmallEngine SHARED
         Source/Engine/EventHandler.cpp
         Source/Engine/Level.cpp
         Source/Engine/Level.h
+        Source/Engine/Math/Transform.h
+        Source/Engine/Math/Rotator.h
 )
 
 target_include_directories(SmallEngine PUBLIC
@@ -62,7 +64,9 @@ add_custom_command(TARGET SmallEngine POST_BUILD
 
 if(WIN32)
     target_compile_options(SmallEngine PRIVATE /utf-8)
-    target_compile_definitions(SmallEngine PRIVATE PLATFORM_WINDOWS)
-elseif(APPLE)
-    target_compile_definitions(SmallEngine PRIVATE PLATFORM_MAC)
+    target_compile_definitions(SmallEngine PUBLIC PLATFORM_WINDOWS)
+endif()
+
+if(APPLE)
+    target_compile_definitions(SmallEngine PUBLIC PLATFORM_MAC)
 endif()

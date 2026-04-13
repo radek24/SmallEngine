@@ -38,10 +38,50 @@ void EventHandler::CaptureInput(SDL_Event Event)
     }
 }
 
+bool EventHandler::IsKeyPressed(SDL_Keycode Key)
+{
+    return GetInputState().PressedKeys.count(Key) > 1;
+}
+
+bool EventHandler::IsKeyHeld(SDL_Keycode Key)
+{
+    return GetInputState().HeldKeys.count(Key) > 1;
+}
+
+bool EventHandler::IsKeyReleased(SDL_Keycode Key)
+{
+    return GetInputState().ReleasedKeys.count(Key) > 1;
+}
+
+bool EventHandler::IsMouseButtonPressed(Uint16 Button)
+{
+    return GetInputState().PressedMouseButtons.count(Button) > 1;
+}
+
+bool EventHandler::IsMouseButtonHeld(Uint16 Button)
+{
+    return GetInputState().HeldMouseButtons.count(Button) > 1;
+}
+
+bool EventHandler::IsMouseButtonReleased(Uint16 Button)
+{
+    return GetInputState().ReleasedMouseButtons.count(Button) > 1;
+}
+
 InputState EventHandler::GetInputState()
 {
     return CurrentInputState;
 }
+
+Vector2f EventHandler::GetMousePos()
+{
+    return CurrentInputState.MousePos;
+}
+Vector2f EventHandler::GetMouseDelta()
+{
+    return CurrentInputState.MouseDelta;
+}
+
 
 void EventHandler::Cleanup()
 {

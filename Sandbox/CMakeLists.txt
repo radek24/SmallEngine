@@ -2,6 +2,8 @@ add_executable(Sandbox
         Source/Sandbox.cpp
         Source/Levels/TestLevel.cpp
         Source/Levels/TestLevel.h
+        Source/Levels/SecondLevel.cpp
+        Source/Levels/SecondLevel.h
 )
 
 target_link_libraries(Sandbox PRIVATE SmallEngine)

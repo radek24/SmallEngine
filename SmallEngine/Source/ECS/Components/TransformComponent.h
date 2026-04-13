@@ -3,9 +3,10 @@
 //
 
 #pragma once
-#include "Math/MathForward.h"
+#include "Engine/Math/MathForward.h"
 
-struct TransformComponent {
+struct TransformComponent
+{
    Vector2f Position;
    float Rotation;
    Vector2f Scale;

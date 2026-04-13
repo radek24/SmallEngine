@@ -36,6 +36,24 @@ class SE_API EventHandler
 public:
     /** Captures all inputs and populates InputState*/
     static void CaptureInput(SDL_Event Event);
+
+    /** Returns if the key was pressed this frame*/
+    [[nodiscard]] static bool IsKeyPressed(SDL_Keycode Key);
+    /** Returns if the key is currently held */
+    [[nodiscard]] static bool IsKeyHeld(SDL_Keycode Key);
+    /** Returns if the key was released this frame */
+    [[nodiscard]] static bool IsKeyReleased(SDL_Keycode Key);
+
+    /** Returns if the mouse button was pressed this frame*/
+    [[nodiscard]] static bool IsMouseButtonPressed(Uint16 Button);
+    /** Returns if the mouse button is currently held */
+    [[nodiscard]] static bool IsMouseButtonHeld(Uint16 Button);
+    /** Returns if the key was released this frame */
+    [[nodiscard]] static bool IsMouseButtonReleased(Uint16 Button);
+
+    [[nodiscard]] static Vector2f GetMousePos();
+    [[nodiscard]] static Vector2f GetMouseDelta();
+
     /** Gets current InputState*/
     [[nodiscard]] static InputState GetInputState();
     /** Call after frame finished, cleans up all the stale inputs */
@@ -45,3 +63,4 @@ public:
     /** Gets set to true if we recieved a stop input (close window etc.)*/
     static bool ShouldStop();
 };
+

@@ -8,12 +8,12 @@
 
 class TestLevel : public Level
 {
-public:
-    void OnEnter() override;
+    public:
+        void OnEnter() override;
 
-    void OnUpdate(float DeltaTime) override;
+        void OnUpdate(float DeltaTime) override;
 
-    void OnRender(const Renderer &Renderer) override;
+        void OnRender(const Renderer &Renderer) override;
 
-    void OnExit() override;
+        void OnExit() override;
 };

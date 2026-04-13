@@ -62,7 +62,6 @@ struct Vector2 {
     /** Gets Normalized vector, doesn't change source */
     [[nodiscard]] Vector2<T> GetNormalized();
 
-
     /* Compares */
     /** Compares vector to another*/
     [[nodiscard]] bool operator==(const Vector2<T>& V) const;

@@ -5,6 +5,7 @@
 #include "App.h"
 
 #include <Engine/Log/Log.h>
+#include <SDL_image/include/SDL3_image/SDL_image.h>
 
 #include "DebugBreaks.h"
 #include "EventHandler.h"
@@ -20,6 +21,7 @@ void App::Init(const Specifications &AppSpec)
     AppWindow = Window::Create(AppSpec.WindowSpecs);
     AppRenderer = Renderer::Create(*AppWindow);
     Running = true;
+    PrintInfo();
 }
 
 App::~App()
@@ -78,16 +80,16 @@ void App::SetArgs(int argc, char *argv[])
 
 void App::TryToTransitionToLevel()
 {
-    if(LevelToTransitionTo)
+    if(!LevelToTransitionTo)
+        return;
+    
+    if(CurrentLevel)
     {
-        if(CurrentLevel)
-        {
-            CurrentLevel->OnExit();
-            CurrentLevel.reset();
-        }
-        CurrentLevel = std::move(LevelToTransitionTo);
-        CurrentLevel->OnEnter();
+        CurrentLevel->OnExit();
+        CurrentLevel.reset();
     }
+    CurrentLevel = std::move(LevelToTransitionTo);
+    CurrentLevel->OnEnter();
 }
 
 Level * App::GetCurrentLevel() const
@@ -97,6 +99,6 @@ Level * App::GetCurrentLevel() const
 
 void App::PrintInfo()
 {
-    LOG_INFO("Info about app:");
-    LOG_INFO("So far no info.");
+    int Version = SDL_GetVersion();
+    LOG_INFO("SDL Version : {0}.{1}.{2}",SDL_VERSIONNUM_MAJOR(Version),SDL_VERSIONNUM_MINOR(Version),SDL_VERSIONNUM_MICRO(Version));
 }
