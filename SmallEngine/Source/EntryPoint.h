@@ -5,7 +5,7 @@
 #include "Engine/App.h"
 
 extern App* CreateApplication();
-#ifdef PLATFORM_WINDOWS || PLATFORM_MAC
+#if defined(PLATFORM_WINDOWS) || defined(PLATFORM_MAC)
 int main(int argc, char *argv[])
 {
     auto App = CreateApplication();

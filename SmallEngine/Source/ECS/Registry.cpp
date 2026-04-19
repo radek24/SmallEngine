@@ -13,21 +13,48 @@ Registry::Registry()
 
 Entity Registry::CreateEntity()
 {
-    if(CurrentID == UINT32_MAX)
+    if (!FreeList.empty()) {
+        Entity::IdType Idx = FreeList.back();
+        FreeList.pop_back();
+        Slots[Idx].Alive = true;
+        return Entity((static_cast<Entity::IdType>(Slots[Idx].Generation) << 24) | Idx);
+    }
+
+    auto Idx = static_cast<Entity::IdType>(Slots.size());
+    if (Idx >= 0x00FFFFFF)
         LOG_FATAL("Reached max entity ids");
-    CurrentID++;
-    return Entity(CurrentID);
+
+    Slots.push_back({ 0, true });
+    return Entity(Idx);
 }
 
 bool Registry::DestroyEntity(Entity E)
 {
-    Unimplemented();
-    return false;
+    if (!IsValid(E))
+        return false;
+
+    for (auto& S : Systems)
+        S->OnEntityDestroyed(E);
+
+    for (auto& [Type, Pool] : Pools)
+        Pool->Remove(E);
+
+    Entity::IdType Idx = E.GetId() & 0x00FFFFFF;
+    Slots[Idx].Alive = false;
+    Slots[Idx].Generation++;
+
+    FreeList.push_back(Idx);
+    return true;
 }
 
 bool Registry::IsValid(Entity E)
 {
-    return true;
+    Entity::IdType Idx = E.GetId() & 0x00FFFFFF;
+    if (Idx >= Slots.size())
+        return false;
+
+    auto Gen = static_cast<uint8_t>(E.GetId() >> 24);
+    return Slots[Idx].Alive && Slots[Idx].Generation == Gen;
 }
 
 void Registry::RunSystems(SystemPhase Phase, float DeltaTime)

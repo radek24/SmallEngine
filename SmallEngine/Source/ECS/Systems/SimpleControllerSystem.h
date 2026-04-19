@@ -4,11 +4,12 @@
 
 
 #pragma once
-#include <Engine/Core.h>
+#include "Engine/Core.h"
 #include "ECS/System.h"
 
 
-class SE_API MovementSystem  : public System
+/** Lets you move any entity using WSAD */
+class SE_API SimpleControllerSystem : public System
 {
 public:
     void Update(Registry &CurrentRegistry, float DeltaTime) override;

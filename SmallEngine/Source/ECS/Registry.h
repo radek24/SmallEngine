@@ -7,19 +7,28 @@
 #include <unordered_map>
 #include <typeindex>
 
+#include <Engine/Core.h>
 #include "ComponentPool.h"
 #include "Entity.h"
 #include "System.h"
 #include "View.h"
 
 /** Simple struct used for tracking entities */
-struct EntitySlot { Entity::IdType GeneratedID; bool Alive; };
+struct EntitySlot
+{
+    uint8_t Generation = 0;
+    bool Alive = false;
+};
 
 /** Represents one level with all entities, components and systems needed */
-class Registry
+class SE_API Registry
 {
 public:
     Registry();
+    Registry(const Registry&) = delete;
+    Registry& operator=(const Registry&) = delete;
+    Registry(Registry&&) = default;
+    Registry& operator=(Registry&&) = default;
     [[nodiscard]] Entity CreateEntity();
     bool DestroyEntity(Entity E);
     /**Checks whether the entity is destroyed or is alive*/

@@ -12,6 +12,7 @@ std::unique_ptr<Window> Window::Create(const WindowSpecification &spec)
 
 Window::Window(const WindowSpecification &spec)
 {
+    Specs = spec;
     if (!SDL_Init(SDL_INIT_VIDEO))
     {
         LOG_ERROR("SDL_Init failed: {0}", SDL_GetError());
@@ -33,6 +34,7 @@ Window::Window(const WindowSpecification &spec)
         LOG_ERROR("Window failed to create {0}",SDL_GetError());
         SDL_Quit();
     }
+
 }
 
 Window::~Window()
@@ -64,4 +66,9 @@ uint32_t Window::GetHeight() const
 SDL_Window * Window::GetNativeHandle() const
 {
     return NativeHandle;
+}
+
+WindowSpecification Window::GetSpecs()
+{
+    return Specs;
 }

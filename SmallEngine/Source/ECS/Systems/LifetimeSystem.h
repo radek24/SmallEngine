@@ -4,14 +4,13 @@
 
 
 #pragma once
-#include <Engine/Core.h>
 #include "ECS/System.h"
+#include "Engine/Core.h"
 
-
-class SE_API MovementSystem  : public System
+class SE_API LifetimeSystem : public System
 {
 public:
     void Update(Registry &CurrentRegistry, float DeltaTime) override;
 
-    [[nodiscard]] SystemPhase GetPhase() const override {return SystemPhase::Update;}
+    [[nodiscard]] SystemPhase GetPhase() const override {return SystemPhase::PostUpdate;}
 };

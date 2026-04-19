@@ -19,6 +19,7 @@ App* CreateApplication()
     AppSpec.AppName = "Sandbox";
     AppSpec.WindowSpecs.Size = Vector2i(500,500);
     AppSpec.WindowSpecs.Name = "Sandbox Window";
+    AppSpec.WindowSpecs.IsResizable = true;
 
     return new Sandbox(AppSpec);
 }

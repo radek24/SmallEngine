@@ -31,7 +31,7 @@ public:
     /** Adds an entity and component to this pool */
     T& Add(Entity E, T Component);
     /** Returns the dense entity array for iteration */
-    const std::vector<Entity>& GetEntities() const { return DenseEntity; }
+    [[nodiscard]] const std::vector<Entity>& GetEntities() const { return DenseEntity; }
     /** Removes an entity from this list (will swap removed element with last and then pop, so this will keep cache continuity) */
     void Remove(Entity E) override;
     /** Gets an entity from this set, if this entity doesn't exist will crash. */

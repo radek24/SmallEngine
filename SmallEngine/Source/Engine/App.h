@@ -31,6 +31,7 @@ public:
     /** Adds args to app specification to be parsed later for anything*/
     void SetArgs(int argc, char *argv[]);
 
+    [[nodiscard]] Renderer* GetRenderer() const {return AppRenderer.get();}
 
     template<typename TLevel>
     /** Schedules level transition that will happen at the end of the frame so we can clean up everything safely. */

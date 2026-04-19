@@ -33,6 +33,8 @@ public:
     [[nodiscard]] uint8_t B8() const{return Bint;}
     [[nodiscard]] uint8_t A8() const{return Aint;}
 
+    [[nodiscard]] SDL_Color GetSDLColor() const;
+
 private:
     uint8_t Rint;
     uint8_t Gint;
@@ -67,3 +69,8 @@ Gint(0),
 Bint(0),
 Aint(255)
 {}
+
+inline SDL_Color Color::GetSDLColor() const
+{
+    return SDL_Color(R8(),G8(),B8(),A8());
+}

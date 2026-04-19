@@ -17,7 +17,9 @@ public:
     [[nodiscard]] uint32_t GetWidth()  const;
     [[nodiscard]] uint32_t GetHeight() const;
     [[nodiscard]] SDL_Window* GetNativeHandle() const;
+    [[nodiscard]] WindowSpecification GetSpecs();
 private:
     SDL_Window* NativeHandle;
+    WindowSpecification Specs;
 
 };

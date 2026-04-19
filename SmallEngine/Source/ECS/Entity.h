@@ -5,7 +5,7 @@
 
 #pragma once
 #include <cstdint>
-
+#include <bitset>
 
 /** Class that represents Entity in our game engine, it only has a ID and all other methods are private. Use registry to create this class */
 class Entity
@@ -40,4 +40,14 @@ private:
     friend class Registry;
 };
 
-Entity::IdType Entity::InvalidEntity = 0;
+inline Entity::IdType Entity::InvalidEntity = 0;
+
+
+template<>
+struct std::hash<Entity>
+{
+    size_t operator()(const Entity& E) const noexcept
+    {
+        return std::hash<Entity::IdType>{}(E.GetId());
+    }
+};

@@ -7,13 +7,14 @@
 #include <ECS/Entity.h>
 #include <ECS/Registry.h>
 #include "ECS/Components/TransformComponent.h"
+#include "ECS/Components/VelocityComponent.h"
 
 void MovementSystem::Update(Registry &CurrentRegistry, float DeltaTime)
 {
-    auto Callback = [](Entity E, TransformComponent &T)
+    auto Callback = [DeltaTime](Entity E, TransformComponent &T,VelocityComponent &V)
     {
-        T.Transform.Position.X += 0.1;
-        LOG_INFO("{0}", T.Transform.Position);
+        T.Transform.Position.X += V.Velocity.X * DeltaTime;
+        T.Transform.Position.Y += V.Velocity.Y* DeltaTime;
     };
-    CurrentRegistry.MakeView<TransformComponent>().Each(Callback);
+    CurrentRegistry.MakeView<TransformComponent,VelocityComponent>().Each(Callback);
 }

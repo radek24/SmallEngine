@@ -32,6 +32,24 @@ add_library(SmallEngine SHARED
         Source/ECS/Systems/MovementSystem.cpp
         Source/ECS/Systems/MovementSystem.h
         Source/ECS/Components/TransformComponent.h
+        Source/ECS/Components/VelocityComponent.h
+        Source/ECS/Components/SpriteComponent.h
+        Source/Engine/Rendering/TextureManager.cpp
+        Source/Engine/Rendering/TextureManager.h
+        Source/ECS/Systems/RenderSystem.cpp
+        Source/ECS/Systems/RenderSystem.h
+        Source/ECS/Components/CameraComponent.h
+        Source/ECS/Systems/SimpleControllerSystem.cpp
+        Source/ECS/Systems/SimpleControllerSystem.h
+        Source/ECS/Components/SimpleKeyboardControllerComponent.h
+        Source/ECS/Components/LifetimeComponent.h
+        Source/ECS/Systems/LifetimeSystem.cpp
+        Source/ECS/Systems/LifetimeSystem.h
+        Source/Engine/Rendering/FontManager.cpp
+        Source/Engine/Rendering/FontManager.h
+        Source/ECS/Systems/UIRenderSystem.h
+        Source/ECS/Systems/UIRenderSystem.cpp
+        Source/ECS/Components/ScreenSpaceTextComponent.h
 )
 
 target_include_directories(SmallEngine PUBLIC
@@ -39,7 +57,11 @@ target_include_directories(SmallEngine PUBLIC
         ${CMAKE_SOURCE_DIR}/SmallEngine/Source
 )
 
-target_link_libraries(SmallEngine PUBLIC SDL3::SDL3)
+target_link_libraries(SmallEngine PUBLIC
+        SDL3::SDL3
+        SDL3_image::SDL3_image
+        SDL3_ttf::SDL3_ttf
+)
 
 
 target_compile_definitions(SmallEngine

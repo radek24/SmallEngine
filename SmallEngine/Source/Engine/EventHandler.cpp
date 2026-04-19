@@ -40,32 +40,32 @@ void EventHandler::CaptureInput(SDL_Event Event)
 
 bool EventHandler::IsKeyPressed(SDL_Keycode Key)
 {
-    return GetInputState().PressedKeys.count(Key) > 1;
+    return GetInputState().PressedKeys.contains(Key);
 }
 
 bool EventHandler::IsKeyHeld(SDL_Keycode Key)
 {
-    return GetInputState().HeldKeys.count(Key) > 1;
+    return GetInputState().HeldKeys.contains(Key);
 }
 
 bool EventHandler::IsKeyReleased(SDL_Keycode Key)
 {
-    return GetInputState().ReleasedKeys.count(Key) > 1;
+    return GetInputState().ReleasedKeys.contains(Key);
 }
 
 bool EventHandler::IsMouseButtonPressed(Uint16 Button)
 {
-    return GetInputState().PressedMouseButtons.count(Button) > 1;
+    return GetInputState().PressedMouseButtons.contains(Button);
 }
 
 bool EventHandler::IsMouseButtonHeld(Uint16 Button)
 {
-    return GetInputState().HeldMouseButtons.count(Button) > 1;
+    return GetInputState().HeldMouseButtons.contains(Button);
 }
 
 bool EventHandler::IsMouseButtonReleased(Uint16 Button)
 {
-    return GetInputState().ReleasedMouseButtons.count(Button) > 1;
+    return GetInputState().ReleasedMouseButtons.contains(Button);
 }
 
 InputState EventHandler::GetInputState()

@@ -4,21 +4,24 @@
 
 
 #pragma once
+#include "Entity.h"
 
 /** Enum used to differentiate between system types and between when they are run*/
 enum class SystemPhase
 {
     Update,
     Physics,
-    Render
+    PostUpdate,
+    Render,
+    RenderUI
 };
 
 class Registry;
-
 /** Base class for any system which will operate on components.*/
 class System {
 public:
     virtual ~System() = default;
     virtual void Update(Registry& CurrentRegistry, float DeltaTime) = 0;
     [[nodiscard]] virtual SystemPhase GetPhase() const = 0;
+    virtual void OnEntityDestroyed(Entity E){};
 };

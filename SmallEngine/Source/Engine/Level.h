@@ -5,12 +5,14 @@
 #pragma once
 #include <ECS/Registry.h>
 
+#include "Rendering/FontManager.h"
 #include "Rendering/Renderer.h"
+#include "Rendering/TextureManager.h"
 
 /** Base class for any level we want to display to the user, there can be only one level at a time. We don't support "layers" */
 class SE_API Level {
 public:
-    Level() = default;
+    Level();
     virtual ~Level() = default;
 
     /** Called once when the level becomes active */
@@ -26,4 +28,6 @@ public:
     virtual void OnExit();
 
     Registry CurrentRegistry;
+    std::unique_ptr<TextureManager> Textures;
+    std::unique_ptr<FontManager> Fonts;
 };
