@@ -13,11 +13,26 @@ Registry::Registry()
 
 Entity Registry::CreateEntity()
 {
+    if(CurrentID == UINT32_MAX)
+        LOG_FATAL("Reached max entity ids");
     CurrentID++;
     return Entity(CurrentID);
 }
 
-bool Registry::DestroyEntity(const Entity &E) {
+bool Registry::DestroyEntity(Entity E)
+{
     Unimplemented();
     return false;
+}
+
+bool Registry::IsValid(Entity E)
+{
+    return true;
+}
+
+void Registry::RunSystems(SystemPhase Phase, float DeltaTime)
+{
+    for (auto& S : Systems)
+        if (S->GetPhase() == Phase)
+            S->Update(*this, DeltaTime);
 }

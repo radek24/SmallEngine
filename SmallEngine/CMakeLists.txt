@@ -4,7 +4,7 @@ set(SDLIMAGE_VENDORED      ON  CACHE BOOL "" FORCE)
 set(SDLIMAGE_INSTALL       OFF CACHE BOOL "" FORCE)
 
 set(SDLIMAGE_PNG           ON  CACHE BOOL "" FORCE)
-set(SDLIMAGE_JPG           OFF  CACHE BOOL "" FORCE)
+set(SDLIMAGE_JPG           ON  CACHE BOOL "" FORCE)
 set(SDLIMAGE_BMP           OFF CACHE BOOL "" FORCE)
 set(SDLIMAGE_WEBP          OFF CACHE BOOL "" FORCE)
 set(SDLIMAGE_AVIF          OFF CACHE BOOL "" FORCE)
@@ -17,7 +17,6 @@ add_subdirectory(Vendor/SDL_ttf EXCLUDE_FROM_ALL)
 add_library(SmallEngine SHARED
         Source/Engine/Log/Log.cpp
         Source/ECS/Registry.cpp
-        Source/ECS/Components/VelocityComponent.h
         Source/Engine/App.cpp
         Source/Engine/Rendering/Window.cpp
         Source/Engine/Rendering/Renderer.cpp
@@ -27,6 +26,12 @@ add_library(SmallEngine SHARED
         Source/Engine/Level.h
         Source/Engine/Math/Transform.h
         Source/Engine/Math/Rotator.h
+        Source/ECS/ComponentPool.h
+        Source/ECS/System.h
+        Source/ECS/View.h
+        Source/ECS/Systems/MovementSystem.cpp
+        Source/ECS/Systems/MovementSystem.h
+        Source/ECS/Components/TransformComponent.h
 )
 
 target_include_directories(SmallEngine PUBLIC
@@ -69,4 +74,8 @@ endif()
 
 if(APPLE)
     target_compile_definitions(SmallEngine PUBLIC PLATFORM_MAC)
+endif()
+
+if(UNIX AND NOT APPLE)
+    target_compile_definitions(SmallEngine PUBLIC PLATFORM_LINUX)
 endif()

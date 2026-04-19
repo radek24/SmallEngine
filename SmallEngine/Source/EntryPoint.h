@@ -5,7 +5,7 @@
 #include "Engine/App.h"
 
 extern App* CreateApplication();
-//#ifdef PLATFORM_WINDOWS || PLATFORM_MAC
+#ifdef PLATFORM_WINDOWS || PLATFORM_MAC
 int main(int argc, char *argv[])
 {
     auto App = CreateApplication();
@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
     delete App;
     return 0;
 }
-/*
+
 #else
 #include <iostream>
 int main(int argc, char *argv[])
@@ -23,4 +23,3 @@ int main(int argc, char *argv[])
     return 0;
 }
 #endif
-*/

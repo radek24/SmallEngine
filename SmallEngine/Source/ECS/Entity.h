@@ -12,6 +12,7 @@ class Entity
 {
 public:
     using IdType = std::uint32_t;
+    static IdType InvalidEntity;
     constexpr Entity() = delete;
 
     [[nodiscard]] constexpr IdType GetId() const
@@ -36,7 +37,7 @@ public:
 private:
     explicit constexpr Entity(const IdType ID): m_Id(ID) {}
     IdType m_Id = 0;
-
-
     friend class Registry;
 };
+
+Entity::IdType Entity::InvalidEntity = 0;

@@ -20,7 +20,7 @@ public:
     void SetAngleRadians(float Angle) {Unimplemented()}
 
     Rotator(){Angle = 0;}
-    explicit Rotator(float Angle) {this->Angle = Angle;}
+    Rotator(float Angle) {this->Angle = Angle;} // NOLINT(*-explicit-constructor)
 
 
     /*Math*/

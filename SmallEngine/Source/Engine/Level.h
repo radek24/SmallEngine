@@ -3,6 +3,8 @@
 //
 
 #pragma once
+#include <ECS/Registry.h>
+
 #include "Rendering/Renderer.h"
 
 /** Base class for any level we want to display to the user, there can be only one level at a time. We don't support "layers" */
@@ -15,11 +17,13 @@ public:
     virtual void OnEnter() {}
 
     /** Called every frame before rendering */
-    virtual void OnUpdate(float DeltaTime) {}
+    virtual void OnUpdate(float DeltaTime);
 
     /** Called every frame to issue draw calls */
-    virtual void OnRender(const Renderer& Renderer) {}
+    virtual void OnRender(const Renderer& Renderer,float DeltaTime);
 
     /** Called once when the level is leaving */
-    virtual void OnExit() {}
+    virtual void OnExit();
+
+    Registry CurrentRegistry;
 };

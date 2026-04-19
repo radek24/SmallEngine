@@ -48,7 +48,7 @@ void App::Run()
         }
         CurrentLevel->OnUpdate(DeltaTime);
         AppRenderer->BeginFrame();
-        CurrentLevel->OnRender(*AppRenderer);
+        CurrentLevel->OnRender(*AppRenderer,DeltaTime);
         AppRenderer->EndFrame();
         FrameCounter++;
     }

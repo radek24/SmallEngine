@@ -22,7 +22,7 @@ struct SE_API InputState
     std::unordered_set<unsigned int> PressedMouseButtons;
     /** Mouse buttons which is user holding currently*/
     std::unordered_set<unsigned int> HeldMouseButtons;
-    /** Mouse buttons released by user this frame*/
+    /**Mouse buttons released by user this frame*/
     std::unordered_set<unsigned int> ReleasedMouseButtons;
 
     /** Current mouse position*/
@@ -61,6 +61,6 @@ public:
     /** Polls input from app*/
     static void PollInputs();
     /** Gets set to true if we recieved a stop input (close window etc.)*/
-    static bool ShouldStop();
+    [[nodiscard]] static bool ShouldStop();
 };
 

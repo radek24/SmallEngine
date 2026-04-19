@@ -1,13 +1,11 @@
 //
-// Created by radov on 08.03.2026.
+// Created by radov on 19.04.2026.
 //
 
 #pragma once
-#include "Engine/Math/MathForward.h"
+#include "Engine/Math/Transform.h"
 
 struct TransformComponent
 {
-   Vector2f Position;
-   float Rotation;
-   Vector2f Scale;
+    Transform Transform;
 };

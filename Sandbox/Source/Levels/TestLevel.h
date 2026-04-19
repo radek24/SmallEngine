@@ -13,7 +13,7 @@ class TestLevel : public Level
 
         void OnUpdate(float DeltaTime) override;
 
-        void OnRender(const Renderer &Renderer) override;
+        void OnRender(const Renderer &Renderer,float DeltaTime) override;
 
         void OnExit() override;
 };
