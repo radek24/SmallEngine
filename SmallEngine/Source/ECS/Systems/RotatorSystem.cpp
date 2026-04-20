@@ -13,7 +13,7 @@ void RotatorSystem::Update(Registry &CurrentRegistry, float DeltaTime)
 {
     auto Callback = [DeltaTime](Entity E, TransformComponent &T,RotatorComponent &V)
     {
-        T.Transform.Rotation += Rotator(DeltaTime*V.RotationSpeed);
+        T.Rotation += Rotator(DeltaTime*V.RotationSpeed);
     };
     CurrentRegistry.MakeView<TransformComponent,RotatorComponent>().Each(Callback);
 }

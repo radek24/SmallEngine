@@ -8,6 +8,7 @@
 #include <type_traits>
 #include <spdlog/fmt/fmt.h>
 
+#include "MathUtils.h"
 #include "Rotator.h"
 
 
@@ -30,7 +31,7 @@ struct Vector2 {
     /** Construct vector from X and Y*/
     [[nodiscard]] Vector2<T>(T InX, T InY);
     /** Construct vector from single value*/
-    [[nodiscard]] explicit Vector2<T>(T InA);
+    [[nodiscard]] Vector2<T>(T InA);
     /** Copy constructor*/
     [[nodiscard]] Vector2<T>(const Vector2<T>& V);
 
@@ -50,10 +51,10 @@ struct Vector2 {
     /** Negates vector*/
     Vector2<T> operator-() const;
     /** Add another vector to this one */
-    Vector2<T> operator+=(const Vector2<T>& V) const;
+    Vector2<T> operator+=(const Vector2<T>& V);
     /** Subtracts another vector from this one */
-    Vector2<T> operator-=(const Vector2<T>& V) const;
-    /* Currently missing operator : += -= /= *= */
+    Vector2<T> operator-=(const Vector2<T>& V);
+    /* Currently missing operator : /= *= */
 
     /** Returns dot product of two vectors*/
     [[nodiscard]] static T DotProduct(const Vector2<T>& A, const Vector2<T>& B);
@@ -65,6 +66,7 @@ struct Vector2 {
     [[nodiscard]] Vector2<T> GetNormalized();
     /** Returns rotated vector by rotator around Origin*/
     [[nodiscard]] Vector2<T> GetRotated(Vector2<T> Origin, Rotator Rotation) const;
+    [[nodiscard]] float LengthSquared() const;
 
     /* Compares */
     /** Compares vector to another*/
@@ -140,14 +142,14 @@ Vector2<T> Vector2<T>::operator-() const
 }
 
 template<typename T>
-Vector2<T> Vector2<T>::operator+=(const Vector2<T> &V) const
+Vector2<T> Vector2<T>::operator+=(const Vector2<T> &V)
 {
     X += V.X; Y += V.Y;
     return *this;
 }
 
 template<typename T>
-Vector2<T> Vector2<T>::operator-=(const Vector2<T> &V) const
+Vector2<T> Vector2<T>::operator-=(const Vector2<T> &V)
 {
     X -= V.X; Y -= V.Y;
     return *this;
@@ -184,7 +186,7 @@ Vector2<T> Vector2<T>::GetNormalized()
 template<typename T>
 Vector2<T> Vector2<T>::GetRotated(Vector2<T> Origin, Rotator Rotation) const
 {
-    const T AngleRad = Rotation.GetAngleDegrees() * (T)(M_PI / 180.0);
+    const T AngleRad = Rotation.GetAngleDegrees() * (T)(3.14159265359f / 180.0);
     const T CosA = (T)cosf((float)AngleRad);
     const T SinA = (T)sinf((float)AngleRad);
 
@@ -195,6 +197,12 @@ Vector2<T> Vector2<T>::GetRotated(Vector2<T> Origin, Rotator Rotation) const
         Origin.X + DX * CosA - DY * SinA,
         Origin.Y + DX * SinA + DY * CosA
     );
+}
+
+template<typename T>
+float Vector2<T>::LengthSquared() const
+{
+    return X * X + Y * Y;
 }
 
 template<typename T>

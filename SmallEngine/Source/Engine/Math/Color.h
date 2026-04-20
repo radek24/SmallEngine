@@ -21,7 +21,8 @@ public:
     /** Constructor that takes 0-1 floats instead of ints, will be converted to ints internally*/
     explicit Color(float Gray);
     Color();
-
+    /** Returns color constructed from HSV (H => 0-360   S = 0-1  V = 0-1)*/
+    static Color FromHSV(float Hue,float Saturation, float Value);
 
     [[nodiscard]] float RF() const{return MathUtils::Integer8ToFloat(Rint);}
     [[nodiscard]] float GF() const{return MathUtils::Integer8ToFloat(Gint);}
@@ -70,6 +71,41 @@ Bint(0),
 Aint(255)
 {}
 
+inline Color Color::FromHSV(float Hue, float Saturation, float Value)
+{
+    Color Result;
+    float R, G, B;
+
+    if (Saturation <= 0.0f)
+    {
+        Result.Rint = MathUtils::FloatToInteger8(Value);
+        Result.Gint = MathUtils::FloatToInteger8(Value);
+        Result.Bint = MathUtils::FloatToInteger8(Value);
+        return Result;
+    }
+
+    float H = Hue / 60.0f;
+    int   I = static_cast<int>(H);
+    float F = H - static_cast<float>(I);
+    float P = Value * (1.0f - Saturation);
+    float Q = Value * (1.0f - Saturation * F);
+    float T = Value * (1.0f - Saturation * (1.0f - F));
+
+    switch (I)
+    {
+        case 0:  R = Value; G = T;     B = P;     break;
+        case 1:  R = Q;     G = Value; B = P;     break;
+        case 2:  R = P;     G = Value; B = T;     break;
+        case 3:  R = P;     G = Q;     B = Value; break;
+        case 4:  R = T;     G = P;     B = Value; break;
+        default: R = Value; G = P;     B = Q;     break;
+    }
+
+    Result.Rint = MathUtils::FloatToInteger8(R);
+    Result.Gint = MathUtils::FloatToInteger8(G);
+    Result.Bint = MathUtils::FloatToInteger8(B);
+    return Result;
+}
 inline SDL_Color Color::GetSDLColor() const
 {
     return SDL_Color(R8(),G8(),B8(),A8());

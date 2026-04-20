@@ -53,22 +53,22 @@ bool EventHandler::IsKeyReleased(SDL_Keycode Key)
     return GetInputState().ReleasedKeys.contains(Key);
 }
 
-bool EventHandler::IsMouseButtonPressed(Uint16 Button)
+bool EventHandler::IsMouseButtonPressed(MouseButton Button)
 {
-    return GetInputState().PressedMouseButtons.contains(Button);
+    return GetInputState().PressedMouseButtons.contains((int)Button);
 }
 
-bool EventHandler::IsMouseButtonHeld(Uint16 Button)
+bool EventHandler::IsMouseButtonHeld(MouseButton Button)
 {
-    return GetInputState().HeldMouseButtons.contains(Button);
+    return GetInputState().HeldMouseButtons.contains((int)Button);
 }
 
-bool EventHandler::IsMouseButtonReleased(Uint16 Button)
+bool EventHandler::IsMouseButtonReleased(MouseButton Button)
 {
-    return GetInputState().ReleasedMouseButtons.contains(Button);
+    return GetInputState().ReleasedMouseButtons.contains((int)Button);
 }
 
-InputState EventHandler::GetInputState()
+const InputState& EventHandler::GetInputState()
 {
     return CurrentInputState;
 }

@@ -6,6 +6,7 @@
 #include "App.h"
 #include "EventHandler.h"
 #include "ECS/Systems/DebugDrawTransformSystem.h"
+#include "ECS/Systems/DebugDrawUISystem.h"
 
 Level::Level()
 {
@@ -29,6 +30,19 @@ void Level::OnUpdate(float DeltaTime)
         {
             LOG_INFO("Transform debug turned ON");
             CurrentRegistry.AddSystem<DebugDrawTransformSystem>(App::Get().GetRenderer());
+        }
+    }
+
+    if (EventHandler::IsKeyPressed(SDLK_F2))
+    {
+        if (CurrentRegistry.HasSystem<DebugDrawUISystem>())
+        {
+            LOG_INFO("UI debug turned OFF");
+            CurrentRegistry.RemoveSystem<DebugDrawUISystem>();
+        }else
+        {
+            LOG_INFO("UI debug turned ON");
+            CurrentRegistry.AddSystem<DebugDrawUISystem>(App::Get().GetRenderer());
         }
     }
 }

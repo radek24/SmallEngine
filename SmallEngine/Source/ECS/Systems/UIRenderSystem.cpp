@@ -49,7 +49,7 @@ void UIRenderSystem::Update(Registry &CurrentRegistry, float DeltaTime)
         float W, H;
         SDL_GetTextureSize(Cached.Texture, &W, &H);
         Vector2f TextureSize(W,H);
-        RendererRef->DrawTexture(T.Transform.Position,T.Transform.Rotation,TextureSize*T.Transform.Scale,Cached.Texture);
+        RendererRef->DrawTexture(T.Position,T.Rotation,TextureSize*T.Scale,Cached.Texture);
     };
 
     CurrentRegistry.MakeView<UITextComponent, TransformComponent>().Each(FontRenderCallback);

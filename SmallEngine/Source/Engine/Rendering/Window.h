@@ -7,7 +7,7 @@
 #include <SDL3/SDL.h>
 #include "Engine/Specifications.h"
 
-class Window {
+class SE_API Window {
 public:
     [[nodiscard]] static std::unique_ptr<Window> Create(const WindowSpecification& spec);
     explicit Window(const WindowSpecification& spec);

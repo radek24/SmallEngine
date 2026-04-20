@@ -12,9 +12,10 @@ struct UIButtonComponent
     bool Pressed = false;
     bool Hovered = false;
 
-    std::function<void()> OnClick{};
-    std::function<void()> OnHover{};
-    std::function<void()> OnRelease{};
+    std::function<void(Entity self)> OnMouseDown{};
+    std::function<void(Entity self)> OnMouseUp{};
+    std::function<void(Entity self)> OnHover{};
+    std::function<void(Entity self)> OnUnhover{};
     //TODO: We currently only support extending size from top left corner, same as UI text. This should be fixed and improved
     Vector2f Size = {100,100};
 };

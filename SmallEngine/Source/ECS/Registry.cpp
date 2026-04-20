@@ -5,6 +5,7 @@
 #include "Registry.h"
 
 #include "Engine/DebugBreaks.h"
+#include "SDL3/SDL_timer.h"
 
 Registry::Registry()
 {
@@ -61,5 +62,10 @@ void Registry::RunSystems(SystemPhase Phase, float DeltaTime)
 {
     for (auto& S : Systems)
         if (S->GetPhase() == Phase)
+        {
+            //auto start = SDL_GetPerformanceCounter();
             S->Update(*this, DeltaTime);
+            //auto elapsed = (SDL_GetPerformanceCounter() - start) * 1000.0 / SDL_GetPerformanceFrequency();
+            //LOG_INFO("{} took {:.3f}ms", typeid(*S).name(), elapsed);
+        }
 }

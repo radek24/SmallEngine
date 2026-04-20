@@ -9,6 +9,14 @@
 #include "Math/MathForward.h"
 #include "Engine/Core.h"
 
+enum class MouseButton
+{
+    Left = 1,
+    Middle = 2,
+    Right = 3,
+};
+
+
 struct SE_API InputState
 {
     /** Keys pressed by user this frame*/
@@ -45,17 +53,17 @@ public:
     [[nodiscard]] static bool IsKeyReleased(SDL_Keycode Key);
 
     /** Returns if the mouse button was pressed this frame*/
-    [[nodiscard]] static bool IsMouseButtonPressed(Uint16 Button);
+    [[nodiscard]] static bool IsMouseButtonPressed(MouseButton Button);
     /** Returns if the mouse button is currently held */
-    [[nodiscard]] static bool IsMouseButtonHeld(Uint16 Button);
+    [[nodiscard]] static bool IsMouseButtonHeld(MouseButton Button);
     /** Returns if the key was released this frame */
-    [[nodiscard]] static bool IsMouseButtonReleased(Uint16 Button);
+    [[nodiscard]] static bool IsMouseButtonReleased(MouseButton Button);
 
     [[nodiscard]] static Vector2f GetMousePos();
     [[nodiscard]] static Vector2f GetMouseDelta();
 
     /** Gets current InputState*/
-    [[nodiscard]] static InputState GetInputState();
+    [[nodiscard]] static const InputState& GetInputState();
     /** Call after frame finished, cleans up all the stale inputs */
     static void Cleanup();
     /** Polls input from app*/

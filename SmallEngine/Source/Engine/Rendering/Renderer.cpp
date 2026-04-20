@@ -59,10 +59,18 @@ void Renderer::DrawRectangle(const Vector2f& Pos, const Vector2f &Size, const Co
     SDL_RenderFillRect(InternalRenderer, &rect);
 }
 
+void Renderer::DrawRectangleBorders(const Vector2f &LeftTopCorner, const Vector2f &Size, const Color &LineColor) const
+{
+    SDL_SetRenderDrawColor(InternalRenderer, COLOR_TO_SDL(LineColor));
+    const SDL_FRect Rect = {LeftTopCorner.X,LeftTopCorner.Y,Size.X,Size.Y};
+    SDL_RenderRect(InternalRenderer,&Rect);
+}
+
 void Renderer::DrawFilledCircle(const Vector2f &Pos, float Radius, const Color &PointColor) const
 {
     SDL_SetRenderDrawColor(InternalRenderer, COLOR_TO_SDL(PointColor));
-    for (int y = -Radius; y <= Radius; y++) {
+    for (int y = -Radius; y <= Radius; y++)
+    {
         int dx = (int)SDL_sqrt((double)(Radius * Radius - y * y));
         SDL_RenderLine(InternalRenderer, Pos.X - dx, Pos.Y + y, Pos.X + dx, Pos.Y + y);
     }

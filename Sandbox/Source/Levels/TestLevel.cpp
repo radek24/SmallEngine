@@ -16,6 +16,7 @@
 #include "ECS/Components/TransformComponent.h"
 #include "ECS/Components/RotatorComponent.h"
 #include "ECS/Components/UIButtonComponent.h"
+#include "ECS/Prefabs/Prefab.h"
 #include "ECS/Systems/DebugDrawTransformSystem.h"
 #include "ECS/Systems/LifetimeSystem.h"
 #include "ECS/Systems/RenderSystem.h"
@@ -27,6 +28,14 @@
 
 void TestLevel::OnEnter() {
     Level::OnEnter();
+
+    Prefab MyTestPrefab;
+    MyTestPrefab
+    .Add<TransformComponent>({{0.0f, 0.0f},{0.1f, 0.1f},{0.0f}})
+    .Add<SpriteComponent>({.Texture = Textures->LoadTexture("Resources/Textures/T_PlaceHolder.png")});
+
+    MyTestPrefab.Instantiate(CurrentRegistry);
+
     //CurrentRegistry.AddSystem<MovementSystem>();
     CurrentRegistry.AddSystem<SimpleControllerSystem>();
     CurrentRegistry.AddSystem<RotatorSystem>();
@@ -34,7 +43,7 @@ void TestLevel::OnEnter() {
     CurrentRegistry.AddSystem<LifetimeSystem>();
     CurrentRegistry.AddSystem<UIRenderSystem>(App::Get().GetRenderer(),*Fonts);
     CurrentRegistry.AddSystem<UIButtonSystem>();
-
+/*
     Entity e = CurrentRegistry.CreateEntity();
     Entity button = CurrentRegistry.CreateEntity();
     Transform t = { {0.0f, 0.0f}, {0.1f, 0.1f}, {0.0f} };
@@ -42,9 +51,11 @@ void TestLevel::OnEnter() {
     SpriteComponent sc = {.Texture = Textures->LoadTexture("Resources/Textures/T_PlaceHolder.png")};
     SimpleKeyboardControllerComponent skcc = {1000.0};
     LifetimeComponent ltc ={50.0f};
-    UITextComponent sstc = {"Ahoj","Resources/Fonts/PacFont.ttf",12};
+    UITextComponent sstc = {"Ahoj","Resources/Fonts/PacFont.ttf",20};
+    auto OnHoverCall   = [this, button]{ CurrentRegistry.GetPool<UITextComponent>().Get(button).FontColor = Color(0.5f); };
+    auto OnUnhoverCall = [this, button]{ CurrentRegistry.GetPool<UITextComponent>().Get(button).FontColor = Color(1.0f); };
     RotatorComponent rotator = {10.f};
-    UIButtonComponent uibc = {};
+    UIButtonComponent uibc = {.OnHover = OnHoverCall, .OnUnhover = OnUnhoverCall, .Size = {90,30}};
 
     CurrentRegistry.AddComponent<TransformComponent>(e,t);
     CurrentRegistry.AddComponent<SimpleKeyboardControllerComponent>(e,skcc);
@@ -55,6 +66,7 @@ void TestLevel::OnEnter() {
     CurrentRegistry.AddComponent<UITextComponent>(button,sstc);
     CurrentRegistry.AddComponent<TransformComponent>(button,bt);
     CurrentRegistry.AddComponent<UIButtonComponent>(button,uibc);
+    */
 }
 
 void TestLevel::OnUpdate(float DeltaTime)

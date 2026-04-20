@@ -47,17 +47,20 @@ add_library(SmallEngine SHARED
         Source/ECS/Systems/UIRenderSystem.h
         Source/ECS/Systems/UIRenderSystem.cpp
         Source/ECS/Components/UITextComponent.h
-        Source/ECS/Systems/RotatorSystem.cpp
         Source/ECS/Systems/RotatorSystem.h
         Source/ECS/Components/RotatorComponent.h
         Source/ECS/Components/UIButtonComponent.h
         Source/ECS/Systems/DebugDrawTransformSystem.cpp
         Source/ECS/Systems/DebugDrawTransformSystem.h
         Source/ECS/Components/ColliderComponent.h
-        Source/ECS/Systems/UIButtonSystem.cpp
         Source/ECS/Systems/UIButtonSystem.h
         Source/Engine/Math/CollisionUtils.cpp
         Source/Engine/Math/CollisionUtils.h
+        Source/ECS/Systems/RotatorSystem.cpp
+        Source/ECS/Systems/UIButtonSystem.cpp
+        Source/ECS/Systems/DebugDrawUISystem.cpp
+        Source/ECS/Systems/DebugDrawUISystem.h
+        Source/ECS/Prefabs/Prefab.h
 )
 
 target_include_directories(SmallEngine PUBLIC

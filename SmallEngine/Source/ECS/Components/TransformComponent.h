@@ -7,5 +7,7 @@
 
 struct TransformComponent
 {
-    Transform Transform;
+    Vector2f Position;
+    Vector2f Scale;
+    Rotator Rotation;
 };

@@ -4,9 +4,9 @@
 
 #pragma once
 #include "ECS/System.h"
+#include "Engine/Core.h"
 
-
-class RotatorSystem : public System
+class SE_API RotatorSystem : public System
 {
 public:
     void Update(Registry &CurrentRegistry, float DeltaTime) override;

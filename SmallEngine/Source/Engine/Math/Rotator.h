@@ -5,8 +5,7 @@
 #pragma once
 #include <Engine/DebugBreaks.h>
 
-#include "MathForward.h"
-
+#include "MathUtils.h"
 
 struct Rotator {
 
@@ -14,7 +13,8 @@ private:
     float Angle;
 public:
     [[nodiscard]] float GetAngleDegrees() const {return Angle;}
-    [[nodiscard]] float GetAngleRadians() const { return Angle * (M_PI / 180.0f); }
+    //TODO: This PI should be a constant
+    [[nodiscard]] float GetAngleRadians() const { return Angle * (3.14159265359f / 180.0f); }
 
     void SetAngleDegrees(float Angle) {this->Angle = Angle;}
     void SetAngleRadians(float Angle) {}

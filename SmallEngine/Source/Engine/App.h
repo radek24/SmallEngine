@@ -32,6 +32,7 @@ public:
     void SetArgs(int argc, char *argv[]);
 
     [[nodiscard]] Renderer* GetRenderer() const {return AppRenderer.get();}
+    [[nodiscard]] Window* GetWindow() const {return AppWindow.get();}
 
     template<typename TLevel>
     /** Schedules level transition that will happen at the end of the frame so we can clean up everything safely. */
