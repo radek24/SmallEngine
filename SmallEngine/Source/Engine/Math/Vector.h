@@ -8,6 +8,8 @@
 #include <type_traits>
 #include <spdlog/fmt/fmt.h>
 
+#include "Rotator.h"
+
 
 /*2D vector*/
 template <typename T>
@@ -61,13 +63,22 @@ struct Vector2 {
     void Normalize() const;
     /** Gets Normalized vector, doesn't change source */
     [[nodiscard]] Vector2<T> GetNormalized();
+    /** Returns rotated vector by rotator around Origin*/
+    [[nodiscard]] Vector2<T> GetRotated(Vector2<T> Origin, Rotator Rotation) const;
 
     /* Compares */
     /** Compares vector to another*/
     [[nodiscard]] bool operator==(const Vector2<T>& V) const;
     /** Compares vector to another*/
     [[nodiscard]] bool operator!=(const Vector2<T>& V) const;
-
+    /** Compares both components and returns and between those compares */
+    [[nodiscard]] bool operator>(const Vector2<T>& V) const;
+    /** Compares both components and returns and between those compares */
+    [[nodiscard]] bool operator<(const Vector2<T>& V) const;
+    /** Compares both components and returns and between those compares */
+    [[nodiscard]] bool operator>=(const Vector2<T>& V) const { return X >= V.X && Y >= V.Y; }
+    /** Compares both components and returns and between those compares */
+    [[nodiscard]] bool operator<=(const Vector2<T>& V) const { return X <= V.X && Y <= V.Y; }
 
     /** Print operator*/
     friend std::ostream& operator<<(std::ostream& os, const Vector2<T>& V)
@@ -171,6 +182,22 @@ Vector2<T> Vector2<T>::GetNormalized()
 }
 
 template<typename T>
+Vector2<T> Vector2<T>::GetRotated(Vector2<T> Origin, Rotator Rotation) const
+{
+    const T AngleRad = Rotation.GetAngleDegrees() * (T)(M_PI / 180.0);
+    const T CosA = (T)cosf((float)AngleRad);
+    const T SinA = (T)sinf((float)AngleRad);
+
+    const T DX = X - Origin.X;
+    const T DY = Y - Origin.Y;
+
+    return Vector2<T>(
+        Origin.X + DX * CosA - DY * SinA,
+        Origin.Y + DX * SinA + DY * CosA
+    );
+}
+
+template<typename T>
 bool Vector2<T>::operator==(const Vector2<T> &V) const
 {
     return X==V.X && Y==V.Y;
@@ -179,7 +206,18 @@ bool Vector2<T>::operator==(const Vector2<T> &V) const
 template<typename T>
 bool Vector2<T>::operator!=(const Vector2<T> &V) const
 {
-    return !(this == V);
+    return !(*this == V);
+}
+template<typename T>
+bool Vector2<T>::operator>(const Vector2<T> &V) const
+{
+    return X > V.X && Y > V.Y;
+}
+
+template<typename T>
+bool Vector2<T>::operator<(const Vector2<T> &V) const
+{
+    return X < V.X && Y < V.Y;
 }
 template <typename Type>
 inline const Vector2<Type> Vector2<Type>::ZeroVector = {Type(0), Type(0)};

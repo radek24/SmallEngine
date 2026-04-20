@@ -50,6 +50,7 @@ void App::Run()
         AppRenderer->BeginFrame();
         CurrentLevel->OnRender(*AppRenderer,DeltaTime);
         AppRenderer->EndFrame();
+        EventHandler::Cleanup();
         FrameCounter++;
     }
 }

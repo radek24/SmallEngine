@@ -6,7 +6,7 @@
 
 #include <ECS/Registry.h>
 
-#include "ECS/Components/ScreenSpaceTextComponent.h"
+#include "ECS/Components/UITextComponent.h"
 #include "ECS/Components/TransformComponent.h"
 
 UIRenderSystem::~UIRenderSystem()
@@ -17,7 +17,7 @@ UIRenderSystem::~UIRenderSystem()
 
 void UIRenderSystem::Update(Registry &CurrentRegistry, float DeltaTime)
 {
-    auto FontRenderCallback = [&](Entity E, ScreenSpaceTextComponent& TC, TransformComponent& T)
+    auto FontRenderCallback = [&](Entity E, UITextComponent& TC, TransformComponent& T)
     {
         if (!TC.Visible || TC.Text.empty()) return;
         auto& Cached = Cache[E];
@@ -52,7 +52,7 @@ void UIRenderSystem::Update(Registry &CurrentRegistry, float DeltaTime)
         RendererRef->DrawTexture(T.Transform.Position,T.Transform.Rotation,TextureSize*T.Transform.Scale,Cached.Texture);
     };
 
-    CurrentRegistry.MakeView<ScreenSpaceTextComponent, TransformComponent>().Each(FontRenderCallback);
+    CurrentRegistry.MakeView<UITextComponent, TransformComponent>().Each(FontRenderCallback);
 
 }
 

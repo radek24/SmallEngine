@@ -14,10 +14,10 @@ private:
     float Angle;
 public:
     [[nodiscard]] float GetAngleDegrees() const {return Angle;}
-    [[nodiscard]] float GetAngleRadians() const {Unimplemented();return 0;}
+    [[nodiscard]] float GetAngleRadians() const { return Angle * (M_PI / 180.0f); }
 
     void SetAngleDegrees(float Angle) {this->Angle = Angle;}
-    void SetAngleRadians(float Angle) {Unimplemented()}
+    void SetAngleRadians(float Angle) {}
 
     Rotator(){Angle = 0;}
     Rotator(float Angle) {this->Angle = Angle;} // NOLINT(*-explicit-constructor)
@@ -60,12 +60,12 @@ inline Rotator Rotator::operator-() const
 
 inline Rotator Rotator::operator+=(const Rotator &V)
 {
-    Angle =+ V.Angle;
+    Angle += V.Angle;
     return *this;
 }
 
 inline Rotator Rotator::operator-=(const Rotator &V)
 {
-    Angle =- V.Angle;
+    Angle -= V.Angle;
     return *this;
 }

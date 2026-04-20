@@ -10,15 +10,18 @@
 #include <Engine/EventHandler.h>
 
 #include "ECS/Components/LifetimeComponent.h"
-#include "ECS/Components/ScreenSpaceTextComponent.h"
+#include "ECS/Components/UITextComponent.h"
 #include "ECS/Components/SimpleKeyboardControllerComponent.h"
 #include "ECS/Components/SpriteComponent.h"
 #include "ECS/Components/TransformComponent.h"
-#include "ECS/Components/VelocityComponent.h"
+#include "ECS/Components/RotatorComponent.h"
+#include "ECS/Components/UIButtonComponent.h"
+#include "ECS/Systems/DebugDrawTransformSystem.h"
 #include "ECS/Systems/LifetimeSystem.h"
-#include "ECS/Systems/MovementSystem.h"
 #include "ECS/Systems/RenderSystem.h"
+#include "ECS/Systems/RotatorSystem.h"
 #include "ECS/Systems/SimpleControllerSystem.h"
+#include "ECS/Systems/UIButtonSystem.h"
 #include "ECS/Systems/UIRenderSystem.h"
 #include "Engine/Math/Rotator.h"
 
@@ -26,23 +29,32 @@ void TestLevel::OnEnter() {
     Level::OnEnter();
     //CurrentRegistry.AddSystem<MovementSystem>();
     CurrentRegistry.AddSystem<SimpleControllerSystem>();
+    CurrentRegistry.AddSystem<RotatorSystem>();
     CurrentRegistry.AddSystem<RenderSystem>(App::Get().GetRenderer(),*Textures);
     CurrentRegistry.AddSystem<LifetimeSystem>();
     CurrentRegistry.AddSystem<UIRenderSystem>(App::Get().GetRenderer(),*Fonts);
+    CurrentRegistry.AddSystem<UIButtonSystem>();
 
     Entity e = CurrentRegistry.CreateEntity();
-    Transform t = { {0.0f, 0.0f}, {1.0f, 1.0f}, {0.0f} };
+    Entity button = CurrentRegistry.CreateEntity();
+    Transform t = { {0.0f, 0.0f}, {0.1f, 0.1f}, {0.0f} };
+    Transform bt = { {10.0f, 10.0f}, {1.0f, 1.0f}, {0.0f} };
     SpriteComponent sc = {.Texture = Textures->LoadTexture("Resources/Textures/T_PlaceHolder.png")};
-    VelocityComponent vc = {{10,0}};
     SimpleKeyboardControllerComponent skcc = {1000.0};
-    LifetimeComponent ltc ={5.0f};
-    ScreenSpaceTextComponent sstc = {"Ahoj","Resources/Fonts/PacFont.ttf",12};
+    LifetimeComponent ltc ={50.0f};
+    UITextComponent sstc = {"Ahoj","Resources/Fonts/PacFont.ttf",12};
+    RotatorComponent rotator = {10.f};
+    UIButtonComponent uibc = {};
+
     CurrentRegistry.AddComponent<TransformComponent>(e,t);
     CurrentRegistry.AddComponent<SimpleKeyboardControllerComponent>(e,skcc);
-    //CurrentRegistry.AddComponent<SpriteComponent>(e,sc);
+    CurrentRegistry.AddComponent<SpriteComponent>(e,sc);
     CurrentRegistry.AddComponent<LifetimeComponent>(e,ltc);
-    CurrentRegistry.AddComponent<ScreenSpaceTextComponent>(e,sstc);
-    //CurrentRegistry.AddComponent<VelocityComponent>(e,vc);
+    CurrentRegistry.AddComponent<RotatorComponent>(e,rotator);
+
+    CurrentRegistry.AddComponent<UITextComponent>(button,sstc);
+    CurrentRegistry.AddComponent<TransformComponent>(button,bt);
+    CurrentRegistry.AddComponent<UIButtonComponent>(button,uibc);
 }
 
 void TestLevel::OnUpdate(float DeltaTime)

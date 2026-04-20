@@ -7,7 +7,7 @@
 #include <string>
 #include <Engine/Math/Color.h>
 
-struct ScreenSpaceTextComponent
+struct UITextComponent
 {
     std::string Text;
     std::string FontPath;

@@ -4,6 +4,8 @@
 
 #include "Level.h"
 #include "App.h"
+#include "EventHandler.h"
+#include "ECS/Systems/DebugDrawTransformSystem.h"
 
 Level::Level()
 {
@@ -16,6 +18,19 @@ void Level::OnUpdate(float DeltaTime)
     CurrentRegistry.RunSystems(SystemPhase::Physics,DeltaTime);
     CurrentRegistry.RunSystems(SystemPhase::Update,DeltaTime);
     CurrentRegistry.RunSystems(SystemPhase::PostUpdate,DeltaTime);
+
+    if (EventHandler::IsKeyPressed(SDLK_F1))
+    {
+        if (CurrentRegistry.HasSystem<DebugDrawTransformSystem>())
+        {
+            LOG_INFO("Transform debug turned OFF");
+            CurrentRegistry.RemoveSystem<DebugDrawTransformSystem>();
+        }else
+        {
+            LOG_INFO("Transform debug turned ON");
+            CurrentRegistry.AddSystem<DebugDrawTransformSystem>(App::Get().GetRenderer());
+        }
+    }
 }
 
 void Level::OnRender(const Renderer &Renderer,float DeltaTime)

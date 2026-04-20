@@ -42,13 +42,19 @@ public:
     /** Adds system to a registry, currently doesn't check if the system is already added*/
     template<typename T, typename... Args>
     T& AddSystem(Args&&... args);
+    /** Removes a system from a registry */
+    template<typename T>
+    void RemoveSystem();
+    /** Checks if there is this system in this registry */
+    template<typename T>
+    bool HasSystem() const;
+
+
     /** Runs all systems of a certain type*/
     void RunSystems(SystemPhase Phase, float DeltaTime);
     /** Adds a component to a specific entity*/
     template<typename T, typename... Args>
     T& AddComponent(Entity E, Args&&... args);
-
-
 
 public:
     Entity::IdType CurrentID;
@@ -76,14 +82,37 @@ View<Components...> Registry::MakeView()
 template<typename T, typename... Args>
 T& Registry::AddSystem(Args&&... args)
 {
-    //TODO: Check if system is already added;
+    if (HasSystem<T>())
+        LOG_WARN("System already added to registry");
     static_assert(std::is_base_of_v<System, T>, "T must inherit from System");
     auto& Ref = Systems.emplace_back(std::make_unique<T>(std::forward<Args>(args)...));
     return static_cast<T&>(*Ref);
 }
 
+template<typename T>
+void Registry::RemoveSystem()
+{
+    static_assert(std::is_base_of_v<System, T>, "T must inherit from System");
+    std::erase_if(Systems, [](const auto& S)
+    {
+        return dynamic_cast<T*>(S.get()) != nullptr;
+    });
+}
+
+template<typename T>
+bool Registry::HasSystem() const
+{
+    static_assert(std::is_base_of_v<System, T>, "T must inherit from System");
+    for (auto& S : Systems)
+    {
+        if (dynamic_cast<T*>(S.get()) != nullptr)
+            return true;
+    }
+    return false;
+}
+
 template<typename T, typename... Args>
 T& Registry::AddComponent(Entity E, Args&&... args) {
-    assert(IsValid(E) && "Adding component on destroyed entity");
+    Assert(IsValid(E) && "Adding component on destroyed entity");
     return GetPool<T>().Add(E, T{ std::forward<Args>(args)... });
 }

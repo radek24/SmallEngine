@@ -16,6 +16,7 @@ std::unique_ptr<Renderer> Renderer::Create(Window &window)
 Renderer::Renderer(Window &window)
 {
     InternalRenderer = SDL_CreateRenderer(window.GetNativeHandle(), nullptr);
+    SDL_SetRenderVSync(InternalRenderer, 1);
     SDL_RendererLogicalPresentation Presentation = SDL_LOGICAL_PRESENTATION_DISABLED;
     switch (window.GetSpecs().Presentation)
     {
@@ -47,7 +48,6 @@ void Renderer::EndFrame() const
 
 void Renderer::Clear() const
 {
-
     SDL_SetRenderDrawColor(InternalRenderer,COLOR_TO_SDL(ClearColor));
     SDL_RenderClear(InternalRenderer);
 }
@@ -59,16 +59,18 @@ void Renderer::DrawRectangle(const Vector2f& Pos, const Vector2f &Size, const Co
     SDL_RenderFillRect(InternalRenderer, &rect);
 }
 
-void Renderer::DrawPoint(const Vector2f &Pos, float Radius, const Color &PointColor) const
+void Renderer::DrawFilledCircle(const Vector2f &Pos, float Radius, const Color &PointColor) const
 {
     SDL_SetRenderDrawColor(InternalRenderer, COLOR_TO_SDL(PointColor));
-    SDL_RenderPoint(InternalRenderer,Pos.X,Pos.Y);
+    for (int y = -Radius; y <= Radius; y++) {
+        int dx = (int)SDL_sqrt((double)(Radius * Radius - y * y));
+        SDL_RenderLine(InternalRenderer, Pos.X - dx, Pos.Y + y, Pos.X + dx, Pos.Y + y);
+    }
 }
 
 void Renderer::DrawTexture(const Vector2f &Pos,const Rotator& Rot, const Vector2f &Size, SDL_Texture *Texture) const
 {
     const SDL_FRect rect = { Pos.X, Pos.Y, Size.X, Size.Y };
-    SDL_RenderTexture(InternalRenderer, Texture, nullptr, &rect);
     SDL_RenderTextureRotated(InternalRenderer,Texture,nullptr,&rect,Rot.GetAngleDegrees(),nullptr,SDL_FLIP_NONE);
 }
 
@@ -82,6 +84,12 @@ void Renderer::DrawDebugText(const Vector2f &Pos, const char *s, const Color &Te
 {
     SDL_SetRenderDrawColor(InternalRenderer, COLOR_TO_SDL(TextColor));
     SDL_RenderDebugText(InternalRenderer,Pos.X,Pos.Y,s);
+}
+
+void Renderer::DrawLine(const Vector2f &StartPos, const Vector2f &EndPos, float Thickness, const Color &LineColor) const
+{
+    SDL_SetRenderDrawColor(InternalRenderer, COLOR_TO_SDL(LineColor));
+    SDL_RenderLine(InternalRenderer,StartPos.X, StartPos.Y, EndPos.X, EndPos.Y);
 }
 
 SDL_Texture* Renderer::CreateTextureFromSurface( SDL_Surface *Surface)

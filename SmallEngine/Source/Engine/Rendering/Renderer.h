@@ -31,10 +31,11 @@ public:
     [[nodiscard]] SDL_Texture* LoadTexture(const std::string& Path) const;
 
     void DrawRectangle(const Vector2f& Pos, const Vector2f& Size, const Color &ShapeColor= Color(1,1,1)) const;
-    void DrawPoint(const Vector2f& Pos,float Radius, const Color &PointColor= Color(1,1,1)) const;
+    void DrawFilledCircle(const Vector2f& Pos,float Radius, const Color &PointColor= Color(1,1,1)) const;
     void DrawTexture(const Vector2f& Pos,const Rotator& Rot, const Vector2f& Size, SDL_Texture* Texture) const;
     void DrawTextureTinted(const Vector2f& Pos,const Rotator& Rot, const Vector2f& Size, SDL_Texture* Texture,const Color& Tint) const;
     void DrawDebugText(const Vector2f &Pos, const char *s, const Color &TextColor = Color(1,1,1)) const;
+    void DrawLine(const Vector2f &StartPos,const Vector2f &EndPos,float Thickness = 1.0, const Color &LineColor = Color(1,1,1)  ) const;
     SDL_Texture* CreateTextureFromSurface(SDL_Surface* Surface);
 private:
     SDL_Renderer* InternalRenderer;

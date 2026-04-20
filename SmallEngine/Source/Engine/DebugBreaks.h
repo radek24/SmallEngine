@@ -1,8 +1,6 @@
 //
 // Created by radov on 08.03.2026.
 //
-
-
 #pragma once
 
 #include <Engine/Log/Log.h>
