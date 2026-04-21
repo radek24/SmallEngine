@@ -9,5 +9,4 @@
 struct SimpleKeyboardControllerComponent
 {
     float Speed = 1.0f;
-
 };

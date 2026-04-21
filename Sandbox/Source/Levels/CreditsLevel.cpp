@@ -6,6 +6,8 @@
 
 #include <Engine/App.h>
 
+#include "MainMenuLevel.h"
+#include "../Prefab/BackButtonPrefab.h"
 #include "ECS/Components/TransformComponent.h"
 #include "ECS/Components/UITextComponent.h"
 #include "ECS/Prefabs/Prefab.h"
@@ -28,8 +30,9 @@ void CreditsLevel::OnEnter()
     for (const auto& text :Credits)
     {
         auto TextEntity = Text.Instantiate(CurrentRegistry);
-        CurrentRegistry.GetPool<UITextComponent>().Get(TextEntity).Text = text;
-        CurrentRegistry.GetPool<TransformComponent>().Get(TextEntity).Position.Y += (i*40) ;
+        CurrentRegistry.Get<UITextComponent>(TextEntity).Text = text;
+        CurrentRegistry.Get<TransformComponent>(TextEntity).Position.Y += (i*40);
         i++;
     }
+    BackButtonPrefab::Create<MainMenuLevel>(CurrentRegistry);
 }

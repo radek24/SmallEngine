@@ -31,7 +31,7 @@ public:
     [[nodiscard]] SDL_Texture* LoadTexture(const std::string& Path) const;
 
     void DrawRectangle(const Vector2f& Pos, const Vector2f& Size, const Color &ShapeColor= Color(1,1,1)) const;
-    void DrawRectangleBorders(const Vector2f& LeftTopCorner, const Vector2f& Size, const Color& LineColor) const;
+    void DrawRectangleBorders(const Vector2f& LeftTopCorner, const Vector2f& Size, const Color& LineColor = Color(1,1,1)) const;
     void DrawFilledCircle(const Vector2f& Pos,float Radius, const Color &PointColor= Color(1,1,1)) const;
     void DrawTexture(const Vector2f& Pos,const Rotator& Rot, const Vector2f& Size, SDL_Texture* Texture) const;
     void DrawTextureTinted(const Vector2f& Pos,const Rotator& Rot, const Vector2f& Size, SDL_Texture* Texture,const Color& Tint) const;

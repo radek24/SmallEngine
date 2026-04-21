@@ -19,6 +19,12 @@ struct EntitySlot
     uint8_t Generation = 0;
     bool Alive = false;
 };
+/** Used by stat system for tracking performance of each system*/
+struct SystemTiming
+{
+    std::string SystemName;
+    double Time;
+};
 
 /** Represents one level with all entities, components and systems needed */
 class SE_API Registry
@@ -48,13 +54,26 @@ public:
     /** Checks if there is this system in this registry */
     template<typename T>
     bool HasSystem() const;
-
-
     /** Runs all systems of a certain type*/
     void RunSystems(SystemPhase Phase, float DeltaTime);
     /** Adds a component to a specific entity*/
     template<typename T, typename... Args>
     T& AddComponent(Entity E, Args&&... args);
+    /** Shortcut for GetPool<T>().Get(E) */
+    template<typename T>
+    T& Get(Entity E);
+
+    /** Debug probes*/
+#ifdef SE_DEBUG
+    /** Returns number of entities currently spawned, for debug purposes mostly, is kinda slow as this does linear search.*/
+    [[nodiscard]] size_t GetNumberOfEntities() const;
+    /** Returns number of active systems */
+    [[nodiscard]] size_t GetNumberOfSystems() const;
+    /** Returns  precise timing of each system */
+    [[nodiscard]] std::vector<SystemTiming>& GetTimings();
+    /** Marks the end of timing of each system*/
+    void FlushTimings();
+#endif
 
 public:
     Entity::IdType CurrentID;
@@ -63,6 +82,13 @@ private:
     std::unordered_map<std::type_index, std::unique_ptr<IComponentPool>> Pools;
     std::vector<EntitySlot> Slots;
     std::vector<Entity::IdType> FreeList;
+
+#ifdef SE_DEBUG
+private:
+    std::vector<SystemTiming> CurrentTimings;
+    std::vector<SystemTiming> LastFrameTimings;
+#endif
+
 };
 
 template<typename T>
@@ -115,4 +141,9 @@ template<typename T, typename... Args>
 T& Registry::AddComponent(Entity E, Args&&... args) {
     Assert(IsValid(E) && "Adding component on destroyed entity");
     return GetPool<T>().Add(E, T{ std::forward<Args>(args)... });
+}
+
+template<typename T>
+T& Registry::Get(Entity E) {
+    return GetPool<T>().Get(E);
 }

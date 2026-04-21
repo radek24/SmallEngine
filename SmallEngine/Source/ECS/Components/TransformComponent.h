@@ -5,9 +5,8 @@
 #pragma once
 #include "Engine/Math/Transform.h"
 
-struct TransformComponent
-{
-    Vector2f Position;
-    Vector2f Scale;
-    Rotator Rotation;
+struct TransformComponent {
+    Vector2f Position ={0,0};
+    Vector2f Scale = {1,1};
+    Rotator Rotation = {0};
 };

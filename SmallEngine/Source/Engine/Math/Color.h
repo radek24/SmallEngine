@@ -8,6 +8,7 @@
 #include <cstdint>
 #include "MathUtils.h"
 #include "Engine/Core.h"
+#include <SDL3/SDL.h>
 
 #define COLOR_TO_SDL(Color) (Color).R8(),(Color).G8(),(Color).B8(),(Color).A8()
 
@@ -34,7 +35,7 @@ public:
     [[nodiscard]] uint8_t B8() const{return Bint;}
     [[nodiscard]] uint8_t A8() const{return Aint;}
 
-    [[nodiscard]] SDL_Color GetSDLColor() const;
+    [[nodiscard]] SDL_Color GetSDLColor() const{return SDL_Color(Rint,Gint,Bint,Aint);}
 
 private:
     uint8_t Rint;
@@ -73,6 +74,8 @@ Aint(255)
 
 inline Color Color::FromHSV(float Hue, float Saturation, float Value)
 {
+    Hue = std::fmod(Hue, 360.0f);
+    if (Hue < 0.0f) Hue += 360.0f;
     Color Result;
     float R, G, B;
 
@@ -105,8 +108,4 @@ inline Color Color::FromHSV(float Hue, float Saturation, float Value)
     Result.Gint = MathUtils::FloatToInteger8(G);
     Result.Bint = MathUtils::FloatToInteger8(B);
     return Result;
-}
-inline SDL_Color Color::GetSDLColor() const
-{
-    return SDL_Color(R8(),G8(),B8(),A8());
 }

@@ -58,14 +58,61 @@ bool Registry::IsValid(Entity E)
     return Slots[Idx].Alive && Slots[Idx].Generation == Gen;
 }
 
+// Anonymous function, kinda bad
+static std::string GetCleanTypeName(const std::type_info& type)
+{
+    std::string name = type.name();
+    for (auto& prefix : {"class ", "struct "})
+    {
+        size_t pos = name.find(prefix);
+        if (pos != std::string::npos)
+            name.erase(pos, strlen(prefix));
+    }
+    return name;
+}
+
 void Registry::RunSystems(SystemPhase Phase, float DeltaTime)
 {
     for (auto& S : Systems)
         if (S->GetPhase() == Phase)
         {
-            //auto start = SDL_GetPerformanceCounter();
+            #ifdef SE_DEBUG
+            auto start = SDL_GetPerformanceCounter();
+            #endif
             S->Update(*this, DeltaTime);
-            //auto elapsed = (SDL_GetPerformanceCounter() - start) * 1000.0 / SDL_GetPerformanceFrequency();
-            //LOG_INFO("{} took {:.3f}ms", typeid(*S).name(), elapsed);
+            #ifdef SE_DEBUG
+            auto elapsed = (SDL_GetPerformanceCounter() - start) * 1000.0 / SDL_GetPerformanceFrequency();
+            CurrentTimings.push_back({GetCleanTypeName(typeid(*S)),elapsed});
+            #endif
         }
 }
+
+#ifdef SE_DEBUG
+size_t Registry::GetNumberOfEntities() const
+{
+    size_t Count = 0;
+    for(auto ES : Slots)
+    {
+        if(ES.Alive == true)
+            Count++;
+    }
+    return Count;
+}
+
+size_t Registry::GetNumberOfSystems() const
+{
+    return Systems.size();
+}
+
+std::vector<SystemTiming>& Registry::GetTimings()
+{
+    return LastFrameTimings;
+}
+
+void Registry::FlushTimings()
+{
+    LastFrameTimings.clear();
+    LastFrameTimings = CurrentTimings;
+    CurrentTimings.clear();
+}
+#endif

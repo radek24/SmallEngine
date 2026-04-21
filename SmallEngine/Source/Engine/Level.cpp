@@ -7,6 +7,7 @@
 #include "EventHandler.h"
 #include "ECS/Systems/DebugDrawTransformSystem.h"
 #include "ECS/Systems/DebugDrawUISystem.h"
+#include "ECS/Systems/DebugStatsSystem.h"
 
 Level::Level()
 {
@@ -20,6 +21,7 @@ void Level::OnUpdate(float DeltaTime)
     CurrentRegistry.RunSystems(SystemPhase::Update,DeltaTime);
     CurrentRegistry.RunSystems(SystemPhase::PostUpdate,DeltaTime);
 
+#ifdef SE_DEBUG
     if (EventHandler::IsKeyPressed(SDLK_F1))
     {
         if (CurrentRegistry.HasSystem<DebugDrawTransformSystem>())
@@ -45,12 +47,30 @@ void Level::OnUpdate(float DeltaTime)
             CurrentRegistry.AddSystem<DebugDrawUISystem>(App::Get().GetRenderer());
         }
     }
+
+    if (EventHandler::IsKeyPressed(SDLK_F3))
+    {
+        if (CurrentRegistry.HasSystem<DebugStatsSystem>())
+        {
+            LOG_INFO("Debug stats turned OFF");
+            CurrentRegistry.RemoveSystem<DebugStatsSystem>();
+        }else
+        {
+            LOG_INFO("Debug stats turned ON");
+            CurrentRegistry.AddSystem<DebugStatsSystem>(App::Get().GetRenderer());
+        }
+    }
+#endif
+
 }
 
 void Level::OnRender(const Renderer &Renderer,float DeltaTime)
 {
     CurrentRegistry.RunSystems(SystemPhase::Render,DeltaTime);
     CurrentRegistry.RunSystems(SystemPhase::RenderUI,DeltaTime);
+#ifdef SE_DEBUG
+    CurrentRegistry.FlushTimings();
+#endif
 }
 
 void Level::OnExit()

@@ -22,6 +22,7 @@ struct WindowSpecification {
     bool IsBorderless = false;
     bool IsFullscreen = false;
     LogicalPresentation Presentation = Disabled;
+    std::string WindowIcon = "Resources/Textures/T_Icon.png";
 };
 
 struct Specifications

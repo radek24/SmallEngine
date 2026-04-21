@@ -1,7 +1,5 @@
 add_executable(Sandbox
         Source/Sandbox.cpp
-        Source/Levels/TestLevel.cpp
-        Source/Levels/TestLevel.h
         Source/Levels/MainMenuLevel.cpp
         Source/Levels/MainMenuLevel.h
         Source/Components/BouncyBallComponent.h
@@ -11,6 +9,10 @@ add_executable(Sandbox
         Source/Levels/CreditsLevel.h
         Source/Prefab/BackButtonPrefab.cpp
         Source/Prefab/BackButtonPrefab.h
+        Source/Levels/DemoSelectLevel.cpp
+        Source/Levels/DemoSelectLevel.h
+        Source/Levels/ComponentShowcase.cpp
+        Source/Levels/ComponentShowcase.h
 )
 
 target_link_libraries(Sandbox PRIVATE SmallEngine)

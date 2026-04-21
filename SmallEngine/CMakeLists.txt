@@ -3,6 +3,7 @@ add_subdirectory(Vendor/SDL3 EXCLUDE_FROM_ALL)
 set(SDLIMAGE_VENDORED      ON  CACHE BOOL "" FORCE)
 set(SDLIMAGE_INSTALL       OFF CACHE BOOL "" FORCE)
 
+
 set(SDLIMAGE_PNG           ON  CACHE BOOL "" FORCE)
 set(SDLIMAGE_JPG           ON  CACHE BOOL "" FORCE)
 set(SDLIMAGE_BMP           OFF CACHE BOOL "" FORCE)
@@ -61,6 +62,15 @@ add_library(SmallEngine SHARED
         Source/ECS/Systems/DebugDrawUISystem.cpp
         Source/ECS/Systems/DebugDrawUISystem.h
         Source/ECS/Prefabs/Prefab.h
+        Source/ECS/Systems/DebugStatsSystem.cpp
+        Source/ECS/Systems/DebugStatsSystem.h
+        Source/ECS/Systems/UITextEffectSystem.cpp
+        Source/ECS/Systems/UITextEffectSystem.h
+        Source/ECS/Components/RainbowTextEffectComponent.h
+        Source/ECS/Components/ShakeComponent.h
+        Source/ECS/Systems/ShakerSystem.cpp
+        Source/ECS/Systems/ShakerSystem.h
+        Vendor/Noise/FastNoiseLite.h
 )
 
 target_include_directories(SmallEngine PUBLIC
@@ -82,15 +92,6 @@ target_compile_definitions(SmallEngine
 
 if(WIN32)
     target_compile_options(SmallEngine PRIVATE /utf-8)
-
-    add_custom_command(TARGET SmallEngine POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy -t
-            $<TARGET_FILE_DIR:SmallEngine>
-            $<TARGET_RUNTIME_DLLS:SmallEngine>
-            COMMAND_EXPAND_LISTS
-            VERBATIM
-    )
-
 endif()
 
 add_custom_command(TARGET SmallEngine POST_BUILD
@@ -112,3 +113,9 @@ endif()
 if(UNIX AND NOT APPLE)
     target_compile_definitions(SmallEngine PUBLIC PLATFORM_LINUX)
 endif()
+
+# Build type
+target_compile_definitions(SmallEngine PUBLIC
+        $<$<CONFIG:Debug>:SE_DEBUG>
+        $<$<CONFIG:Release>:SE_RELEASE>
+)

@@ -27,6 +27,7 @@ Renderer::Renderer(Window &window)
         default: NoEntry() break;
     }
     SDL_SetRenderLogicalPresentation(InternalRenderer,window.GetWidth(), window.GetHeight(), Presentation);
+    SDL_SetRenderDrawBlendMode(InternalRenderer, SDL_BLENDMODE_BLEND);
 }
 
 Renderer::~Renderer()
@@ -112,5 +113,7 @@ void Renderer::SetClearColor(const Color &ClearColor)
 
 SDL_Texture * Renderer::LoadTexture(const std::string& Path) const
 {
-    return IMG_LoadTexture(InternalRenderer,Path.c_str());
+    auto T =  IMG_LoadTexture(InternalRenderer,Path.c_str());
+    SDL_SetTextureScaleMode(T, SDL_SCALEMODE_LINEAR);
+    return T;
 }

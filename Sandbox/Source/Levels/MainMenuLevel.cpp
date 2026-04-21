@@ -8,8 +8,10 @@
 #include <Engine/App.h>
 
 #include "CreditsLevel.h"
+#include "DemoSelectLevel.h"
 #include "../Components/BouncyBallComponent.h"
 #include "../Systems/BouncyBallSystem.h"
+#include "ECS/Components/RainbowTextEffectComponent.h"
 #include "ECS/Components/SpriteComponent.h"
 #include "ECS/Components/TransformComponent.h"
 #include "ECS/Components/UIButtonComponent.h"
@@ -18,6 +20,7 @@
 #include "ECS/Systems/RenderSystem.h"
 #include "ECS/Systems/UIButtonSystem.h"
 #include "ECS/Systems/UIRenderSystem.h"
+#include "ECS/Systems/UITextEffectSystem.h"
 
 void MainMenuLevel::OnEnter() {
     App::Get().GetRenderer()->SetClearColor(Color(1.0f));
@@ -26,6 +29,8 @@ void MainMenuLevel::OnEnter() {
     CurrentRegistry.AddSystem<UIButtonSystem>();
     CurrentRegistry.AddSystem<BouncyBallSystem>(App::Get().GetWindow());
     CurrentRegistry.AddSystem<RenderSystem>(App::Get().GetRenderer(),*Textures);
+    CurrentRegistry.AddSystem<UITextEffectSystem>();
+
     auto OnHoverCall   = [this] (Entity self){ CurrentRegistry.GetPool<UITextComponent>().Get(self).FontColor = Color(0.0f); };
     auto OnUnhoverCall = [this] (Entity self){ CurrentRegistry.GetPool<UITextComponent>().Get(self).FontColor = Color(0.5f); };
     Prefab ClickableButton;
@@ -33,26 +38,32 @@ void MainMenuLevel::OnEnter() {
     ClickableButton.Add<UITextComponent>({.FontPath = "Resources/Fonts/PacFont.ttf",.FontSize = 25,.FontColor = Color(0.5f)});
     ClickableButton.Add<UIButtonComponent>({.OnHover = OnHoverCall,.OnUnhover = OnUnhoverCall,.Size = {200,30}});
 
+    Entity GameTitle = CurrentRegistry.CreateEntity();
+    CurrentRegistry.AddComponent<TransformComponent>(GameTitle,TransformComponent{Vector2f(20,20)});
+    CurrentRegistry.AddComponent<UITextComponent>(GameTitle,UITextComponent{"ECS ENGINE SHOWCASE", "Resources/Fonts/PacFont.ttf",35});
+    CurrentRegistry.AddComponent<RainbowTextEffectComponent>(GameTitle);
 
+    auto OnClickDemo = [this] (Entity self) {App::Get().QueueLevelTransition<DemoSelectLevel>();};
     Entity PlayGameButton = ClickableButton.Instantiate(CurrentRegistry);
-    CurrentRegistry.GetPool<TransformComponent>().Get(PlayGameButton).Position += Vector2f(0,40);
-    CurrentRegistry.GetPool<UITextComponent>().Get(PlayGameButton).Text = "Demos";
+    CurrentRegistry.Get<TransformComponent>(PlayGameButton).Position += Vector2f(0,40);
+    CurrentRegistry.Get<UITextComponent>(PlayGameButton).Text = "Demos";
+    CurrentRegistry.Get<UIButtonComponent>(PlayGameButton).OnMouseUp = OnClickDemo;
 
     auto OnClickCredits = [this] (Entity self) {App::Get().QueueLevelTransition<CreditsLevel>();};
     Entity CreditsButton = ClickableButton.Instantiate(CurrentRegistry);
-    CurrentRegistry.GetPool<TransformComponent>().Get(CreditsButton).Position += Vector2f(0,80);
-    CurrentRegistry.GetPool<UITextComponent>().Get(CreditsButton).Text = "Credits";
-    CurrentRegistry.GetPool<UIButtonComponent>().Get(CreditsButton).OnMouseUp = OnClickCredits;
+    CurrentRegistry.Get<TransformComponent>(CreditsButton).Position += Vector2f(0,80);
+    CurrentRegistry.Get<UITextComponent>(CreditsButton).Text = "Credits";
+    CurrentRegistry.Get<UIButtonComponent>(CreditsButton).OnMouseUp = OnClickCredits;
 
     Entity SettingsButton = ClickableButton.Instantiate(CurrentRegistry);
-    CurrentRegistry.GetPool<TransformComponent>().Get(SettingsButton).Position += Vector2f(0,120);
-    CurrentRegistry.GetPool<UITextComponent>().Get(SettingsButton).Text = "Settings";
+    CurrentRegistry.Get<TransformComponent>(SettingsButton).Position += Vector2f(0,120);
+    CurrentRegistry.Get<UITextComponent>(SettingsButton).Text = "Settings";
 
     auto OnClickExit = [this] (Entity self) {App::Get().Stop();};
     Entity ExitGameButton = ClickableButton.Instantiate(CurrentRegistry);
-    CurrentRegistry.GetPool<TransformComponent>().Get(ExitGameButton).Position += Vector2f(0,160);
-    CurrentRegistry.GetPool<UITextComponent>().Get(ExitGameButton).Text = "Exit";
-    CurrentRegistry.GetPool<UIButtonComponent>().Get(ExitGameButton).OnMouseUp = OnClickExit;
+    CurrentRegistry.Get<TransformComponent>(ExitGameButton).Position += Vector2f(0,160);
+    CurrentRegistry.Get<UITextComponent>(ExitGameButton).Text = "Exit";
+    CurrentRegistry.Get<UIButtonComponent>(ExitGameButton).OnMouseUp = OnClickExit;
 
     Prefab BouncyBall;
     BouncyBall.Add<TransformComponent>({{300.0f, 300.0f},{0.5f},{0.0f}});
@@ -64,13 +75,13 @@ void MainMenuLevel::OnEnter() {
     std::uniform_real_distribution<float> SizeDist(0.01, 0.3);
     std::uniform_real_distribution<float> DampingDist(0.5, 0.9);
     std::uniform_real_distribution<float> HueDist(0, 360);
-    for (int i = 0; i < 1000; ++i)
+    for (int i = 0; i < 10000; ++i)
     {
         auto Ball = BouncyBall.Instantiate(CurrentRegistry);
-        CurrentRegistry.GetPool<BouncyBallComponent>().Get(Ball).Velocity = Vector2f(VelocityDist(RNG),VelocityDist(RNG));
-        CurrentRegistry.GetPool<BouncyBallComponent>().Get(Ball).Damping = DampingDist(RNG);
-        CurrentRegistry.GetPool<TransformComponent>().Get(Ball).Scale = Vector2f(SizeDist(RNG));
-        CurrentRegistry.GetPool<SpriteComponent>().Get(Ball).Tint = Color::FromHSV(HueDist(RNG),0.2,1.0);
+        CurrentRegistry.Get<BouncyBallComponent>(Ball).Velocity = Vector2f(VelocityDist(RNG),VelocityDist(RNG));
+        CurrentRegistry.Get<BouncyBallComponent>(Ball).Damping = DampingDist(RNG);
+        CurrentRegistry.Get<TransformComponent>(Ball).Scale = Vector2f(SizeDist(RNG));
+        CurrentRegistry.Get<SpriteComponent>(Ball).Tint = Color::FromHSV(HueDist(RNG),0.2,1.0);
     }
     Level::OnEnter();
 }

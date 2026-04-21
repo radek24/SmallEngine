@@ -3,6 +3,9 @@
 //
 
 #include "Window.h"
+
+#include <SDL3_image/SDL_image.h>
+
 #include "Engine/DebugBreaks.h"
 
 std::unique_ptr<Window> Window::Create(const WindowSpecification &spec)
@@ -34,7 +37,7 @@ Window::Window(const WindowSpecification &spec)
         LOG_ERROR("Window failed to create {0}",SDL_GetError());
         SDL_Quit();
     }
-
+    SetupWindowIcon(spec);
 }
 
 Window::~Window()
@@ -71,4 +74,19 @@ SDL_Window * Window::GetNativeHandle() const
 WindowSpecification Window::GetSpecs()
 {
     return Specs;
+}
+
+void Window::SetupWindowIcon(const WindowSpecification& spec) const
+{
+    if(spec.WindowIcon.empty())
+        return;
+
+    SDL_Surface* Icon = IMG_Load(spec.WindowIcon.c_str());
+    if (!Icon)
+    {
+        LOG_ERROR("Could not load window icon from {0}",spec.WindowIcon);
+        return;
+    }
+    SDL_SetWindowIcon(NativeHandle, Icon);
+    SDL_DestroySurface(Icon);
 }

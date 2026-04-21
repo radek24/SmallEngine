@@ -57,6 +57,8 @@ void App::Run()
 
 void App::Stop()
 {
+    LOG_INFO("Unloading level");
+    CurrentLevel->OnExit();
     Running = false;
 }
 
@@ -86,10 +88,13 @@ void App::TryToTransitionToLevel()
     
     if(CurrentLevel)
     {
+        LOG_INFO("Unloading level");
         CurrentLevel->OnExit();
         CurrentLevel.reset();
+
     }
     CurrentLevel = std::move(LevelToTransitionTo);
+    LOG_INFO("Loading level");
     CurrentLevel->OnEnter();
 }
 
@@ -102,4 +107,8 @@ void App::PrintInfo()
 {
     int Version = SDL_GetVersion();
     LOG_INFO("SDL Version : {0}.{1}.{2}",SDL_VERSIONNUM_MAJOR(Version),SDL_VERSIONNUM_MINOR(Version),SDL_VERSIONNUM_MICRO(Version));
+    #ifdef SE_DEBUG
+        LOG_INFO("This is debug build");
+    #endif
+
 }

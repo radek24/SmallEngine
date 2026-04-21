@@ -21,5 +21,6 @@ public:
 private:
     SDL_Window* NativeHandle;
     WindowSpecification Specs;
+    void SetupWindowIcon(const WindowSpecification& spec) const;
 
 };
