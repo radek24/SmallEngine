@@ -7,6 +7,10 @@ add_executable(Sandbox
         Source/Components/BouncyBallComponent.h
         Source/Systems/BouncyBallSystem.cpp
         Source/Systems/BouncyBallSystem.h
+        Source/Levels/CreditsLevel.cpp
+        Source/Levels/CreditsLevel.h
+        Source/Prefab/BackButtonPrefab.cpp
+        Source/Prefab/BackButtonPrefab.h
 )
 
 target_link_libraries(Sandbox PRIVATE SmallEngine)

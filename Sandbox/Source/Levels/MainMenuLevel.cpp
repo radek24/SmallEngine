@@ -7,6 +7,7 @@
 #include <random>
 #include <Engine/App.h>
 
+#include "CreditsLevel.h"
 #include "../Components/BouncyBallComponent.h"
 #include "../Systems/BouncyBallSystem.h"
 #include "ECS/Components/SpriteComponent.h"
@@ -32,13 +33,16 @@ void MainMenuLevel::OnEnter() {
     ClickableButton.Add<UITextComponent>({.FontPath = "Resources/Fonts/PacFont.ttf",.FontSize = 25,.FontColor = Color(0.5f)});
     ClickableButton.Add<UIButtonComponent>({.OnHover = OnHoverCall,.OnUnhover = OnUnhoverCall,.Size = {200,30}});
 
+
     Entity PlayGameButton = ClickableButton.Instantiate(CurrentRegistry);
     CurrentRegistry.GetPool<TransformComponent>().Get(PlayGameButton).Position += Vector2f(0,40);
-    CurrentRegistry.GetPool<UITextComponent>().Get(PlayGameButton).Text = "Play Game";
+    CurrentRegistry.GetPool<UITextComponent>().Get(PlayGameButton).Text = "Demos";
 
+    auto OnClickCredits = [this] (Entity self) {App::Get().QueueLevelTransition<CreditsLevel>();};
     Entity CreditsButton = ClickableButton.Instantiate(CurrentRegistry);
     CurrentRegistry.GetPool<TransformComponent>().Get(CreditsButton).Position += Vector2f(0,80);
     CurrentRegistry.GetPool<UITextComponent>().Get(CreditsButton).Text = "Credits";
+    CurrentRegistry.GetPool<UIButtonComponent>().Get(CreditsButton).OnMouseUp = OnClickCredits;
 
     Entity SettingsButton = ClickableButton.Instantiate(CurrentRegistry);
     CurrentRegistry.GetPool<TransformComponent>().Get(SettingsButton).Position += Vector2f(0,120);
@@ -60,8 +64,7 @@ void MainMenuLevel::OnEnter() {
     std::uniform_real_distribution<float> SizeDist(0.01, 0.3);
     std::uniform_real_distribution<float> DampingDist(0.5, 0.9);
     std::uniform_real_distribution<float> HueDist(0, 360);
-    Color color = Color(1.0f,0.8,1.0f,1.0f);
-    for (int i = 0; i < 10000; ++i)
+    for (int i = 0; i < 1000; ++i)
     {
         auto Ball = BouncyBall.Instantiate(CurrentRegistry);
         CurrentRegistry.GetPool<BouncyBallComponent>().Get(Ball).Velocity = Vector2f(VelocityDist(RNG),VelocityDist(RNG));

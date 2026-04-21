@@ -42,8 +42,6 @@ public:
     }
 
     [[nodiscard]] Level* GetCurrentLevel() const;
-
-
 private:
 
     /** Transition to level when possible (on the start of the frame)*/
