@@ -28,7 +28,7 @@ void DebugStatsSystem::Update(Registry &CurrentRegistry, float DeltaTime)
     if(!ShowSystemTimings)
         return;
 
-    RendererRef->DrawDebugText(Vector2f(10,60),"System timings (use F4 to disable)",Color(0,1,0));
+    RendererRef->DrawDebugText(Vector2f(10,60),"System timings",Color(0,1,0));
 
     auto Timings = CurrentRegistry.GetTimings();
 

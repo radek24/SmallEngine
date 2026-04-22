@@ -11,24 +11,23 @@
 
 void BouncyBallSystem::Update(Registry &CurrentRegistry, float DeltaTime)
 {
-    constexpr float Gravity         = 980.0f;
-    constexpr float MouseRadius     = 200.0f;
-    constexpr float MouseRadiusSq   = MouseRadius * MouseRadius; // avoids sqrt
-    constexpr float MouseForce      = 10000.0f;
+    constexpr float Gravity = 980.0f;
+    constexpr float MouseRadius = 200.0f;
+    constexpr float MouseRadiusSq = MouseRadius * MouseRadius;
+    constexpr float MouseForce = 10000.0f;
 
-    const auto WinWidth    = static_cast<float>(CurrentWindow->GetWidth());
-    const auto WinHeight   = static_cast<float>(CurrentWindow->GetHeight());
-    const auto MousePos    = EventHandler::GetMousePos();
-    const bool Repel       = EventHandler::IsMouseButtonHeld(MouseButton::Left);
-    const bool Attract     = EventHandler::IsMouseButtonHeld(MouseButton::Right);
+    const auto WinWidth = static_cast<float>(CurrentWindow->GetWidth());
+    const auto WinHeight = static_cast<float>(CurrentWindow->GetHeight());
+    const auto MousePos= EventHandler::GetMousePos();
+    const bool Repel = EventHandler::IsMouseButtonHeld(MouseButton::Left);
+    const bool Attract = EventHandler::IsMouseButtonHeld(MouseButton::Right);
     const bool MouseActive = Repel || Attract;
-    const float GravityDT  = Gravity * DeltaTime; // hoist multiply out of loop
-    const float ForceDT    = MouseForce * DeltaTime;
-    const float ForceSign  = Repel ? -1.0f : 1.0f;
+    const float GravityDT = Gravity * DeltaTime;
+    const float ForceDT = MouseForce * DeltaTime;
+    const float ForceSign = Repel ? -1.0f : 1.0f;
 
-    auto Callback = [this, DeltaTime, WinWidth, WinHeight, MousePos,
-                     MouseActive, MouseRadiusSq, GravityDT, ForceDT, ForceSign]
-        (Entity E, BouncyBallComponent &BBC, TransformComponent &T)
+    auto Callback = [this, DeltaTime, WinWidth, WinHeight, MousePos,MouseActive, MouseRadiusSq, GravityDT, ForceDT, ForceSign]
+    (Entity E, BouncyBallComponent &BBC, TransformComponent &T)
     {
         const float Size = BBC.Size * T.Scale.X;
 
