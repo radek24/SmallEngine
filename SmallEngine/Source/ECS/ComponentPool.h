@@ -40,6 +40,18 @@ public:
     [[nodiscard]] bool Contains(Entity E) const;
     /** Returns number of components in this pool*/
     [[nodiscard]] size_t Size() const { return DenseData.size(); }
+    /** Pre-allocates dense storage and sparse pages to avoid reallocation spikes */
+    void Reserve(size_t Count)
+    {
+        DenseData.reserve(Count);
+        DenseEntity.reserve(Count);
+        size_t PagesNeeded = (Count / PAGE_SIZE) + 1;
+        if (SparseData.size() < PagesNeeded)
+            SparseData.resize(PagesNeeded);
+        for (size_t i = 0; i < PagesNeeded; ++i)
+            if (SparseData[i].empty())
+                SparseData[i].assign(PAGE_SIZE, INVALID_INDEX);
+    }
 
 
     struct Entry

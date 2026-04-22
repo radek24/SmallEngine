@@ -1,18 +1,17 @@
 //
-// Created by radov on 19.04.2026.
+// Created by radov on 22.04.2026.
 //
 
 
 #pragma once
 #include "ECS/System.h"
-#include "Engine/Core.h"
+#include "Engine/SoundManager.h"
 
-class SE_API LifetimeSystem : public System
+
+class SE_API SoundSystem : public System
 {
 public:
     void Update(Registry &CurrentRegistry, float DeltaTime) override;
 
     [[nodiscard]] SystemPhase GetPhase() const override {return SystemPhase::PostUpdate;}
-private:
-    std::vector<Entity> ToDestroy;
 };

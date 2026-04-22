@@ -13,6 +13,7 @@ Level::Level()
 {
     Textures = std::make_unique<TextureManager>(App::Get().GetRenderer());
     Fonts = std::make_unique<FontManager>();
+    Sounds = std::make_unique<SoundManager>();
 }
 
 void Level::OnUpdate(float DeltaTime)

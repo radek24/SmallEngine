@@ -11,6 +11,7 @@
 #include "DemoSelectLevel.h"
 #include "../Components/BouncyBallComponent.h"
 #include "../Systems/BouncyBallSystem.h"
+#include "ECS/Components/PlaySoundRequestComponent.h"
 #include "ECS/Components/RainbowTextEffectComponent.h"
 #include "ECS/Components/SpriteComponent.h"
 #include "ECS/Components/TransformComponent.h"
@@ -18,6 +19,7 @@
 #include "ECS/Components/UITextComponent.h"
 #include "ECS/Prefabs/Prefab.h"
 #include "ECS/Systems/RenderSystem.h"
+#include "ECS/Systems/SoundSystem.h"
 #include "ECS/Systems/UIButtonSystem.h"
 #include "ECS/Systems/UIRenderSystem.h"
 #include "ECS/Systems/UITextEffectSystem.h"
@@ -30,8 +32,9 @@ void MainMenuLevel::OnEnter() {
     CurrentRegistry.AddSystem<BouncyBallSystem>(App::Get().GetWindow());
     CurrentRegistry.AddSystem<RenderSystem>(App::Get().GetRenderer(),*Textures);
     CurrentRegistry.AddSystem<UITextEffectSystem>();
+    CurrentRegistry.AddSystem<SoundSystem>();
 
-    auto OnHoverCall   = [this] (Entity self){ CurrentRegistry.GetPool<UITextComponent>().Get(self).FontColor = Color(0.0f); };
+    auto OnHoverCall   = [this] (Entity self){ CurrentRegistry.GetPool<UITextComponent>().Get(self).FontColor = Color(0.0f); CurrentRegistry.AddComponent<PlaySoundRequestComponent>(self).SoundPath = "Resources/Sounds/S_ButtonHover.mp3"; };
     auto OnUnhoverCall = [this] (Entity self){ CurrentRegistry.GetPool<UITextComponent>().Get(self).FontColor = Color(0.5f); };
     Prefab ClickableButton;
     ClickableButton.Add<TransformComponent>({{20.0f, 50.0f},{1.0f, 1.0f},{0.0f}});

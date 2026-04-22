@@ -20,6 +20,7 @@ void App::Init(const Specifications &AppSpec)
     FrameCounter = 0;
     AppWindow = Window::Create(AppSpec.WindowSpecs);
     AppRenderer = Renderer::Create(*AppWindow);
+    AppSoundManager = std::make_unique<SoundManager>();
     Running = true;
     PrintInfo();
 }

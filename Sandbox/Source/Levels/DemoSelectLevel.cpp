@@ -8,11 +8,13 @@
 
 #include "ComponentShowcase.h"
 #include "MainMenuLevel.h"
+#include "ParticlesLevel.h"
 #include "../Prefab/BackButtonPrefab.h"
 #include "ECS/Components/UIButtonComponent.h"
 #include "ECS/Components/UITextComponent.h"
 #include "ECS/Prefabs/Prefab.h"
 #include "ECS/Systems/RenderSystem.h"
+#include "ECS/Systems/SoundSystem.h"
 #include "ECS/Systems/UIButtonSystem.h"
 #include "ECS/Systems/UIRenderSystem.h"
 
@@ -27,7 +29,7 @@ std::vector<DemoButtonInfo>  ButtonInfos =
     {"Component Showcase", [] (Entity self) {App::Get().QueueLevelTransition<ComponentShowcase>();}},
     {"Boids", [] (Entity self) {App::Get().QueueLevelTransition<MainMenuLevel>();}},
     {"Space Invaders", [] (Entity self) {App::Get().QueueLevelTransition<MainMenuLevel>();}},
-    {"Particles", [] (Entity self) {App::Get().QueueLevelTransition<MainMenuLevel>();}}
+    {"Particles", [] (Entity self) {App::Get().QueueLevelTransition<ParticlesLevel>();}}
 
 };
 
@@ -40,6 +42,7 @@ void DemoSelectLevel::OnEnter()
     CurrentRegistry.AddSystem<UIRenderSystem>(App::Get().GetRenderer(),*Fonts);
     CurrentRegistry.AddSystem<UIButtonSystem>();
     CurrentRegistry.AddSystem<RenderSystem>(App::Get().GetRenderer(),*Textures);
+    CurrentRegistry.AddSystem<SoundSystem>();
 
     BackButtonPrefab::Create<MainMenuLevel>(CurrentRegistry);
 

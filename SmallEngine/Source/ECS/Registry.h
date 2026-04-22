@@ -39,6 +39,8 @@ public:
     bool DestroyEntity(Entity E);
     /**Checks whether the entity is destroyed or is alive*/
     [[nodiscard]] bool IsValid(Entity E);
+    /** Pre-reserves entity slot storage to avoid reallocation spikes when many entities are created at once */
+    void ReserveEntities(size_t Count);
     /** Used to get or create pool of certain components*/
     template<typename T>
     ComponentPool<T>& GetPool();

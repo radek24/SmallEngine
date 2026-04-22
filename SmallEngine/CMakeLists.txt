@@ -15,6 +15,11 @@ set(SDLTTF_VENDORED        ON  CACHE BOOL "" FORCE)
 set(SDLTTF_INSTALL         OFF CACHE BOOL "" FORCE)
 add_subdirectory(Vendor/SDL_ttf EXCLUDE_FROM_ALL)
 
+set(SDL2MIXER_INSTALL OFF)
+set(SDL2MIXER_SAMPLES OFF)
+set(SDL2MIXER_VENDORED ON)
+add_subdirectory(Vendor/SDL_mixer EXCLUDE_FROM_ALL)
+
 add_library(SmallEngine SHARED
         Source/Engine/Log/Log.cpp
         Source/ECS/Registry.cpp
@@ -71,6 +76,15 @@ add_library(SmallEngine SHARED
         Source/ECS/Systems/ShakerSystem.cpp
         Source/ECS/Systems/ShakerSystem.h
         Vendor/Noise/FastNoiseLite.h
+        Source/ECS/Components/PlaySoundRequestComponent.h
+        Source/ECS/Components/AudioConfigComponent.h
+        Source/ECS/Systems/SoundSystem.cpp
+        Source/ECS/Systems/SoundSystem.h
+        Source/ECS/Components/ParticleComponent.h
+        Source/ECS/Systems/ParticleSystem.cpp
+        Source/ECS/Systems/ParticleSystem.h
+        Source/Engine/SoundManager.cpp
+        Source/Engine/SoundManager.h
 )
 
 target_include_directories(SmallEngine PUBLIC
@@ -82,6 +96,7 @@ target_link_libraries(SmallEngine PUBLIC
         SDL3::SDL3
         SDL3_image::SDL3_image
         SDL3_ttf::SDL3_ttf
+        SDL3_mixer::SDL3_mixer
 )
 
 

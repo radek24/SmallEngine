@@ -9,6 +9,7 @@
 
 void DebugStatsSystem::Update(Registry &CurrentRegistry, float DeltaTime)
 {
+#ifdef SE_DEBUG
     RendererRef->DrawRectangle(Vector2f(5,10),Vector2f(300,60),Color(0,0,0,0.5));
     const std::string FPS = std::format("FPS: {:.2f}", (1/DeltaTime));
     RendererRef->DrawDebugText(Vector2f(10,10),FPS.c_str(),Color(0.0f,1,0));
@@ -40,5 +41,5 @@ void DebugStatsSystem::Update(Registry &CurrentRegistry, float DeltaTime)
         RendererRef->DrawDebugText(Vector2f(20,70 + (10*i)),SystemInfo.c_str(),Color(0,1,0));
         i++;
     }
-
+#endif
 }

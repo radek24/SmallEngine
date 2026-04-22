@@ -12,6 +12,12 @@ Registry::Registry()
     CurrentID = 0;
 }
 
+void Registry::ReserveEntities(size_t Count)
+{
+    Slots.reserve(Slots.size() + Count);
+    FreeList.reserve(Count);
+}
+
 Entity Registry::CreateEntity()
 {
     if (!FreeList.empty()) {

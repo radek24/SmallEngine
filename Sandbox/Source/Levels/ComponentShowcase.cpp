@@ -23,6 +23,7 @@
 #include "ECS/Systems/RotatorSystem.h"
 #include "ECS/Systems/ShakerSystem.h"
 #include "ECS/Systems/SimpleControllerSystem.h"
+#include "ECS/Systems/SoundSystem.h"
 #include "ECS/Systems/UIButtonSystem.h"
 #include "ECS/Systems/UIRenderSystem.h"
 #include "ECS/Systems/UITextEffectSystem.h"
@@ -47,7 +48,7 @@ void ComponentShowcase::OnEnter()
     CurrentRegistry.AddSystem<LifetimeSystem>();
     CurrentRegistry.AddSystem<UITextEffectSystem>();
     CurrentRegistry.AddSystem<ShakerSystem>();
-
+    CurrentRegistry.AddSystem<SoundSystem>();
     {
         auto E = CurrentRegistry.CreateEntity();
         CurrentRegistry.AddComponent<TransformComponent>(E, TransformComponent{Vector2f(20, 15)});

@@ -5,6 +5,7 @@
 #pragma once
 #include <ECS/Registry.h>
 
+#include "SoundManager.h"
 #include "Rendering/FontManager.h"
 #include "Rendering/Renderer.h"
 #include "Rendering/TextureManager.h"
@@ -15,8 +16,8 @@ public:
     Level();
     virtual ~Level() = default;
 
-    /** Called once when the level becomes active */
-    virtual void OnEnter() {}
+    /** Called once when the level becomes active. */
+    virtual void OnEnter() {};
 
     /** Called every frame before rendering */
     virtual void OnUpdate(float DeltaTime);
@@ -30,4 +31,5 @@ public:
     Registry CurrentRegistry;
     std::unique_ptr<TextureManager> Textures;
     std::unique_ptr<FontManager> Fonts;
+    std::unique_ptr<SoundManager> Sounds;
 };

@@ -13,6 +13,8 @@ add_executable(Sandbox
         Source/Levels/DemoSelectLevel.h
         Source/Levels/ComponentShowcase.cpp
         Source/Levels/ComponentShowcase.h
+        Source/Levels/ParticlesLevel.cpp
+        Source/Levels/ParticlesLevel.h
 )
 
 target_link_libraries(Sandbox PRIVATE SmallEngine)

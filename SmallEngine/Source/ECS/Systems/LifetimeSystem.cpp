@@ -11,9 +11,9 @@
 
 void LifetimeSystem::Update(Registry &CurrentRegistry, float DeltaTime)
 {
-    std::vector<Entity> ToDestroy;
+    ToDestroy.clear();
 
-    auto Callback = [&ToDestroy,DeltaTime](Entity E, LifetimeComponent &LC)
+    auto Callback = [this, DeltaTime](Entity E, LifetimeComponent &LC)
     {
         LC.RemainingSeconds -= DeltaTime;
         if(LC.RemainingSeconds <= 0.0f)
