@@ -10,3 +10,6 @@
 [submodule "SmallEngine/Vendor/SDL_ttf"]
 	path = SmallEngine/Vendor/SDL_ttf
 	url = https://github.com/libsdl-org/SDL_ttf.git
+[submodule "SmallEngine/Vendor/SDL_mixer"]
+	path = SmallEngine/Vendor/SDL_mixer
+	url = https://github.com/libsdl-org/SDL_mixer.git
