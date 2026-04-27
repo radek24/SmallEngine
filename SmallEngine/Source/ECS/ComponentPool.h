@@ -141,7 +141,8 @@ bool ComponentPool<T>::Contains(Entity E) const
 template<typename T>
 std::pair<size_t, size_t> ComponentPool<T>::GetPageAndIndexFromEntity(Entity E)
 {
-    size_t PageNumber = E.GetId() / PAGE_SIZE;
-    size_t Index = E.GetId() % PAGE_SIZE;
-    return std::make_pair(PageNumber,Index);
+    size_t SlotIdx = E.GetId() & 0x00FFFFFF;
+    size_t PageNumber = SlotIdx / PAGE_SIZE;
+    size_t Index = SlotIdx % PAGE_SIZE;
+    return std::make_pair(PageNumber, Index);
 }

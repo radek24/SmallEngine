@@ -6,6 +6,7 @@
 
 #include <Engine/App.h>
 
+#include "AsteroidsLevel.h"
 #include "ComponentShowcase.h"
 #include "MainMenuLevel.h"
 #include "ParticlesLevel.h"
@@ -27,12 +28,9 @@ struct DemoButtonInfo
 std::vector<DemoButtonInfo>  ButtonInfos =
 {
     {"Component Showcase", [] (Entity self) {App::Get().QueueLevelTransition<ComponentShowcase>();}},
-    {"Boids", [] (Entity self) {App::Get().QueueLevelTransition<MainMenuLevel>();}},
-    {"Space Invaders", [] (Entity self) {App::Get().QueueLevelTransition<MainMenuLevel>();}},
-    {"Particles", [] (Entity self) {App::Get().QueueLevelTransition<ParticlesLevel>();}}
-
+    {"Asteroids",          [] (Entity self) {App::Get().QueueLevelTransition<AsteroidsLevel>();}},
+    {"Particles",          [] (Entity self) {App::Get().QueueLevelTransition<ParticlesLevel>();}}
 };
-
 
 void DemoSelectLevel::OnEnter()
 {

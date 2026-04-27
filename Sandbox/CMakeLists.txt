@@ -15,6 +15,23 @@ add_executable(Sandbox
         Source/Levels/ComponentShowcase.h
         Source/Levels/ParticlesLevel.cpp
         Source/Levels/ParticlesLevel.h
+        # Asteroids
+        Source/Components/VelocityComponent.h
+        Source/Components/AsteroidComponent.h
+        Source/Components/BulletComponent.h
+        Source/Components/PlayerShipComponent.h
+        Source/Systems/AsteroidsMovementSystem.h
+        Source/Systems/AsteroidsMovementSystem.cpp
+        Source/Systems/AsteroidsRenderSystem.h
+        Source/Systems/AsteroidsRenderSystem.cpp
+        Source/Systems/PlayerInputSystem.h
+        Source/Systems/PlayerInputSystem.cpp
+        Source/Systems/PlayerLifecycleSystem.h
+        Source/Systems/PlayerLifecycleSystem.cpp
+        Source/Systems/AsteroidsCollisionSystem.h
+        Source/Systems/AsteroidsCollisionSystem.cpp
+        Source/Levels/AsteroidsLevel.h
+        Source/Levels/AsteroidsLevel.cpp
 )
 
 target_link_libraries(Sandbox PRIVATE SmallEngine)

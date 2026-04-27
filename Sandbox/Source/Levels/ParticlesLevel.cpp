@@ -22,7 +22,7 @@
 #include "ECS/Systems/UIButtonSystem.h"
 #include "ECS/Systems/UIRenderSystem.h"
 
-static constexpr int ParticlesPerBurst = 80;
+static constexpr int ParticlesPerBurst = 100;
 static constexpr float MinSpeed = 80.0f;
 static constexpr float MaxSpeed = 400.0f;
 static constexpr float MinLifetime = 0.8f;
