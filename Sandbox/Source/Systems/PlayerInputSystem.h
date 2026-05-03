@@ -1,16 +1,16 @@
 #pragma once
 #include "ECS/System.h"
-#include "Engine/Core.h"
+#include "Engine/Math/MathForward.h"
 #include "Engine/Math/Rotator.h"
 
 class PlayerInputSystem : public System
 {
 public:
     explicit PlayerInputSystem(
-        float RotationSpeed  = 180.0f,
-        float ThrustForce    = 280.0f,
-        float BulletSpeed    = 520.0f,
-        float FireCooldown   = 0.25f
+        float RotationSpeed = 180.0f,
+        float ThrustForce = 280.0f,
+        float BulletSpeed = 520.0f,
+        float FireCooldown = 0.25f
     );
 
     void Update(Registry& CurrentRegistry, float DeltaTime) override;

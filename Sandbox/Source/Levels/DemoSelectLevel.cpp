@@ -10,6 +10,7 @@
 #include "ComponentShowcase.h"
 #include "MainMenuLevel.h"
 #include "ParticlesLevel.h"
+#include "StressTestLevel.h"
 #include "../Prefab/BackButtonPrefab.h"
 #include "ECS/Components/UIButtonComponent.h"
 #include "ECS/Components/UITextComponent.h"
@@ -29,7 +30,8 @@ std::vector<DemoButtonInfo>  ButtonInfos =
 {
     {"Component Showcase", [] (Entity self) {App::Get().QueueLevelTransition<ComponentShowcase>();}},
     {"Asteroids",          [] (Entity self) {App::Get().QueueLevelTransition<AsteroidsLevel>();}},
-    {"Particles",          [] (Entity self) {App::Get().QueueLevelTransition<ParticlesLevel>();}}
+    {"Particles",          [] (Entity self) {App::Get().QueueLevelTransition<ParticlesLevel>();}},
+    {"Entity Stress Test", [] (Entity self) {App::Get().QueueLevelTransition<StressTestLevel>();}}
 };
 
 void DemoSelectLevel::OnEnter()

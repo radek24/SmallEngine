@@ -15,6 +15,8 @@ add_executable(Sandbox
         Source/Levels/ComponentShowcase.h
         Source/Levels/ParticlesLevel.cpp
         Source/Levels/ParticlesLevel.h
+        Source/Levels/StressTestLevel.cpp
+        Source/Levels/StressTestLevel.h
         # Asteroids
         Source/Components/VelocityComponent.h
         Source/Components/AsteroidComponent.h

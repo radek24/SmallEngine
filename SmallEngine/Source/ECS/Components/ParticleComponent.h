@@ -3,7 +3,7 @@
 //
 
 #pragma once
-#include "Engine/Math/Vector.h"
+#include "Engine/Math/MathForward.h"
 
 struct ParticleComponent
 {

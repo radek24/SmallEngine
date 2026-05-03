@@ -11,11 +11,14 @@
 
 void SoundSystem::Update(Registry &CurrentRegistry, float DeltaTime)
 {
-    auto Callback = [DeltaTime, this, &CurrentRegistry](Entity E, PlaySoundRequestComponent &SC)
+    std::vector<Entity> ToRemove;
+    CurrentRegistry.MakeView<PlaySoundRequestComponent>().Each([&](Entity E, PlaySoundRequestComponent &SC)
     {
         App::Get().GetSoundManager()->SetVolume(SC.Volume);
         App::Get().GetSoundManager()->Play(SC.SoundPath);
+        ToRemove.push_back(E);
+    });
+
+    for (Entity E : ToRemove)
         CurrentRegistry.GetPool<PlaySoundRequestComponent>().Remove(E);
-    };
-    CurrentRegistry.MakeView<PlaySoundRequestComponent>().Each(Callback);
 }

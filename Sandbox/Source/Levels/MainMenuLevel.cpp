@@ -58,9 +58,11 @@ void MainMenuLevel::OnEnter() {
     CurrentRegistry.Get<UITextComponent>(CreditsButton).Text = "Credits";
     CurrentRegistry.Get<UIButtonComponent>(CreditsButton).OnMouseUp = OnClickCredits;
 
+    /*
     Entity SettingsButton = ClickableButton.Instantiate(CurrentRegistry);
     CurrentRegistry.Get<TransformComponent>(SettingsButton).Position += Vector2f(0,120);
     CurrentRegistry.Get<UITextComponent>(SettingsButton).Text = "Settings";
+    */
 
     auto OnClickExit = [this] (Entity self) {App::Get().Stop();};
     Entity ExitGameButton = ClickableButton.Instantiate(CurrentRegistry);

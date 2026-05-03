@@ -5,8 +5,6 @@
 #pragma once
 #include <Engine/DebugBreaks.h>
 
-#include "MathUtils.h"
-
 struct Rotator {
 
 private:

@@ -1,6 +1,6 @@
 #pragma once
 #include "ECS/System.h"
-#include "Engine/Core.h"
+#include "Engine/Math/MathForward.h"
 
 class PlayerLifecycleSystem : public System
 {

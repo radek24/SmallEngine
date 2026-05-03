@@ -88,7 +88,7 @@ inline Color Color::FromHSV(float Hue, float Saturation, float Value)
     }
 
     float H = Hue / 60.0f;
-    int   I = static_cast<int>(H);
+    int I = static_cast<int>(H);
     float F = H - static_cast<float>(I);
     float P = Value * (1.0f - Saturation);
     float Q = Value * (1.0f - Saturation * F);

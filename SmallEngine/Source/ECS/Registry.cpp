@@ -27,6 +27,9 @@ Entity Registry::CreateEntity()
         return Entity((static_cast<Entity::IdType>(Slots[Idx].Generation) << 24) | Idx);
     }
 
+    if (Slots.empty())
+        Slots.push_back({ 0, false });
+
     auto Idx = static_cast<Entity::IdType>(Slots.size());
     if (Idx >= 0x00FFFFFF)
         LOG_FATAL("Reached max entity ids");
