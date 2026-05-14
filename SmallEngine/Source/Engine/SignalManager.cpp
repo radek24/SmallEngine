@@ -6,6 +6,8 @@
 #include <vector>
 #include "DebugBreaks.h"
 
+SignalPayload SignalPayload::Empty;
+
 SubscriptionId SignalManager::Subscribe(const std::string &Topic, const std::function<void(SignalPayload &)>& Callback)
 {
     SubscriptionId id = NextId++;

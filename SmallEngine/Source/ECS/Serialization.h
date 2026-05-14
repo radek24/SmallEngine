@@ -6,29 +6,37 @@
 #pragma once
 
 #include "Components/TransformComponent.h"
+#include "Components/RotatorComponent.h"
 #include "json/json.hpp"
 
 template<typename T>
 struct ComponentSerializer {
-    static void Save(const T& comp, nlohmann::json& out);
-    static T Load(const nlohmann::json& in);
+    static constexpr bool Serializable = false;
+    static constexpr const char* TypeName = "";
 };
-/*
+
 template<>
 struct ComponentSerializer<TransformComponent> {
+    static constexpr bool Serializable = true;
     static constexpr const char* TypeName = "TransformComponent";
+
     static void Save(const TransformComponent& comp, nlohmann::json& out)
     {
-        out["x"] = comp.Position.X;
-        out["y"] = comp.Position.Y;
-        out["sx"] = comp.Scale.X;
-        out["sy"] = comp.Scale.Y;
+        out["x"]   = comp.Position.X;
+        out["y"]   = comp.Position.Y;
+        out["sx"]  = comp.Scale.X;
+        out["sy"]  = comp.Scale.Y;
         out["rot"] = comp.Rotation.GetAngleDegrees();
     }
+};
 
-    static TransformComponent Load(const nlohmann::json& in)
+template<>
+struct ComponentSerializer<RotatorComponent> {
+    static constexpr bool Serializable = true;
+    static constexpr const char* TypeName = "RotatorComponent";
+
+    static void Save(const RotatorComponent& comp, nlohmann::json& out)
     {
-        return { {in["x"], in["y"]}, {in["sx"], in["sy"]}, in["rot"] };
+        out["speed"] = comp.RotationSpeed;
     }
 };
-*/

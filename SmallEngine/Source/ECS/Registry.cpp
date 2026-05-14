@@ -107,23 +107,19 @@ void Registry::Save(std::string FilePath)
 #endif
 
     nlohmann::json SaveJson;
-    auto &MetaInfo = SaveJson["meta"];
+    auto& MetaInfo = SaveJson["meta"];
     MetaInfo["version"] = ENGINE_VERSION;
     MetaInfo["save_type"] = "json";
 
-
+    auto& Entities = SaveJson["entities"];
 
     std::ofstream o(FilePath);
 
 #ifdef SE_DEBUG
-    o <<  std::setw(4) << SaveJson << std::endl;
+    o << std::setw(4) << SaveJson << std::endl;
 #else
-    o <<  SaveJson << std::endl;
+    o << SaveJson << std::endl;
 #endif
-}
-
-void Registry::Load(std::string FilePath)
-{
 }
 
 #ifdef SE_DEBUG

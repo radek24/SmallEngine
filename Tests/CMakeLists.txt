@@ -7,6 +7,7 @@ add_executable(EngineTests
         Math/ColorTests.cpp
         ECS/ViewTests.cpp
         Core/SignalManagerTests.cpp
+        Core/SettingManagerTests.cpp
 )
 
 

@@ -22,6 +22,9 @@ void App::Init(const Specifications &AppSpec)
     AppRenderer = Renderer::Create(*AppWindow);
     AppSoundManager = std::make_unique<SoundManager>();
     SignalManager = std::make_unique<class SignalManager>();
+    Settings = std::make_unique<SettingManager>();
+    Settings->LoadFromDefaultConfig(AppSpec.SettingConfigPath);
+    Settings->LoadConfig(AppSpec.SettingPath);
     Running = true;
     PrintInfo();
 }

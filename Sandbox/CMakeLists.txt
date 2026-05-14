@@ -35,6 +35,10 @@ add_executable(Sandbox
         Source/Levels/AsteroidsLevel.cpp
         Source/Levels/SimpleTestSaveLevel.cpp
         Source/Levels/SimpleTestSaveLevel.h
+        Source/Levels/SettingLevel.cpp
+        Source/Levels/SettingLevel.h
+        Source/Levels/DirtySettingsLevel.cpp
+        Source/Levels/DirtySettingsLevel.h
 )
 
 target_link_libraries(Sandbox PRIVATE SmallEngine)

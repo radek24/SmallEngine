@@ -6,14 +6,17 @@
 
 #include <Engine/EventHandler.h>
 
+#include "ECS/Components/RotatorComponent.h"
 #include "ECS/Components/TransformComponent.h"
 
 void SimpleTestSaveLevel::OnEnter() {
     Level::OnEnter();
-    auto e = CurrentRegistry.CreateEntity();
-    CurrentRegistry.AddComponent<TransformComponent>(e, TransformComponent{{1,1},{1,1},{1}});
-
-
+    for (int i = 0; i < 100; ++i)
+    {
+        auto e = CurrentRegistry.CreateEntity();
+        CurrentRegistry.AddComponent<TransformComponent>(e, TransformComponent{{(float)i,1},{1,1},{1}});
+        CurrentRegistry.AddComponent<RotatorComponent>(e,RotatorComponent{10});
+    }
 }
 
 void SimpleTestSaveLevel::OnUpdate(float DeltaTime) {

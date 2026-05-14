@@ -24,7 +24,7 @@ template<typename T>
 Entity BackButtonPrefab::Create(Registry& R)
 {
     auto E = R.CreateEntity();
-    auto OnHoverCall   = [&R] (Entity self){ R.GetPool<UITextComponent>().Get(self).FontColor = Color(0.5f);R.AddComponent<PlaySoundRequestComponent>(self).SoundPath = "Resources/Sounds/S_ButtonHover.mp3"; };
+    auto OnHoverCall = [&R] (Entity self){ R.GetPool<UITextComponent>().Get(self).FontColor = Color(0.5f);R.AddComponent<PlaySoundRequestComponent>(self).SoundPath = "Resources/Sounds/S_ButtonHover.mp3"; };
     auto OnUnhoverCall = [&R] (Entity self){ R.GetPool<UITextComponent>().Get(self).FontColor = Color(1.0f); };
     auto OnClick = [] (Entity self){App::Get().QueueLevelTransition<T>();};
     R.AddComponent<TransformComponent>(E, TransformComponent{ .Position = {50, 800} });

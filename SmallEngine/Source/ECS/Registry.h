@@ -6,6 +6,7 @@
 #include <memory>
 #include <unordered_map>
 #include <typeindex>
+#include <functional>
 
 #include <Engine/Core.h>
 #include "ComponentPool.h"
@@ -56,7 +57,7 @@ public:
     void RemoveSystem();
     /** Checks if there is this system in this registry */
     template<typename T>
-    bool HasSystem() const;
+    [[nodiscard]] bool HasSystem() const;
     /** Runs all systems of a certain type*/
     void RunSystems(SystemPhase Phase, float DeltaTime);
     /** Adds a component to a specific entity*/

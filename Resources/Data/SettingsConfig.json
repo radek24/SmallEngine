@@ -1,0 +1,39 @@
+{
+"entries":
+[
+  {
+    "type": "int",
+    "name": "100x Balls",
+    "min": 0,
+    "max": 50,
+    "step": 5,
+    "default": 5
+  },
+  {
+    "type": "enum",
+    "name": "Quality",
+    "options": ["Low","Medium","High","Epic"],
+    "default": 1
+  },
+  {
+    "type": "int",
+    "name": "Difficulty",
+    "min": 0,
+    "max": 10,
+    "step": 1,
+    "default": 5
+  }
+,
+  {
+    "type": "int",
+    "name": "Lives",
+    "min": 1,
+    "max": 25,
+    "step": 1,
+    "default": 3
+  }
+]
+}
+
+
+

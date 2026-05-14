@@ -35,10 +35,10 @@
 static constexpr float WinW = 900.0f;
 static constexpr float WinH = 900.0f;
 
-// ---- constructor ----
+
 AsteroidsLevel::AsteroidsLevel() : RNG(std::random_device{}()) {}
 
-// ---- helpers ----
+
 void AsteroidsLevel::SpawnAsteroid(Vector2f Pos, int Tier, Vector2f Vel)
 {
     float Radius = Tier == 3 ? 46.0f : (Tier == 2 ? 26.0f : 14.0f);
@@ -112,7 +112,6 @@ void AsteroidsLevel::OnEnter()
 
     ParticleTexture = Textures->LoadTexture("Resources/Textures/T_FireworkParticle.png");
 
-
     CurrentRegistry.AddSystem<PlayerLifecycleSystem>(Vector2f{WinW * 0.5f, WinH * 0.5f});
     CurrentRegistry.AddSystem<PlayerInputSystem>();
     CurrentRegistry.AddSystem<AsteroidsMovementSystem>(Window);
@@ -132,7 +131,7 @@ void AsteroidsLevel::OnEnter()
             .Position = {WinW * 0.5f, WinH * 0.5f}
         });
         CurrentRegistry.AddComponent<VelocityComponent>(E, VelocityComponent{});
-        CurrentRegistry.AddComponent<PlayerShipComponent>(E, PlayerShipComponent{});
+        CurrentRegistry.AddComponent<PlayerShipComponent>(E, PlayerShipComponent{.Lives = App::Get().GetSettings()->LineValue<int>("Lives")});
         PlayerEntity = E;
     }
 
@@ -214,7 +213,6 @@ void AsteroidsLevel::OnUpdate(float DeltaTime)
         SetStatusText("GAME OVER", 999.0f);
     }
 
-    // Wave completion
     if (!WaitingForNextWave && !HasAsteroids())
     {
         WaitingForNextWave  = true;

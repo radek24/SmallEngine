@@ -9,6 +9,7 @@
 
 #include "CreditsLevel.h"
 #include "DemoSelectLevel.h"
+#include "SettingLevel.h"
 #include "../Components/BouncyBallComponent.h"
 #include "../Systems/BouncyBallSystem.h"
 #include "ECS/Components/PlaySoundRequestComponent.h"
@@ -58,11 +59,11 @@ void MainMenuLevel::OnEnter() {
     CurrentRegistry.Get<UITextComponent>(CreditsButton).Text = "Credits";
     CurrentRegistry.Get<UIButtonComponent>(CreditsButton).OnMouseUp = OnClickCredits;
 
-    /*
+    auto OnClickSettings = [this](Entity self) { App::Get().QueueLevelTransition<SettingLevel>(); };
     Entity SettingsButton = ClickableButton.Instantiate(CurrentRegistry);
-    CurrentRegistry.Get<TransformComponent>(SettingsButton).Position += Vector2f(0,120);
+    CurrentRegistry.Get<TransformComponent>(SettingsButton).Position += Vector2f(0, 120);
     CurrentRegistry.Get<UITextComponent>(SettingsButton).Text = "Settings";
-    */
+    CurrentRegistry.Get<UIButtonComponent>(SettingsButton).OnMouseUp = OnClickSettings;
 
     auto OnClickExit = [this] (Entity self) {App::Get().Stop();};
     Entity ExitGameButton = ClickableButton.Instantiate(CurrentRegistry);
@@ -80,7 +81,7 @@ void MainMenuLevel::OnEnter() {
     std::uniform_real_distribution<float> SizeDist(0.01, 0.3);
     std::uniform_real_distribution<float> DampingDist(0.5, 0.9);
     std::uniform_real_distribution<float> HueDist(0, 360);
-    for (int i = 0; i < 10000; ++i)
+    for (int i = 0; i < App::Get().GetSettings()->LineValue<int>("100x Balls")*100; ++i)
     {
         auto Ball = BouncyBall.Instantiate(CurrentRegistry);
         CurrentRegistry.Get<BouncyBallComponent>(Ball).Velocity = Vector2f(VelocityDist(RNG),VelocityDist(RNG));

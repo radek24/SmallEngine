@@ -88,6 +88,15 @@ add_library(SmallEngine SHARED
         Source/ECS/Serialization.h
         Source/Engine/SignalManager.cpp
         Source/Engine/SignalManager.h
+        Source/Engine/Settings/SettingLine.h
+        Source/Engine/Settings/SettingManager.cpp
+        Source/Engine/Settings/SettingManager.h
+        Source/Engine/Settings/IntSettingLine.h
+        Source/Engine/Settings/EnumSettingLine.h
+        Source/Engine/Settings/IntSettingLine.cpp
+        Source/Engine/Settings/EnumSettingLine.cpp
+        Source/ECS/Systems/SettingSystem.cpp
+        Source/ECS/Systems/SettingSystem.h
 )
 
 target_include_directories(SmallEngine PUBLIC

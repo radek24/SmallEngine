@@ -16,9 +16,6 @@ public:
 
 App* CreateApplication()
 {
-    int* p = new int[5];                                                                                                                                                                                                                                                                                                p[10] = 42; // heap buffer overflow
-    delete[] p;
-
     Specifications AppSpec;
     AppSpec.AppName = "Sandbox";
     AppSpec.WindowSpecs.Size = Vector2i(900,900);

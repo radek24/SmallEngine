@@ -23,6 +23,7 @@ struct WindowSpecification
     bool IsResizable = true;
     bool IsBorderless = false;
     bool IsFullscreen = false;
+    /** How to handle window resizing */
     LogicalPresentation Presentation = Disabled;
     std::string WindowIcon = "Resources/Textures/T_Icon.png";
 };
@@ -34,5 +35,7 @@ struct Specifications
     int ArgumentCount;
     char** Arguments;
     WindowSpecification WindowSpecs;
+    std::string SettingConfigPath = "Resources/Data/SettingsConfig.json";
+    std::string SettingPath = "Settings.json";
 };
 
