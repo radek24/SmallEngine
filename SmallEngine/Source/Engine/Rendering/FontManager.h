@@ -15,6 +15,7 @@ static constexpr FontHandle INVALID_FONT = 0;
 class FontManager
 {
     // TODO: Trosku moc structu ve tride na muj vkus
+
     struct FontKey
     {
         std::string Path;
@@ -34,7 +35,7 @@ class FontManager
     };
 
     std::unordered_map<FontKey, FontHandle, FontKeyHash> KeyToHandle;
-    std::unordered_map<FontHandle, TTF_Font*>            HandleToFont;
+    std::unordered_map<FontHandle, TTF_Font*> HandleToFont;
     FontHandle NextHandle = 1;
 public:
     FontManager();

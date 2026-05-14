@@ -4,6 +4,11 @@
 
 #include "Registry.h"
 
+#include <fstream>
+#include <Engine/App.h>
+#include <json/json.hpp>
+
+#include "Serialization.h"
 #include "Engine/DebugBreaks.h"
 #include "SDL3/SDL_timer.h"
 
@@ -95,14 +100,40 @@ void Registry::RunSystems(SystemPhase Phase, float DeltaTime)
             #endif
         }
 }
+void Registry::Save(std::string FilePath)
+{
+#ifdef SE_DEBUG
+    LOG_INFO("Saving {0} entities into {1} file", GetNumberOfEntities(), FilePath);
+#endif
+
+    nlohmann::json SaveJson;
+    auto &MetaInfo = SaveJson["meta"];
+    MetaInfo["version"] = ENGINE_VERSION;
+    MetaInfo["save_type"] = "json";
+
+
+
+    std::ofstream o(FilePath);
 
 #ifdef SE_DEBUG
+    o <<  std::setw(4) << SaveJson << std::endl;
+#else
+    o <<  SaveJson << std::endl;
+#endif
+}
+
+void Registry::Load(std::string FilePath)
+{
+}
+
+#ifdef SE_DEBUG
+
 size_t Registry::GetNumberOfEntities() const
 {
     size_t Count = 0;
     for(auto ES : Slots)
     {
-        if(ES.Alive == true)
+        if(ES.Alive)
             Count++;
     }
     return Count;

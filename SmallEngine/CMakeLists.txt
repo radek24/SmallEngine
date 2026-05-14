@@ -85,6 +85,9 @@ add_library(SmallEngine SHARED
         Source/ECS/Systems/ParticleSystem.h
         Source/Engine/SoundManager.cpp
         Source/Engine/SoundManager.h
+        Source/ECS/Serialization.h
+        Source/Engine/SignalManager.cpp
+        Source/Engine/SignalManager.h
 )
 
 target_include_directories(SmallEngine PUBLIC

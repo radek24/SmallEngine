@@ -21,7 +21,10 @@ class Registry;
 class System {
 public:
     virtual ~System() = default;
+    /** Called every frame if registered*/
     virtual void Update(Registry& CurrentRegistry, float DeltaTime) = 0;
+    /** Returns the phase in which we will update this system, override this on every system you create. */
     [[nodiscard]] virtual SystemPhase GetPhase() const = 0;
+    /** Callback for on destruction of any entity, so system can cleanup*/
     virtual void OnEntityDestroyed(Entity E){};
 };

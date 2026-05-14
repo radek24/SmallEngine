@@ -21,6 +21,7 @@ void App::Init(const Specifications &AppSpec)
     AppWindow = Window::Create(AppSpec.WindowSpecs);
     AppRenderer = Renderer::Create(*AppWindow);
     AppSoundManager = std::make_unique<SoundManager>();
+    SignalManager = std::make_unique<class SignalManager>();
     Running = true;
     PrintInfo();
 }
@@ -111,5 +112,6 @@ void App::PrintInfo()
     #ifdef SE_DEBUG
         LOG_INFO("This is debug build");
     #endif
+    LOG_INFO("Engine Version: {0}", ENGINE_VERSION);
 
 }

@@ -18,9 +18,11 @@ public:
 
     /** Iterate over entities with components, Each callback will receive Entity and components.*/
     template<typename Func>
-    void Each(Func&& Callback) {
+    void Each(Func&& Callback)
+    {
         auto* FirstPool = std::get<0>(Pools);
-        for (auto [E, Ignored] : *FirstPool) {
+        for (auto [E, Ignored] : *FirstPool)
+        {
             if (ContainsInAll(E))
                 Callback(E, std::get<ComponentPool<Components>*>(Pools)->Get(E)...);
         }

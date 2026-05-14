@@ -15,7 +15,9 @@ enum LogicalPresentation
     Disabled
 };
 
-struct WindowSpecification {
+struct WindowSpecification
+{
+    /** This will be the window title*/
     std::string Name;
     Vector2i Size;
     bool IsResizable = true;
@@ -27,6 +29,7 @@ struct WindowSpecification {
 
 struct Specifications
 {
+    /** Used for internal identification and such */
     std::string AppName;
     int ArgumentCount;
     char** Arguments;

@@ -82,7 +82,7 @@ void AsteroidsLevel::SetStatusText(const std::string& Text, float Duration)
     if (StatusTextEntity.has_value())
     {
         auto& UTC = CurrentRegistry.Get<UITextComponent>(*StatusTextEntity);
-        UTC.Text    = Text;
+        UTC.Text = Text;
         UTC.Visible = true;
     }
     StatusTextTimer = Duration;
@@ -112,15 +112,6 @@ void AsteroidsLevel::OnEnter()
 
     ParticleTexture = Textures->LoadTexture("Resources/Textures/T_FireworkParticle.png");
 
-    // Pre-reserve pools to avoid mid-frame reallocs during particle bursts.
-    // Worst case: ~6 large asteroids exploding at once = 6*21 = 126 particles + bullets/asteroids.
-    CurrentRegistry.GetPool<TransformComponent>().Reserve(512);
-    CurrentRegistry.GetPool<VelocityComponent>().Reserve(256);
-    CurrentRegistry.GetPool<ParticleComponent>().Reserve(256);
-    CurrentRegistry.GetPool<SpriteComponent>().Reserve(256);
-    CurrentRegistry.GetPool<LifetimeComponent>().Reserve(256);
-    CurrentRegistry.GetPool<AsteroidComponent>().Reserve(64);
-    CurrentRegistry.GetPool<BulletComponent>().Reserve(32);
 
     CurrentRegistry.AddSystem<PlayerLifecycleSystem>(Vector2f{WinW * 0.5f, WinH * 0.5f});
     CurrentRegistry.AddSystem<PlayerInputSystem>();

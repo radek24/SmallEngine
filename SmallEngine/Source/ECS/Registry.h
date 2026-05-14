@@ -35,6 +35,7 @@ public:
     Registry& operator=(const Registry&) = delete;
     Registry(Registry&&) = default;
     Registry& operator=(Registry&&) = default;
+    /** Creates an Entity, returns created entity. This is the only way to create entity*/
     [[nodiscard]] Entity CreateEntity();
     bool DestroyEntity(Entity E);
     /**Checks whether the entity is destroyed or is alive*/
@@ -64,6 +65,11 @@ public:
     /** Shortcut for GetPool<T>().Get(E) */
     template<typename T>
     T& Get(Entity E);
+
+    /** Saves every savable entity in the registry to a file*/
+    void Save(std::string FilePath);
+    /** Loads entities into this registry based on a save file. Will erase every entity and restart this registry while loading.*/
+    void Load(std::string FilePath);
 
     /** Debug probes*/
 #ifdef SE_DEBUG

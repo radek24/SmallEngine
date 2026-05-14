@@ -17,7 +17,6 @@ add_executable(Sandbox
         Source/Levels/ParticlesLevel.h
         Source/Levels/StressTestLevel.cpp
         Source/Levels/StressTestLevel.h
-        # Asteroids
         Source/Components/VelocityComponent.h
         Source/Components/AsteroidComponent.h
         Source/Components/BulletComponent.h
@@ -34,6 +33,8 @@ add_executable(Sandbox
         Source/Systems/AsteroidsCollisionSystem.cpp
         Source/Levels/AsteroidsLevel.h
         Source/Levels/AsteroidsLevel.cpp
+        Source/Levels/SimpleTestSaveLevel.cpp
+        Source/Levels/SimpleTestSaveLevel.h
 )
 
 target_link_libraries(Sandbox PRIVATE SmallEngine)

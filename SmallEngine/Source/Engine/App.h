@@ -6,6 +6,7 @@
 #include <memory>
 
 #include "Level.h"
+#include "SignalManager.h"
 #include "SoundManager.h"
 #include "Rendering/Renderer.h"
 #include "Rendering/Window.h"
@@ -35,6 +36,7 @@ public:
     [[nodiscard]] Renderer* GetRenderer() const {return AppRenderer.get();}
     [[nodiscard]] Window* GetWindow() const {return AppWindow.get();}
     [[nodiscard]] SoundManager* GetSoundManager() const {return AppSoundManager.get();}
+    [[nodiscard]] SignalManager* GetSignalManager() const {return SignalManager.get();}
 
     template<typename TLevel>
     /** Schedules level transition that will happen at the end of the frame so we can clean up everything safely. */
@@ -60,6 +62,7 @@ private:
     std::unique_ptr<SoundManager> AppSoundManager;
     std::unique_ptr<Level> LevelToTransitionTo;
     std::unique_ptr<Level> CurrentLevel;
+    std::unique_ptr<SignalManager> SignalManager;
 };
 
 /** Use this function to pass application as a client*/
