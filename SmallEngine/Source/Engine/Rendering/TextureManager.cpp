@@ -19,7 +19,10 @@ TextureHandle TextureManager::LoadTexture(const std::string& Path)
 
     SDL_Texture* Tex = CurrentRenderer->LoadTexture(Path);
     if(!Tex)
-        LOG_ERROR("Failed to load texture");
+    {
+        LOG_ERROR("Failed to load texture {0}", Path);
+        return INVALID_TEXTURE;
+    }
 
     LOG_INFO("Loaded texture {0}", Path);
     TextureHandle Handle = NextHandle++;

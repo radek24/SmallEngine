@@ -77,7 +77,7 @@ App& App::Get()
 
 float App::GetTime()
 {
-    return static_cast<float>(SDL_GetTicks()) / 1000.0f;
+    return static_cast<float>(static_cast<double>(SDL_GetTicks()) / 1000.0);
 }
 
 void App::SetArgs(int argc, char *argv[])

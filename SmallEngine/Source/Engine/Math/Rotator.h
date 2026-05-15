@@ -15,7 +15,7 @@ public:
     [[nodiscard]] float GetAngleRadians() const { return Angle * (3.14159265359f / 180.0f); }
 
     void SetAngleDegrees(float Angle) {this->Angle = Angle;}
-    void SetAngleRadians(float Angle) {}
+    void SetAngleRadians(float Angle) { this->Angle = Angle * (180.0f / 3.14159265359f); }
 
     Rotator(){Angle = 0;}
     Rotator(float Angle) {this->Angle = Angle;} // NOLINT(*-explicit-constructor)

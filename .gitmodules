@@ -1,15 +1,20 @@
 [submodule "Engine/Vendor/SDL3"]
 	path = Engine/Vendor/SDL3
 	url = https://github.com/libsdl-org/SDL.git
+	shallow = true
 [submodule "SmallEngine/Vendor/SDL3"]
 	path = SmallEngine/Vendor/SDL3
 	url = https://github.com/libsdl-org/SDL
+	shallow = true
 [submodule "SmallEngine/Vendor/SDL_image"]
 	path = SmallEngine/Vendor/SDL_image
 	url = https://github.com/libsdl-org/SDL_image.git
+	shallow = true
 [submodule "SmallEngine/Vendor/SDL_ttf"]
 	path = SmallEngine/Vendor/SDL_ttf
 	url = https://github.com/libsdl-org/SDL_ttf.git
+	shallow = true
 [submodule "SmallEngine/Vendor/SDL_mixer"]
 	path = SmallEngine/Vendor/SDL_mixer
 	url = https://github.com/libsdl-org/SDL_mixer.git
+	shallow = true

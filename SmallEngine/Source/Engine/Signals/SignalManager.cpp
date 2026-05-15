@@ -56,9 +56,6 @@ bool SignalManager::IsAnyoneSubscribed(const std::string &Topic)
 
 void SignalManager::CleanUpAll()
 {
-    for (auto element: CallMap) {
-        element.second.clear();
-    }
     CallMap.clear();
     NextId = 1;
 }

@@ -22,6 +22,7 @@ SoundManager::~SoundManager()
     for (auto& [Handle, Audio] : HandleToAudio)
         MIX_DestroyAudio(Audio);
     MIX_DestroyMixer(Mixer);
+    MIX_Quit();
 }
 
 SoundHandle SoundManager::Load(const std::string& Path)
@@ -31,7 +32,10 @@ SoundHandle SoundManager::Load(const std::string& Path)
 
     MIX_Audio* Audio = MIX_LoadAudio(Mixer, Path.c_str(), true);
     if (!Audio)
+    {
         LOG_ERROR("Failed to load sound {0}: {1}", Path, SDL_GetError());
+        return INVALID_SOUND;
+    }
 
     LOG_INFO("Loaded sound {0}", Path);
     SoundHandle Handle = NextHandle++;

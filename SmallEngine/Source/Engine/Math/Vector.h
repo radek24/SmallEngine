@@ -61,7 +61,7 @@ struct Vector2 {
     /** Returns length of this vector*/
     [[nodiscard]] T Length() const;
     /** Normalize vector IN-PLACE */
-    void Normalize() const;
+    void Normalize();
     /** Gets Normalized vector, doesn't change source */
     [[nodiscard]] Vector2<T> GetNormalized();
     /** Returns rotated vector by rotator around Origin*/
@@ -168,17 +168,16 @@ T Vector2<T>::Length() const
 }
 
 template<typename T>
-void Vector2<T>::Normalize() const
+void Vector2<T>::Normalize()
 {
     const T Scale = this->Length();
-    X *= Scale;
-    Y *= Scale;
+    if (Scale > T(0)) { X /= Scale; Y /= Scale; }
 }
 
 template<typename T>
 Vector2<T> Vector2<T>::GetNormalized()
 {
-    Vector2 Out = this;
+    Vector2 Out = *this;
     Out.Normalize();
     return Out;
 }

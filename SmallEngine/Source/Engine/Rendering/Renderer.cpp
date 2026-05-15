@@ -87,6 +87,7 @@ void Renderer::DrawTextureTinted(const Vector2f &Pos,const Rotator& Rot, const V
 {
     SDL_SetTextureColorModFloat(Texture, Tint.RF(), Tint.GF(), Tint.BF());
     DrawTexture(Pos,Rot,Size,Texture);
+    SDL_SetTextureColorModFloat(Texture, 1.0f, 1.0f, 1.0f);
 }
 
 void Renderer::DrawDebugText(const Vector2f &Pos, const char *s, const Color &TextColor) const
@@ -113,7 +114,8 @@ void Renderer::SetClearColor(const Color &ClearColor)
 
 SDL_Texture * Renderer::LoadTexture(const std::string& Path) const
 {
-    auto T =  IMG_LoadTexture(InternalRenderer,Path.c_str());
-    SDL_SetTextureScaleMode(T, SDL_SCALEMODE_LINEAR);
+    auto T = IMG_LoadTexture(InternalRenderer, Path.c_str());
+    if (T)
+        SDL_SetTextureScaleMode(T, SDL_SCALEMODE_LINEAR);
     return T;
 }

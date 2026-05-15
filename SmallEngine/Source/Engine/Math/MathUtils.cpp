@@ -11,5 +11,6 @@ float MathUtils::Integer8ToFloat(const uint8_t Integer)
 
 uint8_t MathUtils::FloatToInteger8(float Value)
 {
-    return static_cast<uint8_t>(Value * 255.0f);
+    const float Clamped = Value < 0.0f ? 0.0f : (Value > 1.0f ? 1.0f : Value);
+    return static_cast<uint8_t>(Clamped * 255.0f);
 }

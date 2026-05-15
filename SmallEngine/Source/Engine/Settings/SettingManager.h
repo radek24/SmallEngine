@@ -58,7 +58,11 @@ inline int SettingManager::LineValue<int>(const std::string& Name)
 {
     for (auto& Line: Lines) {
         if(Line->Name == Name)
-            return dynamic_cast<IntSettingLine*>(Line.get())->Value;
+        {
+            auto* Casted = dynamic_cast<IntSettingLine*>(Line.get());
+            Assert(Casted && "Setting exists but is not an int setting");
+            return Casted->Value;
+        }
     }
     LOG_FATAL("Did not found {0} int setting", Name);
     return 0;
@@ -69,7 +73,11 @@ inline std::string SettingManager::LineValue<std::string>(const std::string& Nam
 {
     for (auto& Line: Lines) {
         if(Line->Name == Name)
-            return dynamic_cast<EnumSettingLine*>(Line.get())->GetSelectedOption();
+        {
+            auto* Casted = dynamic_cast<EnumSettingLine*>(Line.get());
+            Assert(Casted && "Setting exists but is not an enum setting");
+            return Casted->GetSelectedOption();
+        }
     }
     LOG_FATAL("Did not found {0} string setting", Name);
     return "";
@@ -80,7 +88,11 @@ inline float SettingManager::LineValue<float>(const std::string& Name)
 {
     for (auto& Line: Lines) {
         if(Line->Name == Name)
-            return dynamic_cast<FloatSettingLine*>(Line.get())->Value;
+        {
+            auto* Casted = dynamic_cast<FloatSettingLine*>(Line.get());
+            Assert(Casted && "Setting exists but is not a float setting");
+            return Casted->Value;
+        }
     }
     LOG_FATAL("Did not found {0} float setting", Name);
     return 0;
