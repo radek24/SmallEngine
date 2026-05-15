@@ -1,7 +1,7 @@
 #include "SettingLevel.h"
 
 #include <Engine/App.h>
-#include <Engine/EventHandler.h>
+#include <Engine/Input/EventHandler.h>
 
 #include "DirtySettingsLevel.h"
 #include "MainMenuLevel.h"

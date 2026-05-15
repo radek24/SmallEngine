@@ -5,7 +5,7 @@
 #pragma once
 #include <ECS/Registry.h>
 
-#include "SoundManager.h"
+#include "Sounds/SoundManager.h"
 #include "Rendering/FontManager.h"
 #include "Rendering/Renderer.h"
 #include "Rendering/TextureManager.h"

@@ -23,6 +23,7 @@ struct Subscription
     std::function<void(SignalPayload&)> Callback;
 };
 
+/** Manages subscribers, dispatchers and messeges between them*/
 class SE_API SignalManager
 {
 public:

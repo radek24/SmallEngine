@@ -21,6 +21,8 @@ void SettingManager::LoadFromJson(const nlohmann::json& config)
             AddLine(std::make_unique<IntSettingLine>(Entry));
         else if(Entry["type"] == "enum")
             AddLine(std::make_unique<EnumSettingLine>(Entry));
+        else if(Entry["type"] == "float")
+            AddLine(std::make_unique<FloatSettingLine>(Entry));
     }
 }
 

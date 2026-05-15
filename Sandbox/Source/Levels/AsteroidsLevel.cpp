@@ -2,9 +2,10 @@
 
 #include <cmath>
 #include <string>
+#include "../AsteroidsSignals.h"
 
 #include <Engine/App.h>
-#include <Engine/EventHandler.h>
+#include <Engine/Input/EventHandler.h>
 #include <Engine/Math/Rotator.h>
 
 #include "DemoSelectLevel.h"
@@ -31,6 +32,7 @@
 #include "../Systems/PlayerInputSystem.h"
 #include "../Systems/PlayerLifecycleSystem.h"
 #include "ECS/Systems/RenderSystem.h"
+#include "Engine/Signals/SignalManager.h"
 
 static constexpr float WinW = 900.0f;
 static constexpr float WinH = 900.0f;
@@ -88,19 +90,6 @@ void AsteroidsLevel::SetStatusText(const std::string& Text, float Duration)
     StatusTextTimer = Duration;
 }
 
-void AsteroidsLevel::UpdateHUD()
-{
-    if (!PlayerEntity.has_value()) return;
-    auto& PSC = CurrentRegistry.Get<PlayerShipComponent>(*PlayerEntity);
-
-    if (ScoreTextEntity.has_value())
-        CurrentRegistry.Get<UITextComponent>(*ScoreTextEntity).Text =
-            "SCORE: " + std::to_string(PSC.Score);
-
-    if (LivesTextEntity.has_value())
-        CurrentRegistry.Get<UITextComponent>(*LivesTextEntity).Text =
-            "LIVES: " + std::to_string(std::max(PSC.Lives, 0));
-}
 
 void AsteroidsLevel::OnEnter()
 {
@@ -147,8 +136,9 @@ void AsteroidsLevel::OnEnter()
     {
         Entity E = CurrentRegistry.CreateEntity();
         CurrentRegistry.AddComponent<TransformComponent>(E, TransformComponent{{20, 50}});
+        const std::string LivesText = "LIVES: " + std::to_string(App::Get().GetSettings()->LineValue<int>("Lives"));
         CurrentRegistry.AddComponent<UITextComponent>(E, UITextComponent{
-            .Text = "LIVES: 3", .FontPath = "Resources/Fonts/PacFont.ttf", .FontSize = 22
+            .Text = LivesText, .FontPath = "Resources/Fonts/PacFont.ttf", .FontSize = 22
         });
         LivesTextEntity = E;
     }
@@ -174,7 +164,30 @@ void AsteroidsLevel::OnEnter()
         });
     }
 
+    auto& SM = *App::Get().GetSignalManager();
+
+    ScoreSubId = SM.Subscribe(Signal_AsteroidDestroyed, [this](SignalPayload& P)
+    {
+        if (!PlayerEntity.has_value() || !ScoreTextEntity.has_value()) return;
+        auto& PSC = CurrentRegistry.Get<PlayerShipComponent>(*PlayerEntity);
+        CurrentRegistry.Get<UITextComponent>(*ScoreTextEntity).Text = "SCORE: " + std::to_string(PSC.Score);
+    });
+
+    LivesSubId = SM.Subscribe(Signal_PlayerDamaged, [this](SignalPayload&)
+    {
+        if (!PlayerEntity.has_value() || !LivesTextEntity.has_value()) return;
+        auto& PSC = CurrentRegistry.Get<PlayerShipComponent>(*PlayerEntity);
+        CurrentRegistry.Get<UITextComponent>(*LivesTextEntity).Text = "LIVES: " + std::to_string(std::max(PSC.Lives, 0));
+    });
+
     SpawnWave(3 + WaveNumber);
+}
+
+void AsteroidsLevel::OnExit()
+{
+    auto& SM = *App::Get().GetSignalManager();
+    SM.Unsubscribe(ScoreSubId);
+    SM.Unsubscribe(LivesSubId);
 }
 
 void AsteroidsLevel::OnUpdate(float DeltaTime)
@@ -202,7 +215,6 @@ void AsteroidsLevel::OnUpdate(float DeltaTime)
         GameOverTimer -= DeltaTime;
         if (GameOverTimer <= 0.0f)
             App::Get().QueueLevelTransition<DemoSelectLevel>();
-        UpdateHUD();
         return;
     }
 
@@ -230,5 +242,4 @@ void AsteroidsLevel::OnUpdate(float DeltaTime)
         }
     }
 
-    UpdateHUD();
 }

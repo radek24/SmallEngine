@@ -6,7 +6,7 @@
 #pragma once
 #include <unordered_set>
 #include "Engine/Rendering/Window.h"
-#include "Math/MathForward.h"
+#include "Engine/Math/MathForward.h"
 #include "Engine/Core.h"
 
 enum class MouseButton

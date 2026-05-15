@@ -8,7 +8,7 @@
 #include <SDL_image/include/SDL3_image/SDL_image.h>
 
 #include "DebugBreaks.h"
-#include "EventHandler.h"
+#include "Input/EventHandler.h"
 
 static App* Application = nullptr;
 

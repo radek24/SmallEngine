@@ -8,11 +8,12 @@
 #include <Engine/DebugBreaks.h>
 
 #include "EnumSettingLine.h"
+#include "FloatSettingLine.h"
 #include "IntSettingLine.h"
 #include "SettingLine.h"
 #include "Engine/Core.h"
 
-
+/** Managers game configuration*/
 class SE_API SettingManager
 {
 public:
@@ -73,3 +74,15 @@ inline std::string SettingManager::LineValue<std::string>(const std::string& Nam
     LOG_FATAL("Did not found {0} string setting", Name);
     return "";
 }
+
+template<>
+inline float SettingManager::LineValue<float>(const std::string& Name)
+{
+    for (auto& Line: Lines) {
+        if(Line->Name == Name)
+            return dynamic_cast<FloatSettingLine*>(Line.get())->Value;
+    }
+    LOG_FATAL("Did not found {0} float setting", Name);
+    return 0;
+}
+

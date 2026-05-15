@@ -5,7 +5,7 @@
 
 #pragma once
 #include "ECS/System.h"
-#include "Engine/SoundManager.h"
+#include "Engine/Sounds/SoundManager.h"
 
 
 class SE_API SoundSystem : public System

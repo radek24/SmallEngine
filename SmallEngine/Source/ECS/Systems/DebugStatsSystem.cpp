@@ -5,7 +5,7 @@
 #include "DebugStatsSystem.h"
 
 #include <ECS/Registry.h>
-#include <Engine/EventHandler.h>
+#include <Engine/Input/EventHandler.h>
 
 void DebugStatsSystem::Update(Registry &CurrentRegistry, float DeltaTime)
 {

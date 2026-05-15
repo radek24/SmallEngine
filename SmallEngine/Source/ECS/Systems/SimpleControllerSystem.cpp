@@ -5,7 +5,7 @@
 #include "SimpleControllerSystem.h"
 
 #include <ECS/Registry.h>
-#include <Engine/EventHandler.h>
+#include <Engine/Input/EventHandler.h>
 
 #include "ECS/Components/SimpleKeyboardControllerComponent.h"
 #include "ECS/Components/TransformComponent.h"

@@ -27,7 +27,7 @@ add_library(SmallEngine SHARED
         Source/Engine/Rendering/Window.cpp
         Source/Engine/Rendering/Renderer.cpp
         Source/Engine/Math/MathUtils.cpp
-        Source/Engine/EventHandler.cpp
+        Source/Engine/Input/EventHandler.cpp
         Source/Engine/Level.cpp
         Source/Engine/Level.h
         Source/Engine/Math/Transform.h
@@ -83,11 +83,11 @@ add_library(SmallEngine SHARED
         Source/ECS/Components/ParticleComponent.h
         Source/ECS/Systems/ParticleSystem.cpp
         Source/ECS/Systems/ParticleSystem.h
-        Source/Engine/SoundManager.cpp
-        Source/Engine/SoundManager.h
+        Source/Engine/Sounds/SoundManager.cpp
+        Source/Engine/Sounds/SoundManager.h
         Source/ECS/Serialization.h
-        Source/Engine/SignalManager.cpp
-        Source/Engine/SignalManager.h
+        Source/Engine/Signals/SignalManager.cpp
+        Source/Engine/Signals/SignalManager.h
         Source/Engine/Settings/SettingLine.h
         Source/Engine/Settings/SettingManager.cpp
         Source/Engine/Settings/SettingManager.h
@@ -97,6 +97,7 @@ add_library(SmallEngine SHARED
         Source/Engine/Settings/EnumSettingLine.cpp
         Source/ECS/Systems/SettingSystem.cpp
         Source/ECS/Systems/SettingSystem.h
+        Source/Engine/Settings/FloatSettingLine.cpp
 )
 
 target_include_directories(SmallEngine PUBLIC

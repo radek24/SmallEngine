@@ -4,7 +4,7 @@
 
 #include "BouncyBallSystem.h"
 #include <ECS/Registry.h>
-#include <Engine/EventHandler.h>
+#include <Engine/Input/EventHandler.h>
 
 #include "../Components/BouncyBallComponent.h"
 #include "ECS/Components/TransformComponent.h"

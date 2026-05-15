@@ -2,7 +2,7 @@
 
 #include <cmath>
 #include <ECS/Registry.h>
-#include <Engine/EventHandler.h>
+#include <Engine/Input/EventHandler.h>
 #include "Engine/Math/Rotator.h"
 #include "ECS/Components/LifetimeComponent.h"
 #include "ECS/Components/TransformComponent.h"

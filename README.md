@@ -1,10 +1,20 @@
 # Small ECS Engine
-Rozhodl jsem se vytvořit relativně jednoduchý herní engine, využívající architekturu ECS (entity component system). Protože
+Rozhodl jsem se vytvořit 2D herní engine, využívající architekturu ECS (entity component system). Protože
 mi tenhto způsob handlování gameobjektů přišel zajímavý a chtěl jsem se o něm více naučit.
+
+## Instrukce k buildu
+Protože engine kompiluje všechny dependencies from source a má je natahané jako git moduly, tenhle projekt by se fakt nevešel na kelvin. Tady je [Github](https://github.com/radek24/SmallEngine) ze kterého jde projekt naklonovat a zkompilovat.
+
+### Podporované platformy
+Windows a Mac
+
+## Build konfigurace
+- **Debug** - Má SE_DEBUG makro, debug informace, timery atd 
+- **Release** - Má SE_RELEASE makro, optimalizace, žádné timery, logování.
 
 ## Struktura
 Celý projekt je rozdělený na tři části.
-- **SmallEngine**
+- **SmallEngine** - Kompiluje se do dll, umožnuje uživateli enginu používat exposnuté funkce
 - **Sandbox** - Showcase funkcionality enginu, tato část se kompiluje do spustitelného .exe a jde na něm vidět funcionalita enginu a možnosti vlastního rozšíření
 - **Tests** -  Testy, testují základní funkcionalitu enginu, netestují SDL, pouze vlastní funcionalitu
 
@@ -26,6 +36,7 @@ vykreslování, input, managment levelů, entit, komponent a systémů a další
 - **Komponenty** - POD strukty
 - **Prefab** - Objekt který má více nastavených komponentů na sobě, dělá se z něho entita
 - **SignalManager** - Objekt který řídí obsrver -> subscriber logiku, která jde použít třeba při gameplay eventech. Subscribe("PlayerDie")
+- **SettingManager** - Objekt řídící nastavení hry, umí se automaticky celý vykreslit a nastavuje se podle configu.
 
 ## Sandbox
 Likuje dll SmallEnginu, ukazuje že můžeme jakkoliv rožšířit systémy, komponenty a využít existující třídy díky SE_DLL makru.
@@ -55,3 +66,4 @@ Cmake
 - Vlastní asset manager schopný ukládat / načítat assety z disku
 - Vylepšit Rendering aby mohl podporovat i jiné API (Vulkan, DX12 atd.)
 - Pořádný physics systém
+- Dependency injection pro managery

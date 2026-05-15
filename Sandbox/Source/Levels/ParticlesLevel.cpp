@@ -6,7 +6,7 @@
 
 #include <random>
 #include <Engine/App.h>
-#include <Engine/EventHandler.h>
+#include <Engine/Input/EventHandler.h>
 #include <Engine/Math/MathUtils.h>
 
 #include "DemoSelectLevel.h"

@@ -5,7 +5,7 @@
 #include "DebugDrawUISystem.h"
 
 #include <ECS/Registry.h>
-#include <Engine/EventHandler.h>
+#include <Engine/Input/EventHandler.h>
 
 #include "ECS/Components/TransformComponent.h"
 #include "ECS/Components/UIButtonComponent.h"

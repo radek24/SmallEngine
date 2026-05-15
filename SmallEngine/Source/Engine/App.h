@@ -6,8 +6,8 @@
 #include <memory>
 
 #include "Level.h"
-#include "SignalManager.h"
-#include "SoundManager.h"
+#include "Signals/SignalManager.h"
+#include "Sounds/SoundManager.h"
 #include "Rendering/Renderer.h"
 #include "Rendering/Window.h"
 #include "Engine/Specifications.h"

@@ -4,7 +4,7 @@
 
 #include "Level.h"
 #include "App.h"
-#include "EventHandler.h"
+#include "Input/EventHandler.h"
 #include "ECS/Systems/DebugDrawTransformSystem.h"
 #include "ECS/Systems/DebugDrawUISystem.h"
 #include "ECS/Systems/DebugStatsSystem.h"

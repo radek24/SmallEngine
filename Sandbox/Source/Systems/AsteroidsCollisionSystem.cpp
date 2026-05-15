@@ -6,6 +6,8 @@
 #include <vector>
 
 #include <ECS/Registry.h>
+#include <Engine/App.h>
+#include "../AsteroidsSignals.h"
 #include "ECS/Components/LifetimeComponent.h"
 #include "ECS/Components/ParticleComponent.h"
 #include "ECS/Components/RotatorComponent.h"
@@ -111,8 +113,12 @@ void AsteroidsCollisionSystem::Update(Registry& CurrentRegistry, float DeltaTime
                 CurrentRegistry.MakeView<PlayerShipComponent>().Each(
                     [&](Entity, PlayerShipComponent& PSC)
                     {
-                        int Score = Ast.Tier == 3 ? 20 : (Ast.Tier == 2 ? 50 : 100);
-                        PSC.Score += Score;
+                        int Points = Ast.Tier == 3 ? 20 : (Ast.Tier == 2 ? 50 : 100);
+                        PSC.Score += Points;
+
+                        AsteroidDestroyedPayload P;
+                        P.Points = Points;
+                        App::Get().GetSignalManager()->Dispatch(Signal_AsteroidDestroyed, P);
                     });
 
                 SpawnExplosion(CurrentRegistry, Ast.Pos, Ast.Tier);
@@ -140,6 +146,7 @@ void AsteroidsCollisionSystem::Update(Registry& CurrentRegistry, float DeltaTime
                     PSC.Lives--;
                     PSC.IsDead       = true;
                     PSC.RespawnTimer = 2.0f;
+                    App::Get().GetSignalManager()->Dispatch(Signal_PlayerDamaged, SignalPayload::GetEmpty());
                     SpawnExplosion(CurrentRegistry, PTC.Position, 2);
                     break;
                 }

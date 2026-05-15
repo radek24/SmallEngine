@@ -3,6 +3,7 @@
 #include <random>
 #include "Engine/Level.h"
 #include "Engine/Rendering/TextureManager.h"
+#include "Engine/Signals/SignalManager.h"
 
 class AsteroidsLevel : public Level
 {
@@ -10,8 +11,11 @@ public:
     AsteroidsLevel();
     void OnEnter() override;
     void OnUpdate(float DeltaTime) override;
+    void OnExit() override;
 
 private:
+    SubscriptionId ScoreSubId = 0;
+    SubscriptionId LivesSubId = 0;
     std::optional<Entity> PlayerEntity;
     std::optional<Entity> ScoreTextEntity;
     std::optional<Entity> LivesTextEntity;
@@ -32,5 +36,4 @@ private:
     void SpawnAsteroid(Vector2f Pos, int Tier, Vector2f Vel);
     bool HasAsteroids();
     void SetStatusText(const std::string& Text, float Duration);
-    void UpdateHUD();
 };
