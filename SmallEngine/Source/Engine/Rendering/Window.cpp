@@ -29,7 +29,7 @@ Window::Window(const WindowSpecification &spec)
     if(spec.IsFullscreen)
         Flags = Flags | SDL_WINDOW_FULLSCREEN;
 
-    //Flags = Flags | SDL_WINDOW_HIGH_PIXEL_DENSITY;
+    Flags = Flags | SDL_WINDOW_HIGH_PIXEL_DENSITY;
 
     NativeHandle = SDL_CreateWindow(spec.Name.c_str(), spec.Size.X, spec.Size.Y, Flags);
     if(!NativeHandle)
