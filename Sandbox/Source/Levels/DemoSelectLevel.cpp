@@ -29,9 +29,9 @@ struct DemoButtonInfo
 std::vector<DemoButtonInfo>  ButtonInfos =
 {
     {"Component Showcase", [] (Entity self) {App::Get().QueueLevelTransition<ComponentShowcase>();}},
-    {"Asteroids",          [] (Entity self) {App::Get().QueueLevelTransition<AsteroidsLevel>();}},
-    {"Particles",          [] (Entity self) {App::Get().QueueLevelTransition<ParticlesLevel>();}},
-    {"Entity Stress Test", [] (Entity self) {App::Get().QueueLevelTransition<StressTestLevel>();}}
+    {"Asteroids", [] (Entity self) {App::Get().QueueLevelTransition<AsteroidsLevel>();}},
+    {"Particles", [] (Entity self) {App::Get().QueueLevelTransition<ParticlesLevel>();}},
+    {"Entity Stress Test",[] (Entity self) {App::Get().QueueLevelTransition<StressTestLevel>();}}
 };
 
 void DemoSelectLevel::OnEnter()
@@ -46,7 +46,7 @@ void DemoSelectLevel::OnEnter()
 
     BackButtonPrefab::Create<MainMenuLevel>(CurrentRegistry);
 
-    auto OnHoverCall   = [this] (Entity self){ CurrentRegistry.GetPool<UITextComponent>().Get(self).FontColor = Color(0.5f); };
+    auto OnHoverCall = [this] (Entity self){ CurrentRegistry.GetPool<UITextComponent>().Get(self).FontColor = Color(0.5f); };
     auto OnUnhoverCall = [this] (Entity self){ CurrentRegistry.GetPool<UITextComponent>().Get(self).FontColor = Color(1); };
     Prefab ClickableButton;
     ClickableButton.Add<TransformComponent>({{20.0f, 50.0f},{1.0f, 1.0f},{0.0f}});

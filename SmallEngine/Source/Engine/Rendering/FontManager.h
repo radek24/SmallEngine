@@ -19,7 +19,7 @@ class FontManager
     struct FontKey
     {
         std::string Path;
-        int         Size;
+        int Size;
         bool operator==(const FontKey& Other) const
         {
             return Path == Other.Path && Size == Other.Size;

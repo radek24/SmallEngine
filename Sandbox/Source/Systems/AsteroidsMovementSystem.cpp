@@ -19,9 +19,9 @@ void AsteroidsMovementSystem::Update(Registry& CurrentRegistry, float DeltaTime)
 
             TC.Position += VC.Velocity * DeltaTime;
 
-            if      (TC.Position.X < -Pad)  TC.Position.X = W + Pad;
+            if (TC.Position.X < -Pad)  TC.Position.X = W + Pad;
             else if (TC.Position.X > W + Pad) TC.Position.X = -Pad;
-            if      (TC.Position.Y < -Pad)  TC.Position.Y = H + Pad;
+            if (TC.Position.Y < -Pad)  TC.Position.Y = H + Pad;
             else if (TC.Position.Y > H + Pad) TC.Position.Y = -Pad;
         });
 }

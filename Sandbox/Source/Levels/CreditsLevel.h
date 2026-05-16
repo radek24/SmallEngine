@@ -10,7 +10,8 @@ class CreditsLevel :public Level
 {
 public:
     void OnEnter() override;
-    std::vector<std::string> Credits ={"This game and engine",
+    std::vector<std::string> Credits ={
+        "This game and engine",
         "was created for CPP course",
         "By Radovan Stastny",
         " ",

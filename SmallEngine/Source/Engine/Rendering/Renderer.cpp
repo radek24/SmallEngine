@@ -15,7 +15,7 @@ std::unique_ptr<Renderer> Renderer::Create(Window &window)
 
 Renderer::Renderer(Window &window)
 {
-    InternalRenderer = SDL_CreateRenderer(window.GetNativeHandle(), nullptr);
+    InternalRenderer = window.ConstructRenderer();
     SDL_SetRenderVSync(InternalRenderer, 1);
     SDL_RendererLogicalPresentation Presentation = SDL_LOGICAL_PRESENTATION_DISABLED;
     switch (window.GetSpecs().Presentation)

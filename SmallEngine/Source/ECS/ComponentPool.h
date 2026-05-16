@@ -63,7 +63,7 @@ public:
     struct Iterator
     {
         ComponentPool* Pool;
-        size_t         Index;
+        size_t Index;
 
         Entry operator*() const
         {

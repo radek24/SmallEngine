@@ -20,13 +20,6 @@
 #include "../Components/PlayerShipComponent.h"
 #include "../Components/VelocityComponent.h"
 
-static float RadiusForTier(int Tier)
-{
-    if (Tier == 3) return 46.0f;
-    if (Tier == 2) return 26.0f;
-    return 14.0f;
-}
-
 AsteroidsCollisionSystem::AsteroidsCollisionSystem(TextureHandle ParticleTexture, float ShipRadius, float BulletRadius)
     : ParticleTexture(ParticleTexture)
     , ShipRadius(ShipRadius)
@@ -50,13 +43,10 @@ void AsteroidsCollisionSystem::SpawnExplosion(Registry& R, Vector2f Pos, int Tie
 
         Entity E = R.CreateEntity();
         R.AddComponent<TransformComponent>(E, TransformComponent{.Position = Pos, .Scale = {0.08f, 0.08f}});
-        R.AddComponent<SpriteComponent>(E, SpriteComponent{
-            .Texture = ParticleTexture,
-            .Tint    = Color::FromHSV(BaseHue + HueDist(RNG), 0.9f, 1.0f)
-        });
+        R.AddComponent<SpriteComponent>(E, SpriteComponent{.Texture = ParticleTexture,.Tint = Color::FromHSV(BaseHue + HueDist(RNG), 0.9f, 1.0f)});
         R.AddComponent<ParticleComponent>(E, ParticleComponent{
-            .Velocity     = {cosf(Angle.GetAngleRadians()) * Speed, sinf(Angle.GetAngleRadians()) * Speed},
-            .Damping      = 0.93f,
+            .Velocity = {cosf(Angle.GetAngleRadians()) * Speed, sinf(Angle.GetAngleRadians()) * Speed},
+            .Damping = 0.93f,
             .GravityScale = 0.0f
         });
         R.AddComponent<LifetimeComponent>(E, LifetimeComponent{LifeDist(RNG)});
@@ -70,16 +60,16 @@ void AsteroidsCollisionSystem::SpawnChildAsteroid(Registry& R, Vector2f Pos, int
     std::uniform_real_distribution<float> SpinDist(-50.0f, 50.0f);
 
     Rotator A = AngleDist(RNG);
-    float S = SpeedDist(RNG);
+    float   S = SpeedDist(RNG);
 
     Entity E = R.CreateEntity();
     R.AddComponent<TransformComponent>(E, TransformComponent{Pos});
     R.AddComponent<VelocityComponent>(E, VelocityComponent{{cosf(A.GetAngleRadians()) * S, sinf(A.GetAngleRadians()) * S}});
-    R.AddComponent<AsteroidComponent>(E, AsteroidComponent{Tier, RadiusForTier(Tier)});
+    R.AddComponent<AsteroidComponent>(E, AsteroidComponent::FromTier(Tier));
     R.AddComponent<RotatorComponent>(E, RotatorComponent{SpinDist(RNG)});
 }
 
-void AsteroidsCollisionSystem::Update(Registry& CurrentRegistry, float DeltaTime)
+void AsteroidsCollisionSystem::Update(Registry& CurrentRegistry, float)
 {
     struct AstData { Entity E; Vector2f Pos; float Radius; int Tier; };
     struct BulData { Entity E; Vector2f Pos; };
@@ -99,6 +89,9 @@ void AsteroidsCollisionSystem::Update(Registry& CurrentRegistry, float DeltaTime
     std::unordered_set<Entity> DeadAsteroids;
     std::vector<std::pair<Vector2f, int>> Splits;
 
+    PlayerShipComponent* PlayerPSC = nullptr;
+    CurrentRegistry.MakeView<PlayerShipComponent>().Each([&](Entity, PlayerShipComponent& PSC) { PlayerPSC = &PSC; });
+
     for (auto& Bul : Bullets)
     {
         for (auto& Ast : Asteroids)
@@ -110,16 +103,15 @@ void AsteroidsCollisionSystem::Update(Registry& CurrentRegistry, float DeltaTime
                 DeadBullets.insert(Bul.E);
                 DeadAsteroids.insert(Ast.E);
 
-                CurrentRegistry.MakeView<PlayerShipComponent>().Each(
-                    [&](Entity, PlayerShipComponent& PSC)
-                    {
-                        int Points = Ast.Tier == 3 ? 20 : (Ast.Tier == 2 ? 50 : 100);
-                        PSC.Score += Points;
+                if (PlayerPSC)
+                {
+                    int Points = Ast.Tier == 3 ? 20 : (Ast.Tier == 2 ? 50 : 100);
+                    PlayerPSC->Score += Points;
 
-                        AsteroidDestroyedPayload P;
-                        P.Points = Points;
-                        App::Get().GetSignalManager()->Dispatch(Signal_AsteroidDestroyed, P);
-                    });
+                    ScoreChangedPayload ScoreP;
+                    ScoreP.NewScore = PlayerPSC->Score;
+                    App::Get().GetSignalManager()->Dispatch(Signal_ScoreChanged, ScoreP);
+                }
 
                 SpawnExplosion(CurrentRegistry, Ast.Pos, Ast.Tier);
 
@@ -146,7 +138,11 @@ void AsteroidsCollisionSystem::Update(Registry& CurrentRegistry, float DeltaTime
                     PSC.Lives--;
                     PSC.IsDead       = true;
                     PSC.RespawnTimer = 2.0f;
-                    App::Get().GetSignalManager()->Dispatch(Signal_PlayerDamaged, SignalPayload::GetEmpty());
+
+                    LivesChangedPayload LivesP;
+                    LivesP.NewLives = PSC.Lives;
+                    App::Get().GetSignalManager()->Dispatch(Signal_LivesChanged, LivesP);
+
                     SpawnExplosion(CurrentRegistry, PTC.Position, 2);
                     break;
                 }

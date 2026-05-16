@@ -31,10 +31,13 @@ add_executable(Sandbox
         Source/Systems/PlayerLifecycleSystem.cpp
         Source/Systems/AsteroidsCollisionSystem.h
         Source/Systems/AsteroidsCollisionSystem.cpp
+        Source/Systems/AsteroidsGameSystem.h
+        Source/Systems/AsteroidsGameSystem.cpp
+        Source/Systems/AsteroidsSoundSystem.h
+        Source/Systems/AsteroidsSoundSystem.cpp
+        Source/Components/AsteroidsGameTags.h
         Source/Levels/AsteroidsLevel.h
         Source/Levels/AsteroidsLevel.cpp
-        Source/Levels/SimpleTestSaveLevel.cpp
-        Source/Levels/SimpleTestSaveLevel.h
         Source/Levels/SettingLevel.cpp
         Source/Levels/SettingLevel.h
         Source/Levels/DirtySettingsLevel.cpp

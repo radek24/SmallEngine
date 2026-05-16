@@ -2,10 +2,12 @@
 
 #include <cmath>
 #include <ECS/Registry.h>
+#include <Engine/App.h>
 #include <Engine/Input/EventHandler.h>
 #include "Engine/Math/Rotator.h"
 #include "ECS/Components/LifetimeComponent.h"
 #include "ECS/Components/TransformComponent.h"
+#include "../AsteroidsSignals.h"
 #include "../Components/BulletComponent.h"
 #include "../Components/PlayerShipComponent.h"
 #include "../Components/VelocityComponent.h"
@@ -16,13 +18,14 @@ PlayerInputSystem::PlayerInputSystem(float RotationSpeed, float ThrustForce, flo
 
 void PlayerInputSystem::SpawnBullet(Registry& R, Vector2f Pos, Rotator Rot) const
 {
-    const float A    = Rot.GetAngleRadians();
-    Vector2f Fwd = {sinf(A), -cosf(A)};
+    const float A = Rot.GetAngleRadians();
+    Vector2f Fwd  = {sinf(A), -cosf(A)};
     Entity E = R.CreateEntity();
     R.AddComponent<TransformComponent>(E, TransformComponent{Pos + Fwd * 20.0f});
     R.AddComponent<VelocityComponent>(E, VelocityComponent{Fwd * BulletSpeed});
     R.AddComponent<BulletComponent>(E, BulletComponent{});
     R.AddComponent<LifetimeComponent>(E, LifetimeComponent{1.5f});
+    App::Get().GetSignalManager()->Dispatch(Signal_BulletFired, SignalPayload::GetEmpty());
 }
 
 void PlayerInputSystem::Update(Registry& CurrentRegistry, float DeltaTime)

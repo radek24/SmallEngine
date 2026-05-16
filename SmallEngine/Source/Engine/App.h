@@ -61,10 +61,10 @@ private:
     std::unique_ptr<Window> AppWindow;
     std::unique_ptr<Renderer> AppRenderer;
     std::unique_ptr<SoundManager> AppSoundManager;
-    std::unique_ptr<Level> LevelToTransitionTo;
-    std::unique_ptr<Level> CurrentLevel;
     std::unique_ptr<SignalManager> SignalManager;
     std::unique_ptr<SettingManager> Settings;
+    std::unique_ptr<Level> LevelToTransitionTo;
+    std::unique_ptr<Level> CurrentLevel;
 };
 
 /** Use this function to pass application as a client*/

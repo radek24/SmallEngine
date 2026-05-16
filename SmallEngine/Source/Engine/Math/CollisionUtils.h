@@ -9,7 +9,5 @@
 class CollisionUtils
 {
 public:
-    [[nodiscard]] static bool IsPointInsideRectangle(Vector2f Point, Vector2f TopLeft,Vector2f BottomRight);
-private:
-
+    [[nodiscard]] static bool IsPointInsideRectangle(const Vector2f& Point, const Vector2f &TopLeft, const Vector2f &BottomRight);
 };

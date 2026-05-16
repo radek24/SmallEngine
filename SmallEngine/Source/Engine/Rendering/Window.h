@@ -17,10 +17,12 @@ public:
     /** Poll every event for event handler*/
     void PollEvents(){};
 
+    /** Returns current window Width*/
     [[nodiscard]] uint32_t GetWidth()  const;
+    /** Returns current window Height*/
     [[nodiscard]] uint32_t GetHeight() const;
-    /** Return native SDL handle*/
-    [[nodiscard]] SDL_Window* GetNativeHandle() const;
+    /** Construct SDL renderer from this window */
+    [[nodiscard]] SDL_Renderer* ConstructRenderer() const;
     /** Returns this window own specifications*/
     [[nodiscard]] WindowSpecification GetSpecs();
 private:

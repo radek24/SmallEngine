@@ -49,7 +49,7 @@ public:
     /** Get view with specific components.*/
     template<typename... Components>
     View<Components...> MakeView();
-    /** Adds system to a registry, currently doesn't check if the system is already added*/
+    /** Adds system to a registry*/
     template<typename T, typename... Args>
     T& AddSystem(Args&&... args);
     /** Removes a system from a registry */

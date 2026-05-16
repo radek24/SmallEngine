@@ -66,9 +66,9 @@ uint32_t Window::GetHeight() const
     return h;
 }
 
-SDL_Window * Window::GetNativeHandle() const
+SDL_Renderer * Window::ConstructRenderer() const
 {
-    return NativeHandle;
+    return SDL_CreateRenderer(NativeHandle, nullptr);
 }
 
 WindowSpecification Window::GetSpecs()

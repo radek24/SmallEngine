@@ -7,9 +7,8 @@
 #include "../Components/VelocityComponent.h"
 
 PlayerLifecycleSystem::PlayerLifecycleSystem(
-    Vector2f RespawnPos, float RespawnDelay, float InvincibleTime, float BlinkPeriod)
+    Vector2f RespawnPos, float InvincibleTime, float BlinkPeriod)
     : RespawnPos(RespawnPos)
-    , RespawnDelay(RespawnDelay)
     , InvincibleTime(InvincibleTime)
     , BlinkPeriod(BlinkPeriod)
 {}

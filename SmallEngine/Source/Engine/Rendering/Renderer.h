@@ -24,7 +24,7 @@ public:
     void EndFrame() const;
     /** Clears screen with color specified*/
     void Clear() const;
-
+    /** Set Background color for this renderenr, persists for whole lifetime of a app*/
     void SetClearColor(const Color& ClearColor);
 
     /** Loads texture from a path, do not use directly, prefer TextureManager*/
@@ -37,6 +37,8 @@ public:
     void DrawTextureTinted(const Vector2f& Pos,const Rotator& Rot, const Vector2f& Size, SDL_Texture* Texture,const Color& Tint) const;
     void DrawDebugText(const Vector2f &Pos, const char *s, const Color &TextColor = Color(1,1,1)) const;
     void DrawLine(const Vector2f &StartPos,const Vector2f &EndPos,float Thickness = 1.0, const Color &LineColor = Color(1,1,1)  ) const;
+
+    /** Simple wraper so we dont need to expose internal renderer */
     SDL_Texture* CreateTextureFromSurface(SDL_Surface* Surface);
 private:
     SDL_Renderer* InternalRenderer;

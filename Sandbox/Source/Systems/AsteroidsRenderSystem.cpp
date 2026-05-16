@@ -8,7 +8,7 @@
 #include "../Components/BulletComponent.h"
 #include "../Components/PlayerShipComponent.h"
 
-void AsteroidsRenderSystem::DrawPolygon(Vector2f Center, float Radius, int Sides, Rotator Rot, Color C) const
+void AsteroidsRenderSystem::DrawPolygon(const Vector2f &Center, float Radius, int Sides, Rotator Rot, Color C) const
 {
     const float Step   = 2.0f * MathUtils::PI / static_cast<float>(Sides);
     const float RotRad = Rot.GetAngleRadians();
@@ -22,7 +22,7 @@ void AsteroidsRenderSystem::DrawPolygon(Vector2f Center, float Radius, int Sides
     }
 }
 
-void AsteroidsRenderSystem::DrawShip(Vector2f Center, Rotator Rot, Color C) const
+void AsteroidsRenderSystem::DrawShip(const Vector2f &Center, const Rotator Rot, const Color C) const
 {
     const float AngleRad = Rot.GetAngleRadians();
     const float Cos = cosf(AngleRad);
@@ -40,7 +40,7 @@ void AsteroidsRenderSystem::DrawShip(Vector2f Center, Rotator Rot, Color C) cons
     RendererRef->DrawLine(LeftWing,Nose,1.5f, C);
 }
 
-void AsteroidsRenderSystem::Update(Registry& CurrentRegistry, float DeltaTime)
+void AsteroidsRenderSystem::Update(Registry& CurrentRegistry, float)
 {
     CurrentRegistry.MakeView<TransformComponent, AsteroidComponent>().Each(
         [&](Entity, TransformComponent& TC, AsteroidComponent& AC)

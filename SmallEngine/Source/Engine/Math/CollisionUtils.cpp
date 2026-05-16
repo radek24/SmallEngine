@@ -4,7 +4,7 @@
 
 #include "CollisionUtils.h"
 
-bool CollisionUtils::IsPointInsideRectangle(Vector2f Point, Vector2f TopLeft, Vector2f BottomRight)
+bool CollisionUtils::IsPointInsideRectangle(const Vector2f& Point, const Vector2f &TopLeft, const Vector2f &BottomRight)
 {
     return (Point > TopLeft && Point < BottomRight);
 }

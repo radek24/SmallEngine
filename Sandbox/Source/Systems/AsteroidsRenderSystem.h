@@ -15,6 +15,6 @@ public:
 private:
     Renderer* RendererRef;
 
-    void DrawPolygon(Vector2f Center, float Radius, int Sides, Rotator Rot, Color C) const;
-    void DrawShip(Vector2f Center, Rotator Rot, Color C) const;
+    void DrawPolygon(const Vector2f &Center, float Radius, int Sides, Rotator Rot, Color C) const;
+    void DrawShip(const Vector2f &Center, Rotator Rot, Color C) const;
 };
