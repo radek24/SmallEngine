@@ -50,8 +50,8 @@ void AsteroidsGameSystem::SpawnAsteroid(Registry& R, Vector2f Pos, int Tier, Vec
 
 void AsteroidsGameSystem::SpawnWave(Registry& R, int Count)
 {
-    const float W = static_cast<float>(CurrentWindow->GetWidth());
-    const float H = static_cast<float>(CurrentWindow->GetHeight());
+    const float W = static_cast<float>(CurrentWindow->GetLogicalWidth());
+    const float H = static_cast<float>(CurrentWindow->GetLogicalHeight());
     const Vector2f Center{W * 0.5f, H * 0.5f};
 
     std::uniform_real_distribution<float> AngleDist(0.0f, 360.0f);

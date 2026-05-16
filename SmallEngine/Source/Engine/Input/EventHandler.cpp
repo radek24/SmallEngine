@@ -4,6 +4,8 @@
 
 #include "EventHandler.h"
 
+#include <Engine/App.h>
+
 static InputState CurrentInputState;
 static Vector2f LastCursorPos = Vector2f(0,0);
 static bool Stop = false;
@@ -32,9 +34,9 @@ void EventHandler::CaptureInput(SDL_Event Event)
     }
     if(Event.type == SDL_EVENT_MOUSE_MOTION)
     {
-        CurrentInputState.MouseDelta = Vector2f(LastCursorPos - Vector2f(Event.button.x,Event.button.y));
-        CurrentInputState.MousePos = Vector2f(Event.button.x,Event.button.y);
-        LastCursorPos = Vector2f(Event.button.x,Event.button.y);
+        CurrentInputState.MouseDelta = Vector2f(LastCursorPos - Vector2f(Event.motion.x, Event.motion.y));
+        CurrentInputState.MousePos = Vector2f(Event.motion.x, Event.motion.y);
+        LastCursorPos = Vector2f(Event.motion.x, Event.motion.y);
     }
 }
 
@@ -101,6 +103,7 @@ void EventHandler::PollInputs()
     while(SDL_PollEvent(&e))
     {
         if (e.type == SDL_EVENT_QUIT) Stop = true;
+        App::Get().GetRenderer()->ConvertEventToRenderCoords(&e);
         CaptureInput(e);
     }
 

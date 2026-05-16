@@ -6,8 +6,8 @@
 
 void AsteroidsMovementSystem::Update(Registry& CurrentRegistry, float DeltaTime)
 {
-    const float W   = static_cast<float>(CurrentWindow->GetWidth());
-    const float H   = static_cast<float>(CurrentWindow->GetHeight());
+    const float W = static_cast<float>(CurrentWindow->GetLogicalWidth());
+    const float H = static_cast<float>(CurrentWindow->GetLogicalHeight());
     constexpr float Pad = 50.0f;
 
     CurrentRegistry.MakeView<TransformComponent, VelocityComponent>().Each(

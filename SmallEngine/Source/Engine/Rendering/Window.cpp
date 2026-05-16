@@ -54,7 +54,6 @@ Window::~Window()
 uint32_t Window::GetWidth() const
 {
     int w,h;
-    //SDL_GetWindowSizeInPixels(NativeHandle, &w, &h); //Might be useful for retina
     SDL_GetWindowSize(NativeHandle, &w, &h);
     return w;
 }
@@ -64,6 +63,26 @@ uint32_t Window::GetHeight() const
     int w,h;
     SDL_GetWindowSize(NativeHandle, &w, &h);
     return h;
+}
+
+uint32_t Window::GetLogicalWidth() const
+{
+    switch(Specs.Presentation)
+    {
+        case LogicalPresentation::Disabled: return GetWidth();break;
+        case LogicalPresentation::Letterbox: return Specs.Size.X;break;
+        default: return GetWidth();
+    }
+}
+
+uint32_t Window::GetLogicalHeight() const
+{
+    switch(Specs.Presentation)
+    {
+        case LogicalPresentation::Disabled: return GetHeight();break;
+        case LogicalPresentation::Letterbox: return Specs.Size.Y;break;
+        default: return GetHeight();
+    }
 }
 
 SDL_Renderer * Window::ConstructRenderer() const

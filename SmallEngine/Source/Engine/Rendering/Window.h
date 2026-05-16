@@ -21,6 +21,12 @@ public:
     [[nodiscard]] uint32_t GetWidth()  const;
     /** Returns current window Height*/
     [[nodiscard]] uint32_t GetHeight() const;
+
+    /** Returns current window Width with regard to logical presentation*/
+    [[nodiscard]] uint32_t GetLogicalWidth()  const;
+    /** Returns current window Height with regard to logical presentation*/
+    [[nodiscard]] uint32_t GetLogicalHeight() const;
+
     /** Construct SDL renderer from this window */
     [[nodiscard]] SDL_Renderer* ConstructRenderer() const;
     /** Returns this window own specifications*/

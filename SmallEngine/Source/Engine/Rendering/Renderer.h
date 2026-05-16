@@ -27,6 +27,8 @@ public:
     /** Set Background color for this renderenr, persists for whole lifetime of a app*/
     void SetClearColor(const Color& ClearColor);
 
+    void ConvertEventToRenderCoords(SDL_Event* Event) const;
+
     /** Loads texture from a path, do not use directly, prefer TextureManager*/
     [[nodiscard]] SDL_Texture* LoadTexture(const std::string& Path) const;
 

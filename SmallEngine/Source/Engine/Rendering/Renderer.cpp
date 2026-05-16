@@ -26,7 +26,7 @@ Renderer::Renderer(Window &window)
         case LogicalPresentation::Disabled: Presentation = SDL_LOGICAL_PRESENTATION_DISABLED; break;
         default: NoEntry() break;
     }
-    SDL_SetRenderLogicalPresentation(InternalRenderer,window.GetWidth(), window.GetHeight(), Presentation);
+    SDL_SetRenderLogicalPresentation(InternalRenderer,window.GetSpecs().Size.X, window.GetSpecs().Size.Y, Presentation);
     SDL_SetRenderDrawBlendMode(InternalRenderer, SDL_BLENDMODE_BLEND);
 }
 
@@ -110,6 +110,11 @@ SDL_Texture* Renderer::CreateTextureFromSurface( SDL_Surface *Surface)
 void Renderer::SetClearColor(const Color &ClearColor)
 {
     this->ClearColor = ClearColor;
+}
+
+void Renderer::ConvertEventToRenderCoords(SDL_Event* Event) const
+{
+    SDL_ConvertEventToRenderCoordinates(InternalRenderer, Event);
 }
 
 SDL_Texture * Renderer::LoadTexture(const std::string& Path) const

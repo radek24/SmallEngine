@@ -135,8 +135,8 @@ void StressTestLevel::SpawnEntities(int Count)
     if (Count <= 0) return;
 
     static std::mt19937 RNG(std::random_device{}());
-    const float WinW = static_cast<float>(App::Get().GetWindow()->GetWidth());
-    const float WinH = static_cast<float>(App::Get().GetWindow()->GetHeight());
+    const float WinW = static_cast<float>(App::Get().GetWindow()->GetLogicalWidth());
+    const float WinH = static_cast<float>(App::Get().GetWindow()->GetLogicalHeight());
     std::uniform_real_distribution<float> PosXDist(50, WinW - 50);
     std::uniform_real_distribution<float> PosYDist(50, WinH / 2.0f);
     std::uniform_real_distribution<float> VelDist(-600, 600);

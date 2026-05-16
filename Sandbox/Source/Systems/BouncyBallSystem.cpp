@@ -16,8 +16,8 @@ void BouncyBallSystem::Update(Registry &CurrentRegistry, float DeltaTime)
     constexpr float MouseRadiusSq = MouseRadius * MouseRadius;
     constexpr float MouseForce = 10000.0f;
 
-    const auto WinWidth = static_cast<float>(CurrentWindow->GetWidth());
-    const auto WinHeight = static_cast<float>(CurrentWindow->GetHeight());
+    const auto WinWidth = static_cast<float>(CurrentWindow->GetLogicalWidth());
+    const auto WinHeight = static_cast<float>(CurrentWindow->GetLogicalHeight());
     const auto MousePos= EventHandler::GetMousePos();
     const bool Repel = EventHandler::IsMouseButtonHeld(MouseButton::Left);
     const bool Attract = EventHandler::IsMouseButtonHeld(MouseButton::Right);
@@ -33,13 +33,13 @@ void BouncyBallSystem::Update(Registry &CurrentRegistry, float DeltaTime)
 
         if (MouseActive)
         {
-            const Vector2f ToMouse    = MousePos - T.Position;
-            const float    DistanceSq = ToMouse.LengthSquared();
+            const Vector2f ToMouse = MousePos - T.Position;
+            const float DistanceSq = ToMouse.LengthSquared();
 
             if (DistanceSq < MouseRadiusSq && DistanceSq > 0.01f)
             {
-                const float Distance  = std::sqrt(DistanceSq);
-                const float Falloff   = 1.0f - (Distance / MouseRadius);
+                const float Distance = std::sqrt(DistanceSq);
+                const float Falloff = 1.0f - (Distance / MouseRadius);
                 BBC.Velocity += (ToMouse / Distance) * (ForceDT * Falloff * ForceSign);
             }
         }
@@ -56,13 +56,13 @@ void BouncyBallSystem::Update(Registry &CurrentRegistry, float DeltaTime)
         }
         else if (T.Position.Y - Size <= 0.0f)
         {
-            T.Position.Y   = Size;
+            T.Position.Y = Size;
             BBC.Velocity.Y = -BBC.Velocity.Y * BBC.Damping;
         }
 
         if (T.Position.X + Size >= WinWidth)
         {
-            T.Position.X   = WinWidth - Size;
+            T.Position.X = WinWidth - Size;
             BBC.Velocity.X = -BBC.Velocity.X * BBC.Damping;
         }
         else if (T.Position.X - Size <= 0.0f)
